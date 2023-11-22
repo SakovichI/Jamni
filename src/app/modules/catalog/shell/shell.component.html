@@ -1,0 +1,22 @@
+<section class="all-news">
+  <div class="all-news__header">
+    <h1 class="all-news__title">
+      Каталог
+    </h1>
+    <p class="all-news__subtitle"></p>
+  </div>
+  <div class="small-container">
+    <div class="breadcrumbs all-news__breadcrumbs">
+      <a [routerLink]="'/'" class="breadcrumbs__link">главная</a>
+      <a [routerLink]="'/catalog'" class="breadcrumbs__link breadcrumbs__link--active">Каталог</a>
+    </div>
+    <ul class="catalog">
+      <li class="catalog__item" *ngFor="let category of categories">
+        <a [routerLink]="'/category/' + category.id">
+          <img [src]="category.image" alt="image">
+          <p class="catalog__title">{{category.name}}</p></a>
+
+      </li>
+    </ul>
+  </div>
+</section>

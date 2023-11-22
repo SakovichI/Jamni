@@ -1,0 +1,333 @@
+<section class="hero">
+  <div class="container">
+    <div class="hero__wrap">
+      <div class="hero__slider slider">
+        <div class="slider-wrapper">
+          <a [href]="'product/' + item.id" class="slider-slide slide" *ngFor="let item of sliderItems">
+            <picture>
+              <source [srcset]="item.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
+              <img loading="lazy" [src]="item.coverImage || 'assets/img/no-img-placeholder.svg'" class="image" width="651" height="726" alt="slide1">
+            </picture>
+          </a>
+        </div>
+        <button class="btn-reset slider__btn slider__btn-prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <button class="btn-reset slider__btn slider__btn-next" #firstSliderNext>
+          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="hero__slider-thumbs slider-thumbs">
+        <div class="slider-thumbs__wrapper">
+          <a [href]="'product/' + item.id" class="slider-thumbs__slide slide-thumbs" *ngFor="let item of sliderItems">
+            <picture>
+              <source [srcset]="item.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
+              <img loading="lazy" [src]="item.coverImage || 'assets/img/no-img-placeholder.svg'" class="image slide-thumbs__image" width="187" height="187" alt="slide">
+            </picture>
+          </a>
+        </div>
+      </div>
+      <div class="hero__content">
+      <span class="hero__date">
+        2015
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="1" viewBox="0 0 22 1" fill="none">
+          <path d="M1 0.5H21" stroke="black" stroke-width="0.5" stroke-linecap="round"/>
+        </svg>
+        2023
+      </span>
+        <h1 class="hero__title">
+          Изысканная <br>мебель — оживляющая<br>пространство
+        </h1>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="bestsellers">
+  <div class="container bestsellers__container">
+    <h2 class="bestsellers__title">
+      бестселлеры
+    </h2>
+    <div class="bestsellers__slider slider-bestseller">
+      <a [href]="'category/' + categories[1]?.id" [routerLink]="'category/' + categories[1]?.id" class="bestsellers__link">смотреть больше
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="4" viewBox="0 0 26 4" fill="none">
+          <path
+            d="M25.1768 2.17678C25.2744 2.07915 25.2744 1.92085 25.1768 1.82322L23.5858 0.232233C23.4882 0.134602 23.3299 0.134602 23.2322 0.232233C23.1346 0.329864 23.1346 0.488155 23.2322 0.585786L24.6464 2L23.2322 3.41421C23.1346 3.51184 23.1346 3.67014 23.2322 3.76777C23.3299 3.8654 23.4882 3.8654 23.5858 3.76777L25.1768 2.17678ZM0 2.25H25V1.75H0V2.25Z"
+            fill="black"/>
+        </svg>
+      </a>
+      <div class="slider-bestseller__wrap">
+        <div class="slider-bestseller__slide" *ngFor="let bestseller of bestsellers">
+          <a [href]="'product/' + bestseller.id" [routerLink]="'product/' + bestseller.id" class="slider-bestseller__link">
+            <div class="bestseller-image-container" [style.background-image]="'url(' + bestseller.coverImage || 'assets/img/no-img-placeholder.svg' + ')'">
+            </div>
+<!--            <picture>-->
+<!--              <source [srcset]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">-->
+<!--              <img loading="lazy" [src]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" class="image slider-bestseller__img"-->
+<!--                   width="360" height="550" alt="slide">-->
+<!--            </picture>-->
+            <span class="slider-bestseller__text">{{bestseller.name}}</span>
+          </a>
+        </div>
+      </div>
+      <div class="slider-bestseller__control">
+        <button class="btn-reset slider-bestseller__btn slider-bestseller__btn-prev">
+          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="slider-bestseller__scrollbar"></div>
+        <button class="btn-reset slider-bestseller__btn slider-bestseller__btn-next">
+          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="categories">
+  <div class="container">
+    <ul class="categories__list categories__list--product"
+        [ngClass]="{'categories__list--product': categoriesName === 'Каталог товаров',
+                    'categories__list--pufs': categoriesName === 'Пуфы и банкетки',
+                    'categories__list--sofas': categoriesName === 'Диваны',
+                    'categories__list--furniture': categoriesName === 'Бескаркасная мебель',
+                    'categories__list--chairs': categoriesName === 'Стулья',
+                    'categories__list--bed': categoriesName === 'Кровати',
+                    'categories__list--armchair': categoriesName === 'Кресла'}">
+      <li *ngFor="let category of categories; let i=index" class="categories__item">
+        <a [href]="'category/' + category.id" [routerLink]="'category/' + category.id" class="categories__link" (mouseenter)="hover(category.name)">
+          <span class="categories__count">{{'(' + (i+1) + ')'}}</span>
+          {{category.name}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+<section class="about-brand">
+  <div class="container about-brand__container">
+    <h2 class="about-brand__title">о бренде</h2>
+    <span class="about-brand__subtitle">Познакомимся</span>
+    <div class="about-brand__content content-brand">
+      <p class="content-brand__text"><img src="assets/img/logo-text.png" class="content-brand__logo" loading="lazy"
+                                          alt="logo">
+        это ландшафтное ателье с
+        дружной командой единомышленников, искренне любящих свое
+        дело. Для каждого из нас это не просто работа, это одна маленькая жизнь, где мы создаём лёгкие, яркие и
+        действительно качественные вещи для дома и сада.<br>
+        <br>
+        Впереди ещё много открытий, знакомство с которыми вам предстоит на страницах нашего сайта.</p>
+      <div class="content-brand__images">
+        <picture>
+          <source srcset="assets/img/about-brand/brand1.webp" type="image/webp">
+          <img loading="lazy" src="assets/img/about-brand/brand1.jpg" class="image content-brand__image" width="470px"
+               height="430px" alt="brand_img">
+        </picture>
+        <picture>
+          <source srcset="assets/img/about-brand/brand2.webp" type="image/webp">
+          <img loading="lazy" src="assets/img/about-brand/brand2.jpg" class="image content-brand__image" width="300"
+               height="300" alt="brand_img">
+        </picture>
+      </div>
+    </div>
+    <div class="about-brand__services services-brand">
+      <div class="services-brand__line">
+        <div class="services-brand__column">
+          <span class="services-brand__title">01</span>
+          <div class="services-brand__content">
+            <img src="assets/img/about-brand/3d.svg" alt="icon" class="services-brand__img">
+            <span class="services-brand__txt">3D-модель <br> мебели</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="services-brand__line">
+        <div class="services-brand__column">
+          <span class="services-brand__title">02</span>
+          <div class="services-brand__content">
+            <img src="assets/img/about-brand/medal.svg" alt="icon" class="services-brand__img">
+            <span class="services-brand__txt">гарантия качества<br>и сроков</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="services-brand__line">
+        <div class="services-brand__column">
+          <span class="services-brand__title">03</span>
+          <div class="services-brand__content">
+            <img src="assets/img/about-brand/crown.svg" alt="icon" class="services-brand__img">
+            <span class="services-brand__txt">индивидуальный<br>заказ</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="services-brand__line">
+        <div class="services-brand__column">
+          <span class="services-brand__title">04</span>
+          <div class="services-brand__content">
+            <img src="assets/img/about-brand/delivery.svg" alt="icon" class="services-brand__img">
+            <span class="services-brand__txt">Доставка <br>и монтаж</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section class="projects">
+  <div class="container">
+    <h2 class="projects__title">
+      наши проекты
+    </h2>
+    <span class="projects__subtitle">
+ с душой реализованные идеи
+    </span>
+    <div class="projects__slider slider-project">
+      <div class="slider-project__wrap">
+        <div class="slider-project__slide">
+          <picture>
+            <source srcset="assets/img/project-slide/slide2.webp" type="image/webp">
+            <img loading="lazy" src="assets/img/project-slide/slide2.png" class="image slider-project__image"
+                 alt="our_projects">
+          </picture>
+          <h3 class="slider-project__title">ДИВАНЫ И КРЕСЛА ЧЕСТЕРФИЛД</h3>
+          <p class="slider-project__decription">Как использовать традиционную мягкую мебель при оформлении интерьеров в
+            разных стилях.</p>
+        </div>
+        <div class="slider-project__slide">
+          <picture>
+            <source srcset="assets/img/project-slide/slide3.webp" type="image/webp">
+            <img loading="lazy" src="assets/img/project-slide/slide3.png" class="image slider-project__image"
+                 alt="our_projects">
+          </picture>
+          <h3 class="slider-project__title">Jamni на HELPER’S BAZAR</h3>
+          <p class="slider-project__decription">Погрузитесь в этот день вместе с нами и нашей мебелью.</p>
+        </div>
+        <div class="slider-project__slide">
+          <picture>
+            <source srcset="assets/img/project-slide/slide1.webp" type="image/webp">
+            <img loading="lazy" src="assets/img/project-slide/slide1.jpg" class="image slider-project__image"
+                 alt="our_projects">
+          </picture>
+          <h3 class="slider-project__title">Эфиры передачи «Дачный ответ» с нашей мебелью</h3>
+          <p class="slider-project__decription">Иногда героями передач становятся изделия из нашей стандартной
+            коллекции, а иногда нам выпадает большая честь — изготавливать мебель по эксклюзивным проектам авторов!</p>
+        </div>
+        <div class="slider-project__slide">
+          <picture>
+            <source srcset="assets/img/project-slide/slide4.webp" type="image/webp">
+            <img loading="lazy" src="assets/img/project-slide/slide4.jpg" class="image slider-project__image"
+                 alt="our_projects">
+          </picture>
+          <h3 class="slider-project__title">фото с нашей мебелью в интерьерах покупателей</h3>
+          <p class="slider-project__decription">Подборка фото от наших покупателей</p>
+        </div>
+        <div class="slider-project__slide">
+          <picture>
+            <source srcset="assets/img/project-slide/slide5.webp" type="image/webp">
+            <img loading="lazy" src="assets/img/project-slide/slide5.jpg" class="image slider-project__image"
+                 alt="our_projects">
+          </picture>
+          <h3 class="slider-project__title">Как устроены наши кровати</h3>
+          <p class="slider-project__decription">Отвечаем на ваши вопросы о наших кроватях.</p>
+        </div>
+      </div>
+      <div class="slider-project__control">
+        <button class="slider-project__btn slider-project__btn--prev btn-reset">
+          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="slider-project__scrollbar"></div>
+        <button class="slider-project__btn slider-project__btn--next btn-reset">
+          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="video">
+  <video src="video/video.mp4" poster="assets/img/video-prev/video1.jpg" width="1920" height="530"></video>
+  <svg xmlns="http://www.w3.org/2000/svg" width="67" height="67" viewBox="0 0 67 67" fill="none" class="video__btn">
+    <ellipse cx="33.5" cy="33.5" rx="33.5" ry="33.5" transform="rotate(-180 33.5 33.5)" fill="white"/>
+    <path
+      d="M42.0284 31.7728C43.3239 32.5256 43.3239 34.4744 42.0284 35.2272L30.8063 41.7485C29.5473 42.4802 28 41.5279 28 40.0213L28 26.9787C28 25.4721 29.5473 24.5198 30.8063 25.2515L42.0284 31.7728Z"
+      fill="black"/>
+  </svg>
+</section>
+<section class="offer">
+  <div class="container">
+    <div class="offer__inner">
+      <picture>
+        <source srcset="assets/img/offer-block/offer1.webp" type="image/webp">
+        <img loading="lazy" src="assets/img/offer-block/offer1.png" class="image offer__image" width="540" height="516"
+             alt="offer_img">
+      </picture>
+      <div class="offer__content">
+        <h2 class="offer__title">Воплотим ваш проект <br>в уникальную мебель</h2>
+        <p class="offer__text">
+          Команда Jamni продолжает работать с профессионалами! Работать с архитекторами, дизайнерами и уникальными
+          проектами — наша страсть, давайте делать это вместе! Мы всегда готовы встретиться с вами в Шоу Руме, подобрать
+          и предоставить материалы, дать доступ к коллекции оцифрованных моделей.
+          <br><br>
+          Если у вас есть индивидуальный запрос, проект или необходимо найти и реализовать нестандартное решение
+        </p>
+        <a [routerLink]="'load-project'" href="load-project" class="offer__link">для вашего дома или сада — <span class="offer__btn">вам сюда</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="callback">
+  <div class="container">
+    <div class="callback__inner">
+      <p class="callback__text">Если у вас, как у дизайнера, уже есть готовый проект и вы ищете возможность его
+        реализации, обратитесь к нам</p>
+      <a  [routerLink]="'load-project'" href="/load-project" class="callback__link">
+        <img src="assets/img/logo_black.png" alt="logo" class="callback__img" width="128px" height="47px">
+      </a>
+      <p class="callback__text">Если вы хотите заказать дизайн-проект, мы с удовольствием поможем вам связаться с
+        профессиональным дизайнером для сотрудничества</p>
+    </div>
+  </div>
+</section>
+<section class="mailing">
+  <div class="small-container">
+    <div class="mailing__inner">
+      <div class="mailing__content">
+        <h2 class="mailing__title">подпишитесь на нашу рассылку</h2>
+        <span class="mailing__subtitle">получайте <span class="mailing__subtitle--bold">скидки</span> и супер предложения</span>
+        <form action="#" class="mailing__form form-mailing" (ngSubmit)="submitForm($any($event.target))" [formGroup]="form" enctype="multipart/form-data">
+          <label class="form-mailing__label">
+            <input name="email" type="text" class="form-mailing__input" placeholder="Введите свой адрес электронной почты" formControlName="email"
+                   [class.error]="form.controls['email'].invalid && form.controls['email'].touched">
+          </label>
+          <button type="submit" class="btn-reset form-mailing__btn btn-anim" [disabled]="form.invalid">
+
+            <span class="btn-anim__text">
+                          <svg class="form-mailing__icon">
+              <use xlink:href="assets/img/sprite.svg#mail"></use>
+            </svg>ПОДПИСАТЬСЯ</span>
+          </button>
+        </form>
+      </div>
+      <picture>
+        <source srcset="assets/img/offer-block/offer-mobile.webp" type="image/webp">
+        <img loading="lazy" src="assets/img/offer-block/offer-mobile.png" class="image mailing__image" width="256"
+             height="536"
+             alt="mailing-image">
+      </picture>
+    </div>
+  </div>
+</section>

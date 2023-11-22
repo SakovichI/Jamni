@@ -1,0 +1,284 @@
+<div class="categories">
+  <section class="head" [ngClass]="{'head--sofas': category?.name === 'Диваны', 'head--decor': category?.name !== 'Диваны' }">
+    <h1 class="head__title">
+      {{category?.name}}
+    </h1>
+    <div class="head__subtitle">
+      Изысканные детали для уюта и стиля: <br>обогатите свой интерьер уникальными декоративными акцентами
+    </div>
+  </section>
+  <section class="categories__nav categories-nav" *ngIf="category?.childCategories">
+    <div class="small-container">
+      <div class="sliderMy categories-nav__slider nav-slider">
+        <div class="sliderMy__wrapper nav-slider__wrapper">
+          <div class="sliderMy__slide nav-slider__slide slide-nav"
+               *ngFor="let subCategory of category.childCategories">
+            <a [routerLink]="'/category/' + subCategory.id" [href]="'/category/' + subCategory.id"
+               class="slide-nav__link">
+              <picture>
+                <source [srcset]="subCategory.image || 'assets/img/no-img-placeholder.svg'" type="image/webp">
+                <img loading="lazy" [src]="subCategory.image || 'assets/img/no-image-placeholder.svg'"
+                     class="image slide-nav__image"
+                     width="340"
+                     height="200" alt="nav-image">
+              </picture>
+              <span class="slide-nav__description">
+            {{subCategory.name}}
+          </span>
+            </a>
+          </div>
+        </div>
+        <div class="sliderMy__scrollbar nav-slider__scrollbar"></div>
+      </div>
+    </div>
+  </section>
+  <section class="breadcrumbs breadcrumbs__categories">
+    <div class="small-container">
+      <a [routerLink]="'/'" [href]="'.'" class="breadcrumbs__link">главная</a>
+      <a [routerLink]="'/catalog'" [href]="'/catalog'" class="breadcrumbs__link">каталог</a>
+      <a [routerLink]="'.'" [href]="'.'" class="breadcrumbs__link breadcrumbs__link--active">{{category?.name}}</a>
+    </div>
+  </section>
+  <section class="categories__content categories-content" *ngIf="category?.items?.length">
+    <div class="small-container">
+      <div class="categories-content__controls control-categories">
+        <button class="btn-reset control-categories__item control-categories__item--filter"
+                data-filter-control="filter" (click)="openFilter()">
+          <svg class="control-categories__icon">
+            <use xlink:href="assets/img/sprite.svg#filter"></use>
+          </svg>
+          <span class="control-categories__text">Фильтры</span>
+        </button>
+        <button class="btn-reset control-categories__item" data-filter-control="sort" (click)="openSort()">
+          <svg class="control-categories__icon">
+            <use xlink:href="assets/img/sprite.svg#sort"></use>
+          </svg>
+          <span class="control-categories__text">Сортировка</span>
+        </button>
+
+      </div>
+      <div class="categories-content__wrap">
+        <div class="categories-content__filter filter" #filter>
+          <form action="#" class="filter__form">
+            <!--            <div class="filter__btn-wrap">-->
+            <!--              <input type="button" class="input-reset filter__btn filter__btn&#45;&#45;active" value="весь декор">-->
+            <!--              <input type="button" class="input-reset filter__btn" value="скидки">-->
+            <!--              <input type="button" class="input-reset filter__btn" value="новинки">-->
+            <!--              <input type="button" class="input-reset filter__btn" value="бестселлеры">-->
+            <!--            </div>-->
+            <div class="filter__section section-filter accordion" *ngFor="let specification of specsFormArray.controls">
+              <ng-container [ngSwitch]="specification?.value.specification.valueType">
+                <ng-template [ngSwitchCase]="'CHAR'">
+                  <div class="section-filter__title accordion__title">
+                    {{specification.value.specification.name}}
+                    <div class="accordion__icon">
+                      <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
+                      <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+                    </div>
+                  </div>
+                  <div class="section-filter__content accordion__content">
+                    <label class="custom-checkbox section-filter__checkbox"
+                           *ngFor="let option of specification.get('specification')?.value.values">
+                      <input type="checkbox" class="custom-checkbox__field"
+                             (change)="onCharSpecChange(specification, option, $any($event.target).checked, category?.id)">
+                      <span class="custom-checkbox__content">{{option.value}}</span>
+                    </label>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'BOOLEAN'">
+                  <div class="section-filter__title accordion__title">
+                    {{specification.value.specification.name}}
+                    <div class="accordion__icon">
+                      <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
+                      <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+                    </div>
+                  </div>
+                  <div class="section-filter__content accordion__content">
+                    <label class="custom-checkbox section-filter__checkbox">
+                      <input type="radio" class="custom-checkbox__field" [checked]="!!specification.value.value" [name]="'bool' + specification.value.specification.id"
+                             (change)="onBooleanSpecChange(specification, specification.value.specification.values[0])">
+                      <span class="custom-checkbox__content">Да</span>
+                    </label>
+                    <label class="custom-checkbox section-filter__checkbox">
+                      <input type="radio" class="custom-checkbox__field" [checked]="!specification.value.value" [name]="'bool' + specification.value.specification.id"
+                             (change)="onBooleanSpecChange(specification, null)">
+                      <span class="custom-checkbox__content">Нет</span>
+                    </label>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'COLOR'">
+                  <div class="section-filter__title accordion__title">
+                    {{specification.value.specification.name}}
+                    <div class="accordion__icon">
+                      <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
+                      <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+                    </div>
+                  </div>
+                  <div class="section-filter__content accordion__content">
+                    <label class="custom-checkbox section-filter__checkbox"
+                           *ngFor="let option of specification.get('specification')?.value.values">
+                      <input type="checkbox" class="custom-checkbox__field"
+                             (change)="onCharSpecChange(specification, option, $any($event.target).checked, category?.id)">
+                      <span class="custom-checkbox__content">{{option.value}}</span>
+                    </label>
+                  </div>
+                </ng-template>
+                <ng-template [ngSwitchCase]="'NUMBER'">
+                  <div class="section-filter__title accordion__title">
+                    {{specification.value.specification.name}}
+                    <div class="accordion__icon">
+                      <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
+                      <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+                    </div>
+                  </div>
+                  <div class="section-filter__content accordion__content">
+                    <div class="section-filter__price price-range">
+                      <label class="price-range__label">
+                        <input type="number" class="price-range__input input-reset"
+                               [formControl]="$any(specification.get('from'))">
+                      </label>
+                      <span class="price-range__symbol">-</span>
+                      <label class="price-range__label">
+                        <input type="number" class="price-range__input input-reset"
+                               [formControl]="$any(specification.get('to'))">
+
+                      </label>
+                    </div>
+                    <div class="nouislider-container section-filter__price"></div>
+                  </div>
+                </ng-template>
+              </ng-container>
+            </div>
+          </form>
+        </div>
+        <ul class="control-categories__list sort" #sort>
+          <li class="sort__item">
+            <button class="btn-reset sort__btn" (click)="term = 'популярность'">популярность
+            </button>
+          </li>
+          <li class="sort__item">
+            <button class="btn-reset sort__btn" (click)="term = 'цена: наименьшая'">
+              цена: наименьшая
+            </button>
+          </li>
+          <li class="sort__item">
+            <button class="btn-reset sort__btn" (click)="term = 'цена: наибольшая'">
+              цена: наибольшая
+            </button>
+          </li>
+        </ul>
+        <ul class="categories-content__products product" *ngIf="category?.items?.length">
+          <li class="product__item" *ngFor="let product of category.items.slice(0, 18) | sortProducts: term | filterProducts: specsFormArray.controls">
+            <a [routerLink]="'/product/' + product.id" [href]="'/product/' + product.id" class="product__link">
+              <div class="product__wrap">
+                <button class="btn-reset product__btn">
+                  <svg class="product__icon">
+                    <use xlink:href="assets/img/sprite.svg#favorites"></use>
+                  </svg>
+                </button>
+                <div class="product__image-wrap">
+                  <picture>
+                    <source [srcset]="product.coverImage || 'assets/img/no-image-placeholder.svg'" type="image/webp">
+                    <img loading="lazy" [src]="product.coverImage || 'assets/img/no-image-placeholder.svg'"
+                         class="image product__image"
+                         width="" height="" alt="product-image">
+                  </picture>
+                </div>
+                <span class="product__title">{{product.name}}</span>
+                <span class="product__price">{{product.price}} руб.</span>
+                <ul class="product__textiles">
+                  <li class="product__textile product__textile--gray"></li>
+                  <li class="product__textile product__textile--brown"></li>
+                  <li class="product__textile product__textile--black"></li>
+                  <li class="product__textile product__textile--black-light"></li>
+                </ul>
+                <!--                <ul class="product__textiles" *ngIf="product.availableColors.length">-->
+                <!--                  <li class="product__textile" *ngFor="let color of product.availableColors" [style.background-color]="color"></li>-->
+                <!--                </ul>-->
+              </div>
+            </a>
+          </li>
+          <li class="product__item--article"><a href="#" class="product__link">
+            <article class="product__article article-prod">
+              <span class="article-prod__text">Статья</span>
+              <h1 class="article-prod__title">ДЕКОРИРОВАНИЕ ИНТЕРЬЕРА: <br>КАК ГРАМОТНО ВЫБРАТЬ ДЕКОР ДЛЯ ДОМА</h1>
+              <p class="article-prod__description">Погрузитесь в мир красоты и вдохновения, и сделайте свой дом
+                по-настоящему привлекательным и стильным с нашими рекомендациями по декорированию интерьера.</p>
+            </article>
+          </a></li>
+        </ul>
+      </div>
+      <!--      <div class="breadcrumbs-number categories__breadcrumbs-number">-->
+      <!--        <div class="breadcrumbs-number__wrap">-->
+      <!--          <button class="btn-reset breadcrumbs-number__btn breadcrumbs-number__bnt&#45;&#45;prev"><</button>-->
+      <!--          <div class="breadcrumbs-number__links">-->
+      <!--            <a href="#" class="breadcrumbs-number__link breadcrumbs-number__link&#45;&#45;active">1</a>-->
+      <!--            <a href="#" class="breadcrumbs-number__link">2</a>-->
+      <!--            <a href="#" class="breadcrumbs-number__link">3</a>-->
+      <!--            <a href="#" class="breadcrumbs-number__link">4</a>-->
+      <!--            <a href="#" class="breadcrumbs-number__link">5</a>-->
+      <!--            <span class="breadcrumbs-number__doted">…</span>-->
+      <!--            <a href="#" class="breadcrumbs-number__link">21</a>-->
+      <!--          </div>-->
+      <!--          <button class="btn-reset breadcrumbs-number__btn breadcrumbs-number__bnt&#45;&#45;next">></button>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <section class="else-product">
+        <div class="small-container">
+          <h2 class="else-product__title">еще товары</h2>
+          <span class="else-product__subtitle">вам может понравится</span>
+
+          <div class=" sliderMy else-product__slider slider-elseProduct">
+            <div class=" sliderMy__wrapper slider-elseProduct__wrapper">
+              <div class="sliderMy__slide slider-elseProduct__slide slider-elseProduct-slide"
+                   *ngFor="let product of otherProducts">
+                <a [routerLink]="'/product/' + product.id" [href]="'/product/' + product.id">
+                  <div class="product__wrap">
+                    <button class="btn-reset product__btn" type="button">
+                      <svg class="product__icon">
+                        <use xlink:href="assets/img/sprite.svg#favorites"></use>
+                      </svg>
+                    </button>
+                    <div class="product__image-wrap">
+                      <picture>
+                        <source [srcset]="product.coverImage" type="image/webp">
+                        <img loading="lazy" [src]="product.coverImage" class="image product__image"
+                             width="" height="" alt="product-image">
+                      </picture>
+                    </div>
+                    <span class="product__title">{{product.name}}</span>
+                    <span class="product__price">{{product.price}} руб.</span>
+
+                    <ul class="product__textiles" *ngIf="product.availableColors">
+                      <li class="product__textile" *ngFor="let color of product.availableColors"
+                          [style.background-color]="color"></li>
+                      <li class="product__textile product__textile--brown"></li>
+                      <li class="product__textile product__textile--black"></li>
+                      <li class="product__textile product__textile--black-light"></li>
+                    </ul>
+                  </div>
+                </a>
+              </div>
+            </div>
+            <div class="sliderMy__control slider-elseProduct__control">
+              <button class="btn-reset sliderMy__btn sliderMy__btn--prev">
+                <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+                  <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+                  <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+                </svg>
+              </button>
+              <div class="sliderMy__scrollbar"></div>
+              <button class="btn-reset sliderMy__btn sliderMy__btn--next">
+                <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+                  <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+                  <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>
+

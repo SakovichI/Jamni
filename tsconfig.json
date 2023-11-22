@@ -1,0 +1,54 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "paths": {
+      "@core": ["src/app/modules/core/index.ts"],
+      "@landing": ["src/app/modules/landing/index.ts"],
+      "@category": ["src/app/modules/category/index.ts"],
+      "@decor": ["src/app/modules/category-decor/index.ts"],
+      "@sofas": ["src/app/modules/category-sofas/index.ts"],
+      "@product-sofas": ["src/app/modules/product-sofas/index.ts"],
+      "@product": ["src/app/modules/product/index.ts"],
+      "@cut-info": ["src/app/modules/cut-info/index.ts"],
+      "@cut-delivery": ["src/app/modules/cut-delivery/index.ts"],
+      "@cut-pay": ["src/app/modules/cut-pay/index.ts"],
+      "@cut-res": ["src/app/modules/cut-res/index.ts"],
+      "@delivery": ["src/app/modules/delivery/index.ts"],
+      "@load-project": ["src/app/modules/load-project/index.ts"],
+      "@contacts-page": ["src/app/modules/contacts-page/index.ts"],
+      "@about-company": ["src/app/modules/about-company/index.ts"],
+      "@news-page": ["src/app/modules/news-page/index.ts"],
+      "@all-news": ["src/app/modules/all-news/index.ts"],
+      "@reviews": ["src/app/modules/reviews/index.ts"],
+      "@pay-delivery": ["src/app/modules/pay-delivery/index.ts"],
+      "@catalog": ["src/app/modules/catalog/index.ts"]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2020",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

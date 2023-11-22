@@ -1,0 +1,15 @@
+.contacts__map{
+  width: 700px;
+  height: auto;
+  border:none;
+}
+.ymaps3x0--main-engine-container canvas {
+  filter: grayscale(1);
+}
+@media all and (max-width: 700px) {
+  .contacts__map{
+    width: 100%;
+    height: 400px;
+    border:none;
+  }
+}

@@ -1,0 +1,41 @@
+@font-face {
+  font-family: 'Lovelace-Regular';
+  src: url('./Lovelace-Regular.woff2') format('woff');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Monica-Light';
+  src: url('./Moniqa-Light.woff2') format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'NeueHaasUnica-Light';
+  src: url('./NeueHaasUnica-Light.woff2') format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'ProximaNova-Light';
+  src: url('./ProximaNova-Light.woff2') format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'ProximaNova-Regular';
+  src: url('./ProximaNova-Regular.woff2') format('woff');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'ProximaNova-SemiBold';
+  src: url('./ProximaNova-SemiBold.woff2') format('woff');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Romile-Regular';
+  src: url('./Romile-Regular.woff2') format('woff');
+  font-weight: normal;
+}

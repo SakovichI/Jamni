@@ -1,0 +1,135 @@
+<section class="cut-res">
+  <div class="small-container">
+    <div class="cut-res__wrap">
+      <div class="cut-res__inner">
+        <div class="cut-res__row">
+          <picture class="cut-res__image">
+            <source srcset="assets/img/cut-img/cut-result1.webp" type="image/webp">
+            <img alt="cut-img" class="image cut-res__img" height="254" loading="lazy" src="assets/img/cut-img/cut-result1.jpg" width="254">
+          </picture>
+          <div class="cut-res__head">
+            <h1 class="cut-res__title">Спасибо за заказ</h1>
+<!--            <p class="cut-res__text">Вы всегда можете отследить свой заказ в -->
+<!--              <a href="#" class="cut-res__link">личном кабинете</a>-->
+<!--            </p>-->
+          </div>
+        </div>
+        <div class="cut-res__row">
+          <picture class="cut-res__image cut-res__image--lg">
+            <source srcset="assets/img/cut-img/cut-result2.webp" type="image/webp">
+            <img alt="cut-img" class="image cut-res__img" height="282" loading="lazy" src="assets/img/cut-img/cut-result2.jpg" width="460">
+          </picture>
+        </div>
+      </div>
+      <div class="cut-info__result result-cut accordion">
+        <div class="result-cut__accordion-title accordion__title">
+          показать заказ
+          <div class="accordion__icon">
+            <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
+            <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+          </div>
+        </div>
+        <div class="accordion__content">
+          <h1 class="result-cut__title">
+            ваши покупки
+          </h1>
+          <div class="result-cut__items" data-simplebar>
+            <div class="result-cut__item item-cut" *ngFor="let product of generalService.selectedItems">
+              <div class="item-cut__wrap">
+                <picture>
+                  <source [srcset]="product.product.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
+                  <img loading="lazy" [src]="product.product.coverImage || 'assets/img/no-img-placeholder.svg'" class="image" width="130" height="130"
+                       alt="prod-image">
+                </picture>
+                <div class="item-cut__content" data-prod="result-cut">
+                  <h3 class="item-cut__title">{{product.product.name}}</h3>
+                  <span class="item-cut__price">{{generalService.getProductAmount(product) * product.product.price}} руб</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="result-cut__sum sum-cut">
+            <div class="sum-cut__wrap">
+              <!--              <form action="#" class="sum-cut__coupon form form-coupon">-->
+              <!--                <label class="form__label">-->
+              <!--                  <input type="text" class="input-reset form__input form-coupon__input" name="coupon"-->
+              <!--                         placeholder="Подарочная карта или купон">-->
+              <!--                </label>-->
+              <!--                <button type="button" class="form-coupon__btn btn-reset form__btn btn-anim">-->
+              <!--                  <span class="form__btn-text form-coupon__btn-text btn-anim__text">применить</span>-->
+              <!--                </button>-->
+              <!--              </form>-->
+              <div class="sum-cut__inner-text">
+                <!--                <div class="sum-cut__row">-->
+                <!--                  <span class="sum-cut__title">промежуточный</span>-->
+                <!--                  <span class="sum-cut__txt" data-full-price="result-cut">0</span>-->
+                <!--                </div>-->
+                <!--                <div class="sum-cut__row">-->
+                <!--                  <span class="sum-cut__title">доставка</span>-->
+                <!--                  <span class="sum-cut__txt sum-cut__txt&#45;&#45;light">Расситывается на следующем шаге</span>-->
+                <!--                </div>-->
+                <div class="sum-cut__row">
+                  <span class="sum-cut__title sum-cut__title--lg">итог</span>
+                  <span class="sum-cut__txt sum-cut__txt--lg">{{generalService.getTotalCartPrice()}} руб</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <section class="else-product else-product--gray-bg">
+    <div class="small-container">
+      <h2 class="else-product__title">продолжить покупки</h2>
+      <span class="else-product__subtitle">вам может понравится</span>
+      <div class=" sliderMy else-product__slider slider-elseProduct">
+        <div class=" sliderMy__wrapper slider-elseProduct__wrapper">
+          <div class="sliderMy__slide slider-elseProduct__slide slider-elseProduct-slide" *ngFor="let item of items">
+            <a [routerLink]="'/product/' + item.id" [href]="'/product/' + item.id">
+              <div class="product__wrap">
+                <button class="btn-reset product__btn">
+                  <svg class="product__icon">
+                    <use xlink:href="assets/img/sprite.svg#favorites"></use>
+                  </svg>
+                </button>
+                <div class="product__image-wrap">
+                  <picture>
+                    <source [srcset]="item.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
+                    <img loading="lazy" [src]="item.coverImage || 'assets/img/no-img-placeholder.svg'" class="image product__image"
+                         width="" height="" alt="product-image">
+                  </picture>
+                </div>
+                <span class="product__title">{{item.name}}</span>
+                <span class="product__price">{{item.price}} руб.</span>
+
+                <ul class="product__textiles">
+                  <li class="product__textile product__textile--gray"></li>
+                  <li class="product__textile product__textile--brown"></li>
+                  <li class="product__textile product__textile--black"></li>
+                  <li class="product__textile product__textile--black-light"></li>
+                </ul>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="sliderMy__control slider-elseProduct__control">
+          <button class="btn-reset sliderMy__btn sliderMy__btn--prev">
+            <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+              <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+              <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <div class="sliderMy__scrollbar"></div>
+          <button class="btn-reset sliderMy__btn sliderMy__btn--next">
+            <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
+              <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
+              <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</section>
