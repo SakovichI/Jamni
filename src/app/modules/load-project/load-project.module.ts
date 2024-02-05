@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {Route, RouterModule} from "@angular/router";
-import {ShellComponent} from "./shell";
+import {ShellComponent} from "../log-in/shell";
 import {ReactiveFormsModule} from "@angular/forms";
 import {SharedModule} from "../../shared";
 

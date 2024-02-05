@@ -1,0 +1,23 @@
+<div class="favorites">
+  <ul class="favorites__wrap">
+    <li class="product__item" *ngFor="let product of category">
+      <a [routerLink]="'/product/' + product.id" [href]="'/product/' + product.id" class="product__link">
+        <div class="product__wrap">
+          <button class="btn-reset product__btn">
+            <img src="./assets/img/cut-img/delete-prod.webp" class="product__icon" alt="icon">
+          </button>
+          <div class="product__image-wrap">
+            <picture>
+              <source [srcset]="product.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
+              <img loading="lazy" [src]="product.coverImage || 'assets/img/no-img-placeholder.svg'"
+                   class="image product__image"
+                   width="" height="" alt="product-image">
+            </picture>
+          </div>
+          <span class="product__title">{{product.name}}</span>
+          <span class="product__price">{{product.price}} руб.</span>
+        </div>
+      </a>
+    </li>
+  </ul>
+</div>

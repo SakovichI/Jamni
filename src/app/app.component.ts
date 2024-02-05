@@ -24,14 +24,14 @@ import {ChildrenOutletContexts, RouterOutlet} from "@angular/router";
         query(":leave", [
           style({ opacity: 1 }),
           animate(
-            "500ms linear",
+            "300ms linear",
             style({ opacity: 0 })
           )
         ],{optional:true}),
         query(":enter", [
           style({opacity: 0 }),
           animate(
-            "500ms linear",
+            "300ms linear",
             style({ opacity: 1 })
           )
         ], {optional:true}),

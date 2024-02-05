@@ -1,0 +1,35 @@
+.favorites {
+}
+
+.favorites__wrap {
+  max-width: 1200px;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap:20px;
+}
+
+.product__item {
+  flex: 1 1 20%;
+}
+
+.product__link {
+}
+
+.product__wrap {
+}
+
+
+.product__btn {
+  &:hover > .product__icon{
+    transition: .2s ease-in;
+    transform: scale(1.1);
+  }
+}
+.product__icon{
+  width: 22px;
+  height: 22px;
+  transition: .2s ease-in;
+}
+.product__image-wrap {
+}

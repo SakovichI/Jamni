@@ -28,11 +28,11 @@
           <nav class="header__burger burger-menu" data-menu [ngClass]="{active: burgerMenu}">
             <div class="burger-menu__content">
               <div class="burger-menu__header">
-                <!--                <a href="#" class="burger-menu__link burger-menu__link&#45;&#45;icon">-->
-                <!--                  <svg class="burger-menu__icon burger-menu__icon&#45;&#45;stroke">-->
-                <!--                    <use xlink:href="assets/img/sprite.svg#user"></use>-->
-                <!--                  </svg>-->
-                <!--                </a>-->
+                <a routerLink="login" class="burger-menu__link burger-menu__link--icon" (click)="openBurger()">
+                  <svg class="burger-menu__icon burger-menu__icon--stroke">
+                    <use xlink:href="assets/img/sprite.svg#user"></use>
+                  </svg>
+                </a>
                 <a [routerLink]="'category/382'" class="burger-menu__link burger-menu__link--icon"
                    (click)="openBurger()">
                   <svg class="burger-menu__icon">
@@ -75,31 +75,11 @@
           <a [routerLink]="'.'" href="." class="header__logo"><img src="assets/img/logo.svg" alt="logo" loading="lazy"
                                                                    width="148" height="55"></a>
           <div class="header__icons icons-header">
-            <button class="btn-reset icons-header__link icons-header__link--user" (click)="viewsLoginModal()">
+            <button class="btn-reset icons-header__link icons-header__link--user" routerLink="login">
               <svg class="icons-header__icon icons-header__icon--stroke">
                 <use xlink:href="assets/img/sprite.svg#user"></use>
               </svg>
             </button>
-            <div class="modal login-modal" [ngClass]="{'open': loginModal}" (click)="viewsLoginModal()">
-
-            </div>
-            <div class="modal__container login-modal__container" [ngClass]="{'open': loginModal}">
-              <div class="modal__content login-modal__content">
-                <form action="#" class="authorization__form authorization__form--border-radius form form-login">
-                  <div class="form-login__title">войти</div>
-                  <label class="form-login__label form__label">
-                    <input class="input-reset form__input form-login__input" placeholder="E-mail*" required type="text">
-                  </label>
-                  <label class="form-login__label form__label">
-                    <input class="input-reset form__input form-login__input" placeholder="Пароль" required type="password">
-                  </label>
-                  <button class="btn-reset form-login__btn btn-anim">
-                    <span class="btn-anim__text">войти</span>
-                  </button>
-                  <!--        <span class="form-login__text">У вас еще нет профиля? <a href="authorization.html" class="form-login__link">Зарегистрироваться</a></span>-->
-                </form>
-              </div>
-            </div>
             <a [routerLink]="'catalog'" class="icons-header__link icons-header__link--favorites">
               <svg class="icons-header__icon">
                 <use xlink:href="assets/img/sprite.svg#favorites"></use>
@@ -214,7 +194,6 @@
         </menu>
       </div>
     </nav>
-    <app-log-in></app-log-in>
   </header>
 
   <main [@routeAnimations]="prepareRoute(outlet)">

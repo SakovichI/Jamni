@@ -1,0 +1,144 @@
+<section class="registration">
+  <div class="bg-gray">
+    <div class="registration__wrap">
+      <div class="small-container">
+        <div class="registration__inner">
+          <div class="registration__title">РЕГИСТРАЦИЯ</div>
+          <div class="registration__header registration-head">
+            <label class="custom-checkbox registration-head__checkbox">
+              <input type="radio" class="custom-checkbox__field" name="role" value="КЛИЕНТ" checked (change)="changeForm($event)">
+              <span
+                class="custom-checkbox__content registration-head__checkbox-content form-info__text--light" >КЛИЕНТ</span>
+            </label>
+            <label class="custom-checkbox registration-head__checkbox">
+              <input type="radio" class="custom-checkbox__field" name="role" value="дизайнер" (change)="changeForm($event)">
+              <span
+                class="custom-checkbox__content registration-head__checkbox-content form-info__text--light">дизайнер</span>
+            </label>
+            <label class="custom-checkbox registration-head__checkbox">
+              <input type="radio" class="custom-checkbox__field" name="role" value="оптовик" (change)="changeForm($event)">
+              <span
+                class="custom-checkbox__content registration-head__checkbox-content form-info__text--light">оптовик</span>
+            </label>
+          </div>
+          <form action="#" class="form form-reg" [ngClass]="{active: formType === 'клиент'}">
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Фамилия" required type="text">
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Имя" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Отчество" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <p-inputMask mask="+7(999) 999-99-99" class="form-reg__input form__input" placeholder="Телефон"></p-inputMask>
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Почта" required type="text">
+              </label>
+            </div>
+            <label class="custom-checkbox form-reg__checkbox">
+              <input type="checkbox" class="custom-checkbox__field" name="mailing" value="true">
+              <span
+                class="custom-checkbox__content form-reg__checkbox-content">Присылайте мне электронные письма с новостями и предложениями </span>
+            </label>
+            <button class="btn-reset form-reg__btn btn-anim">
+              <span class="btn-anim__text">Зарегистрироваться</span>
+            </button>
+            <span class="form-reg__text">Пароль будет отправлен на почту</span>
+          </form>
+          <form action="#" class="form form-reg" [ngClass]="{active: formType === 'дизайнер'}">
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Фамилия" required type="text">
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Имя" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Отчество" required type="text">
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Сайт" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Юр лицо" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <p-inputMask mask="+7(999) 999-99-99" class="form-reg__input form__input" placeholder="Телефон"></p-inputMask>
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Почта" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <textarea class="input-reset form__input form-reg__input" placeholder="Работали ли с нами?" required type="text"></textarea>
+              </label>
+              <label class="form-reg__label form__label">
+                <textarea class="input-reset form__input form-reg__input" placeholder="Есть ли вас свои дизайнерские коллекции?" required type="text"></textarea>
+              </label>
+            </div>
+            <button class="btn-reset form-reg__btn btn-anim">
+              <span class="btn-anim__text">Зарегистрироваться</span>
+            </button>
+            <span class="form-reg__text">Пароль будет отправлен на почту</span>
+          </form>
+          <form action="#" class="form form-reg" [ngClass]="{active: formType === 'оптовик'}">
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Фамилия" required type="text">
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Имя" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Отчество" required type="text">
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Сайт" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Юр лицо" required type="text">
+              </label>
+            </div>
+            <div class="form-reg__row">
+              <label class="form-reg__label form__label">
+                <p-inputMask mask="+7(999) 999-99-99" class="form-reg__input form__input" placeholder="Телефон"></p-inputMask>
+              </label>
+              <label class="form-reg__label form__label">
+                <input class="input-reset form__input form-reg__input" placeholder="Почта" required type="text">
+              </label>
+            </div>
+            <button class="btn-reset form-reg__btn btn-anim">
+              <span class="btn-anim__text">Зарегистрироваться</span>
+            </button>
+            <span class="form-reg__text">Пароль будет отправлен на почту</span>
+          </form>
+        </div>
+      </div>
+      <picture class="authorization__image">
+        <source srcset="assets/img/login-fon.webp" type="image/webp">
+        <img alt="login-img" class="image authorization__img" height="650" loading="lazy" src="assets/img/login-fon.jpg"
+             width="1920">
+      </picture>
+    </div>
+  </div>
+</section>
+
