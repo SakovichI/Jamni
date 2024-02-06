@@ -13,6 +13,10 @@ import { DeliveryAdresComponent } from './personal-area/components/delivery-adre
 import { AddressFormComponent } from './personal-area/components/address-form/address-form.component';
 import {InputMaskModule} from "primeng/inputmask";
 import { ProfileComponent } from './personal-area/components/profile/profile.component';
+import { PriceComponent } from './personal-area/components/price/price.component';
+import { BonusComponent } from './personal-area/components/bonus/bonus.component';
+import { ModelsComponent } from './personal-area/components/models/models.component';
+import {ProfileIpComponent} from "./personal-area/components/profile-ip/profile-ip.component";
 
 const personalRoutes: Route[] = [
   {
@@ -154,6 +158,10 @@ const routes: Route[] = [
     DeliveryAdresComponent,
     AddressFormComponent,
     ProfileComponent,
+    ProfileIpComponent,
+    PriceComponent,
+    BonusComponent,
+    ModelsComponent,
   ],
   imports: [
     HttpClientModule,

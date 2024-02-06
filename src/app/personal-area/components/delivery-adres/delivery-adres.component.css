@@ -15,7 +15,7 @@
   margin-bottom: 20px;
   font-weight: 300;
   font-size: 16px;
-  line-height: 437%;
+  line-height: normal;
   text-transform: uppercase;
   color: #23221e;
 }
@@ -81,3 +81,20 @@
   height: 48px;
 }
 
+@media all and (max-width: 650px) {
+  .address-elem__wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .address__info {
+    order: 3
+  }
+  .address__content{
+    padding-bottom: 28px;
+    margin-bottom: 28px;
+    border-bottom: 1px solid #d3d3d3;
+  }
+}
