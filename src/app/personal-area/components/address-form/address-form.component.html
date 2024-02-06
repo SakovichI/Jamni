@@ -1,0 +1,64 @@
+<form action="#" class="cut-info__form form form-info">
+  <div class="form-info__wrap form__wrap">
+    <div class="form-info__inner">
+      <h2 class="form-info__title">добавьте адрес доставки</h2>
+      <div class="form__row">
+        <div class="form-group form-info__select form__select">
+          <div class="dropdown form-info__dropdown form__dropdown">
+            <button type="button" class="dropdown__button">
+              Россия
+            </button>
+            <svg class="dropdown__icon">
+              <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
+            </svg>
+            <ul class="dropdown__list">
+              <li class="dropdown__list-item" data-value="Россия">
+                Россия
+              </li>
+              <li class="dropdown__list-item" data-value="Беларусь">
+                Беларусь
+              </li>
+              <li class="dropdown__list-item" data-value="Казахстан">
+                Казахстан
+              </li>
+            </ul>
+            <input type="text" name="select-category" value="" class="dropdown__input-hidden">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-info__row form__row">
+      <label class="form__label form-info__label">
+        <input name="name" type="text" class="form__input form-info__input input-reset" placeholder="Имя">
+      </label>
+      <label class="form__label form-info__label">
+        <input name="surname" type="text" class="form__input form-info__input input-reset" placeholder="Фамилия">
+      </label>
+    </div>
+    <div class="form-info__row form__row">
+      <label class="form__label form-info__label">
+        <input name="city" type="text" class="form__input form-info__input input-reset" placeholder="Город">
+      </label>
+      <label class="form__label form-info__label">
+        <input name="index" type="text" class="form__input form-info__input input-reset" placeholder="Индекс">
+      </label>
+    </div>
+    <div class="form-info__row form__row">
+      <label class="form__label form-info__label">
+        <input name="street" type="text" class="form__input form-info__input input-reset" placeholder="Улица">
+      </label>
+      <label class="form__label form-info__label">
+        <input name="house-num" type="text" class="form__input form-info__input input-reset"
+               placeholder="Номер дома">
+      </label>
+    </div>
+    <div class="form-info__row form__row">
+      <label class="form__label form-info__label">
+        <p-inputMask mask="+7(999) 999-99-99" class="form-reg__input form__input" placeholder="Телефон"></p-inputMask>
+      </label>
+    </div>
+  </div>
+  <button type="button" class="form-info__btn btn-reset form__btn btn-anim">
+    <span class="form__btn-text form-info__btn-text btn-anim__text" >добавить</span>
+  </button>
+</form>

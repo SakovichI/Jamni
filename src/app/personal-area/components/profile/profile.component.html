@@ -1,0 +1,38 @@
+<form class="form">
+  <h2 class="form__title">контакты</h2>
+  <div class="form__wrap">
+    <div class="form__row">
+      <label class="form__label">
+        <input type="text" class="input-reset form__input" placeholder="Электронная почта">
+      </label>
+      <label class="form__label">
+        <p-inputMask mask="+7(999) 999-99-99" class="form__input" placeholder="Телефон"></p-inputMask>
+      </label>
+
+    </div>
+    <label class="custom-checkbox form-reg__checkbox">
+      <input type="checkbox" class="custom-checkbox__field" name="mailing" value="true">
+      <span
+        class="custom-checkbox__content form-reg__checkbox-content">Присылайте мне электронные письма с новостями и предложениями </span>
+    </label>
+  </div>
+  <h2 class="form__title">основные данные</h2>
+  <div class="form__wrap">
+    <div class="form__row">
+      <label class="form__label">
+        <input type="text" class="input-reset form__input" placeholder="Фамилия">
+      </label>
+      <label class="form__label">
+        <input type="text" class="input-reset form__input" placeholder="Имя">
+      </label>
+    </div>
+    <div class="form__row">
+      <label class="form__label">
+        <input type="text" class="input-reset form__input" placeholder="Отчество">
+      </label>
+    </div>
+  </div>
+  <button class="form__btn btn-reset btn-anim">
+    <span class="btn-anim__text">Сохранить</span>
+  </button>
+</form>

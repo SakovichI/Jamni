@@ -1,0 +1,81 @@
+.cut-info__form {
+}
+
+.form {
+}
+
+.form-info {
+}
+
+.form-info__wrap {
+}
+
+.form__wrap {
+}
+
+.form-info__inner {
+  margin-top: 0;
+}
+
+.form-info__title {
+}
+
+.form__row {
+}
+
+.form-group {
+}
+
+.form-info__select {
+}
+
+.form__select {
+}
+
+.form-info__label {
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
+
+.form__input {
+}
+
+.form-info__input {
+}
+
+.input-reset {
+}
+
+.form-info__btn {
+}
+
+.btn-reset {
+}
+
+.form__btn {
+}
+
+.btn-anim {
+}
+
+.form__btn-text {
+}
+
+.form-info__btn-text {
+}
+
+.btn-anim__text {
+}
+@media all and (max-width: 1100px) {
+  .form-info__row {
+    flex-direction: row;
+    gap: 20px;
+  }
+}
+@media all and (max-width: 650px) {
+  .form-info__row {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

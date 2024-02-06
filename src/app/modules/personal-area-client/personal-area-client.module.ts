@@ -7,6 +7,9 @@ import {ShellComponent} from "./shell/shell.component";
 import {FavoritesComponent} from "../../personal-area/components/favorites/favorites.component";
 import {OrdersComponent} from "../../personal-area/components/orders/orders.component";
 import {OrderComponent} from "../../personal-area/components/order/order.component";
+import {DeliveryAdresComponent} from "../../personal-area/components/delivery-adres/delivery-adres.component";
+import {AddressFormComponent} from "../../personal-area/components/address-form/address-form.component";
+import {ProfileComponent} from "../../personal-area/components/profile/profile.component";
 
 const routes: Route[] = [
   {
@@ -33,6 +36,21 @@ const routes: Route[] = [
         path: 'orders/:id',
         component: OrderComponent,
         data: {animation: 'order'}
+      },
+      {
+        path: 'address',
+        component: DeliveryAdresComponent,
+        data: {animation: 'address'}
+      },
+      {
+        path: 'address/:id',
+        component: AddressFormComponent,
+        data: {animation: 'new-address'}
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: {animation: 'profile'}
       }
     ]
   },

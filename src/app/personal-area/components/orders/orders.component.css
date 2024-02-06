@@ -87,3 +87,40 @@
   width: 220px;
 }
 
+@media all and (max-width: 790px) {
+  .order__wrap {
+    overflow: hidden;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: #fcfcfc;
+  }
+  .order__btn {
+    margin: 20px auto;
+    height: 35px;
+    width: 100%;
+    max-width: 220px;
+  }
+}
+@media all and (max-width: 520px) {
+  .order__info-text {
+    display: block;
+    width: max-content;
+    &:not(:last-child){
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      padding-right: 0;
+      margin-right: 0;
+      border-right: none;
+      border-bottom: 1px solid #000;
+    }
+  }
+  .order__images {
+    max-width: 160px;
+    height: 160px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}

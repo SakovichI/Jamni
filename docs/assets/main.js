@@ -2085,18 +2085,18 @@
               }
             });
 
-            // Выбор элемента списка. Запомнить выбранное значение. Закрыть дропдаун
-            // dropDownListItems.forEach(function (listItem) {
-            //   listItem.addEventListener('click', function (e) {
-            //     e.stopPropagation();
-            //     dropDownBtn.innerHTML = this.innerHTML;
-            //     dropDownBtn.focus();
-            //     dropDownInput.value = this.dataset.value;
-            //     dropDownList.classList.remove('dropdown__list--visible');
-            //     dropDownList.style.maxHeight = null;
-            //     dropDownIcon.classList.remove('dropdown__icon--active');
-            //   });
-            // });
+            //Выбор элемента списка. Запомнить выбранное значение. Закрыть дропдаун
+            dropDownListItems.forEach(function (listItem) {
+              listItem.addEventListener('click', function (e) {
+                e.stopPropagation();
+                dropDownBtn.innerHTML = this.innerHTML;
+                dropDownBtn.focus();
+                dropDownInput.value = this.dataset.value;
+                dropDownList.classList.remove('dropdown__list--visible');
+                dropDownList.style.maxHeight = null;
+                dropDownIcon.classList.remove('dropdown__icon--active');
+              });
+            });
 
             // Клик снаружи дропдауна. Закрыть дропдаун
             document.addEventListener('click', function (e) {

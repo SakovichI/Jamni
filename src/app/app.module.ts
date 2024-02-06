@@ -9,6 +9,10 @@ import { FavoritesComponent } from './personal-area/components/favorites/favorit
 import { OrdersComponent } from './personal-area/components/orders/orders.component';
 import { OrderComponent } from './personal-area/components/order/order.component';
 import {TableModule} from "primeng/table";
+import { DeliveryAdresComponent } from './personal-area/components/delivery-adres/delivery-adres.component';
+import { AddressFormComponent } from './personal-area/components/address-form/address-form.component';
+import {InputMaskModule} from "primeng/inputmask";
+import { ProfileComponent } from './personal-area/components/profile/profile.component';
 
 const personalRoutes: Route[] = [
   {
@@ -147,6 +151,9 @@ const routes: Route[] = [
     AppComponent,
     OrdersComponent,
     OrderComponent,
+    DeliveryAdresComponent,
+    AddressFormComponent,
+    ProfileComponent,
   ],
   imports: [
     HttpClientModule,
@@ -154,7 +161,8 @@ const routes: Route[] = [
     BrowserModule,
     SharedModule,
     RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'}),
-    TableModule
+    TableModule,
+    InputMaskModule
   ],
   providers: [
     provideRoutes(routes)

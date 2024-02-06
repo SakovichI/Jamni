@@ -9,9 +9,9 @@
         <ul class="personal-nav__lest">
           <li class="personal-nav__item"><a routerLink="favorites" routerLinkActive="active" class="personal-nav__link">ИЗБРАННОЕ</a></li>
           <li class="personal-nav__item"><a routerLink="orders" routerLinkActive="active"  class="personal-nav__link">мои заказы</a></li>
-          <li class="personal-nav__item"><a routerLink="addres" routerLinkActive="active" class="personal-nav__link">адреса ДОСТАВКИ</a></li>
+          <li class="personal-nav__item"><a routerLink="address" routerLinkActive="active" class="personal-nav__link">адреса ДОСТАВКИ</a></li>
           <li class="personal-nav__item"><a routerLink="profile" routerLinkActive="active" class="personal-nav__link">мой профиль</a></li>
-          <li class="personal-nav__item"><a routerLink="/" routerLinkActive="active" class="personal-nav__link">выход</a></li>
+          <li class="personal-nav__item"><a routerLink="/" class="personal-nav__link">выход</a></li>
         </ul>
       </nav>
       <div class="personal-content__inner" [@routeAnimationsPersonal]="prepareRoute(outlet)">

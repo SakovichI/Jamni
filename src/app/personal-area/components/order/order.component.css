@@ -77,3 +77,26 @@
   line-height: normal;
   color: #a7a7a7;
 }
+@media all and (max-width: 960px) {
+  .desc-order__title {
+    padding: 0 12px;
+    margin-bottom: 12px;
+  }
+  .desc-order {
+    width: 100%;
+    max-width: 100%;
+  }
+  .desc-order__colors {
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #fcfcfc;
+  }
+  .order-date{
+    padding: 0 12px;
+  }
+  .order-time {
+    padding: 0 12px;
+    margin-bottom: 12px;
+  }
+
+}
