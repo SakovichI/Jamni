@@ -58,8 +58,6 @@ export class BonusComponent implements OnInit, AfterViewInit {
       }
     }
 
-
-
   }
 
   ngAfterViewInit() {
@@ -72,4 +70,9 @@ export class BonusComponent implements OnInit, AfterViewInit {
     }
   }
 
+  showTooltip(event: any){
+    const tooltip = event.currentTarget.querySelector('.chart__main-dot-tooltip')
+    event.currentTarget.classList.toggle('active')
+    tooltip.classList.toggle('active')
+  }
 }

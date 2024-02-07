@@ -21,7 +21,7 @@
           </div>
           <div class="chart__main">
             <div class="chart__main-area">
-              <div class="chart__main-dot" [style.bottom]="posY + '%'" [style.left]="(posX)+ '%'" >
+              <div class="chart__main-dot" [style.bottom]="posY + '%'" [style.left]="(posX)+ '%'" (click)="showTooltip($event)">
                 <svg width="48" height="48" class="chart__main-dot-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="24" cy="24" r="24" fill="#BDBDBD" fill-opacity="0.1" />
                   <circle cx="23.8895" cy="23.9462" r="10.5556" fill="white" />

@@ -410,4 +410,22 @@
     width: 90%;
     transform: translateX(0);
   }
+  .chart__main-dot:not(.active) {
+    &:hover > .chart__main-dot-tooltip {
+      opacity: 0;
+      visibility: hidden;
+      transition: .2s ease-in;
+    }
+    &:hover .chart__main-dot-icon > circle:nth-child(1) {
+      animation: none;
+    }
+  }
+  .chart__main-dot.active .chart__main-dot-icon > circle:nth-child(1){
+    animation: none;
+  }
+  .chart__main-dot-tooltip.active {
+    opacity: 1;
+    visibility: visible;
+    transition: .2s ease-in;
+  }
 }
