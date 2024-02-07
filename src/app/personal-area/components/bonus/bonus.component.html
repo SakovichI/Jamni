@@ -5,8 +5,37 @@
         <span class="bonus__head-item__text">ваш баланс</span>
         <span class="bonus__head-item__text bonus__head-item__text--lg">1 200 000 руб</span>
       </div>
-      <div class="bonus__head-chart">
-
+      <div class="bonus__head-chart ">
+        <div class="chart__wrap">
+          <div class="chart__vertical">
+            <span class="chart__vertical-value">3 000 000 руб.</span>
+            <span class="chart__vertical-value">1 500 000 руб.</span>
+            <span class="chart__vertical-value">500 000 руб.</span>
+            <span class="chart__vertical-value">0</span>
+          </div>
+          <div class="chart__horizontal">
+            <span class="chart__horizontal-value">0%</span>
+            <span class="chart__horizontal-value">10%</span>
+            <span class="chart__horizontal-value">15%</span>
+            <span class="chart__horizontal-value">20%</span>
+          </div>
+          <div class="chart__main">
+            <div class="chart__main-area">
+              <div class="chart__main-dot" [style.bottom]="posY + '%'" [style.left]="(posX)+ '%'" >
+                <svg width="48" height="48" class="chart__main-dot-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="24" cy="24" r="24" fill="#BDBDBD" fill-opacity="0.1" />
+                  <circle cx="23.8895" cy="23.9462" r="10.5556" fill="white" />
+                  <circle cx="23.8882" cy="23.9488" r="4.22222" fill="#6A6A6A" />
+                </svg>
+                <div class="chart__main-dot-tooltip" #tooltip>
+                  <span class="chart__main-dot-text">Сумма: 1 200 000 руб</span>
+                  <span class="chart__main-dot-text">Вознаграждение: 10%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h2 class="chart__title">процент вознаграждений</h2>
       </div>
     </div>
     <div class="bonus__content">

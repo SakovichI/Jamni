@@ -656,6 +656,7 @@ main {
 }
 
 .cut-modal__header {
+  width: 100%;
   padding: 37px 37px 37px 30px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -678,6 +679,7 @@ main {
 }
 
 .cut-modal__content {
+  width: 100%;
   padding: 40px 32px 0px 30px;
   max-height: 500px;
   flex: 1 1 auto;
@@ -691,6 +693,7 @@ main {
 }
 
 .cut-modal__footer {
+  width: 100%;
   padding: 40px 30px;
   background-color: #23221E;
 }

@@ -1,11 +1,24 @@
-.bonus {
-}
-
-.bonus__wrap {
+@keyframes animDot {
+  0% {
+    transform-origin: center;
+    transform: scale(0);
+  }
+  50% {
+    transform-origin: center;
+    transform: scale(1);
+  }
+  100% {
+    transform-origin: center;
+    transform: scale(0);
+  }
 }
 
 .bonus__head {
   margin-bottom: 60px;
+  display: flex;
+  align-items: end;
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .bonus__head-item {
@@ -28,11 +41,8 @@
   margin-bottom: 0;
   font-weight: 700;
   font-size: 64px;
-  line-height: 37%;
+  line-height: 90%;
   color: #000;
-}
-
-.bonus__head-chart {
 }
 
 .bonus__content {
@@ -77,12 +87,173 @@
   color: #000;
 }
 
-@media all and (max-width: 800px) {
+.chart__main-area {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  top: 10px;
+}
+
+.chart__wrap {
+  max-width: 490px;
+  display: grid;
+  grid-template-columns: min-content 1fr;
+}
+
+.chart__vertical {
+  grid-column: 1/2;
+  grid-row: 1/2;
+  margin-right: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 96%;
+  transform: translateY(10px);
+}
+
+.chart__vertical-value {
+  white-space: nowrap;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: right;
+  color: #a7a7a7;
+}
+
+.chart__horizontal {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 98%;
+  transform: translateX(10px);
+}
+
+.chart__horizontal-value {
+  font-weight: 400;
+  font-size: 12px;
+  color: #a7a7a7;
+}
+
+.chart__main {
+  min-width: 400px;
+  min-height: 200px;
+  grid-column: 2/3;
+  grid-row: 1/2;
+  position: relative;
+  background: url("/assets/img/bonus-line.svg") no-repeat center, url("/assets/img/bonus-grid.svg") no-repeat center;
+
+}
+
+.chart__main-line {
+  position: absolute;
+  bottom: -10px;
+  left: 5px;
+}
+
+.chart__main-dot {
+  position: absolute;
+
+  &:hover > .chart__main-dot-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transition: .2s ease-in;
+  }
+
+  &:hover .chart__main-dot-icon > circle:nth-child(1) {
+    animation: none;
+  }
+}
+
+.chart__main-dot-icon {
+  cursor: pointer;
+}
+
+.chart__main-dot-icon > circle:nth-child(1) {
+  animation: animDot 2s linear infinite;
+}
+
+.chart__main-dot-tooltip {
+  position: absolute;
+  top: -60px;
+  left: -83px;
+  border-radius: 6px;
+  padding: 10px 20px;
+  background: #000;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transition: .2s ease-in;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    bottom: -10px;
+    z-index: 0;
+    border-radius: 1px;
+    left: 47%;
+    background: #000000;
+    transform: rotate(133deg) translateX(-50%);
+  }
+}
+
+.chart__main-dot-tooltip.left {
+  position: absolute;
+  top: -10px;
+  left: -203px;
+  border-radius: 6px;
+  padding: 10px 20px;
+  background: #000;
+  z-index: 2;
+  opacity: 0;
+  visibility: hidden;
+  transition: .2s ease-in;
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    bottom: 17px;
+    z-index: 0;
+    border-radius: 1px;
+    left: 93%;
+    background: #000000;
+    transform: rotate(133deg) translateX(-50%);
+  }
+}
+
+.chart__main-dot-text {
+  position: relative;
+  z-index: 1;
+  display: block;
+  font-weight: 600;
+  font-size: 16px;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.chart__title {
+  margin-top: 33px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 100%;
+  text-transform: uppercase;
+  color: #000;
+  text-align: center;
+}
+
+@media all and (max-width: 1200px) {
   .bonus__head {
     margin-bottom: 38px;
   }
 
   .bonus__head-item {
+    align-self: start;
     padding: 28px;
   }
 
@@ -96,6 +267,27 @@
     font-size: 38px;
     line-height: 100%;
     color: #000;
+  }
+}
+
+@media all and (max-width: 800px) {
+
+  .bonus__head {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 36px;
+    justify-content: space-between;
+  }
+
+  .bonus__head-item {
+    align-self: stretch;
+    padding: 28px;
+    text-align: center;
+  }
+
+  .bonus__head-chart {
+    align-self: center;
   }
 
   .bonus__title {
@@ -119,5 +311,103 @@
 
   .bonus__content-subtitle {
     margin-bottom: 20px;
+  }
+}
+
+@media all and (max-width: 520px) {
+  .chart__wrap {
+    max-width: 490px;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+  }
+
+  .chart__main-area {
+    position: absolute;
+    bottom: 7px;
+    left: 25px;
+    right: 23px;
+    top: 45px;
+  }
+
+  .chart__main {
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 320px;
+    grid-column: 2/3;
+    grid-row: 1/2;
+    position: relative;
+    background: url("/assets/img/bonus-line-mob.svg") no-repeat 50% 95%, url("/assets/img/bonus-grid-mob.svg") no-repeat center;
+
+  }
+
+  .chart__main-dot-text {
+    display: block;
+    font-weight: 600;
+    font-size: 10px;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .chart__main-dot-tooltip {
+    top: -34px;
+    left: -45px;
+    padding: 5px 10px
+  }
+
+  .chart__main-dot-tooltip.left {
+    position: absolute;
+    top: 0;
+    left: -143px;
+    border-radius: 6px;
+    padding: 10px 20px;
+    background: #000;
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: .2s ease-in;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      bottom: 9px;
+      z-index: 0;
+      border-radius: 1px;
+      left: 91%;
+      background: #000000;
+      transform: rotate(133deg) translateX(-50%);
+    }
+  }
+
+  .chart__vertical {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    margin-right: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    transform: translateY(-8px);
+  }
+
+  .chart__vertical-value {
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 12px;
+    writing-mode: vertical-rl;
+    text-align: right;
+    color: #a7a7a7;
+    transform-origin: center;
+    transform: rotate(180deg);
+  }
+
+  .chart__horizontal {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    margin-top: 8px;
+    width: 90%;
+    transform: translateX(0);
   }
 }
