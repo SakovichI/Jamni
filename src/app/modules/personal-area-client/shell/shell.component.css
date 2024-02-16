@@ -49,6 +49,7 @@
 }
 
 .personal-content__inner {
+  position: relative;
   overflow: hidden;
   flex: 1 1 auto;
 }
