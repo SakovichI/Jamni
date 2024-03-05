@@ -1,0 +1,40 @@
+<div
+  class="popup"
+  *ngIf="modal.errorModal"
+  [ngClass]="{ open: modal.errorModal }"
+>
+  <div class="popup__overlay" (click)="modal.showError('')"></div>
+  <div class="popup__content">
+    <button class="btn-reset popup__btn-close" (click)="modal.showError('')">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 30 30"
+        fill="none"
+      >
+        <line
+          x1="1.98995"
+          y1="1"
+          x2="29.2843"
+          y2="28.2943"
+          stroke="black"
+          stroke-width="1.4"
+          stroke-linecap="round"
+        ></line>
+        <line
+          x1="0.7"
+          y1="-0.7"
+          x2="39.3"
+          y2="-0.7"
+          transform="matrix(-0.707107 0.707107 0.707107 0.707107 29.2852 1)"
+          stroke="black"
+          stroke-width="1.4"
+          stroke-linecap="round"
+        ></line>
+      </svg>
+    </button>
+    <span class="popup__title">Ошибка</span>
+    <p class="popup__text">{{ modal.errorMessage }}</p>
+  </div>
+</div>

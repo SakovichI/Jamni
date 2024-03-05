@@ -2,24 +2,72 @@
   <div class="small-container">
     <div class="breadcrumbs personal-area__breadcrumbs">
       <a routerLink="/" class="breadcrumbs__link">главная</a>
-      <a routerLink="./" class="breadcrumbs__link breadcrumbs__link--active">Личный кабинет</a>
+      <a routerLink="./" class="breadcrumbs__link breadcrumbs__link--active"
+        >Личный кабинет</a
+      >
     </div>
     <div class="personal-area__content personal-content">
       <nav class="personal-content__nav personal-nav">
         <ul class="personal-nav__lest">
-          <li class="personal-nav__item"><a routerLink="bonus" routerLinkActive="active" class="personal-nav__link">Бонусный баланс</a></li>
-          <li class="personal-nav__item"><a routerLink="models" routerLinkActive="active" class="personal-nav__link">база 3d-моделей</a></li>
-          <li class="personal-nav__item"><a routerLink="favorites" routerLinkActive="active" class="personal-nav__link">ИЗБРАННОЕ</a></li>
-          <li class="personal-nav__item"><a routerLink="orders" routerLinkActive="active"  class="personal-nav__link">мои заказы</a></li>
-          <li class="personal-nav__item"><a routerLink="address" routerLinkActive="active" class="personal-nav__link">адреса ДОСТАВКИ</a></li>
-          <li class="personal-nav__item"><a routerLink="profile" routerLinkActive="active" class="personal-nav__link">мой профиль</a></li>
-          <li class="personal-nav__item"><a routerLink="/" class="personal-nav__link">выход</a></li>
+          <li class="personal-nav__item">
+            <a
+              routerLink="bonus"
+              routerLinkActive="active"
+              class="personal-nav__link"
+              >Бонусный баланс</a
+            >
+          </li>
+          <li class="personal-nav__item">
+            <a
+              routerLink="models"
+              routerLinkActive="active"
+              class="personal-nav__link"
+              >база 3d-моделей</a
+            >
+          </li>
+          <li class="personal-nav__item">
+            <a
+              routerLink="favorites"
+              routerLinkActive="active"
+              class="personal-nav__link"
+              >ИЗБРАННОЕ</a
+            >
+          </li>
+          <li class="personal-nav__item">
+            <a
+              routerLink="orders"
+              routerLinkActive="active"
+              class="personal-nav__link"
+              >мои заказы</a
+            >
+          </li>
+          <li class="personal-nav__item">
+            <a
+              routerLink="address"
+              routerLinkActive="active"
+              class="personal-nav__link"
+              >адреса ДОСТАВКИ</a
+            >
+          </li>
+          <li class="personal-nav__item">
+            <a
+              routerLink="profile"
+              routerLinkActive="active"
+              class="personal-nav__link"
+              >мой профиль</a
+            >
+          </li>
+          <li class="personal-nav__item">
+            <a (click)="auth.logout()" class="personal-nav__link">выход</a>
+          </li>
         </ul>
       </nav>
-      <div class="personal-content__inner" [@routeAnimationsPersonal]="prepareRoute(outlet)">
+      <div
+        class="personal-content__inner"
+        [@routeAnimationsPersonal]="prepareRoute(outlet)"
+      >
         <router-outlet #outlet="outlet"></router-outlet>
       </div>
     </div>
   </div>
 </div>
-

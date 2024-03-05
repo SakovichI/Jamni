@@ -1,27 +1,64 @@
 <section class="authorization">
   <div class="bg-gray">
     <div class="authorization__wrap">
-      <h1 class="authorization__title">
-        аВТОРИЗОВАТЬСЯ
-      </h1>
+      <h1 class="authorization__title">аВТОРИЗОВАТЬСЯ</h1>
       <p class="authorization__subtitle">
-        Войдите в свой аккаунт для доступа к персональным настройкам и возможностям
+        Войдите в свой аккаунт для доступа к персональным настройкам и
+        возможностям
       </p>
       <div class="small-container">
         <div class="authorization__inner">
-          <form action="#" class="authorization__form form form-login">
+          <form
+            action="#"
+            class="authorization__form form form-login"
+            [formGroup]="form"
+            (ngSubmit)="submit(form)"
+          >
             <div class="form-login__title">войти</div>
             <label class="form-login__label form__label">
-              <input class="input-reset form__input form-login__input" placeholder="E-mail*" required type="text">
+              <input
+                class="input-reset form__input form-login__input"
+                placeholder="E-mail*"
+                required
+                type="text"
+                formControlName="email"
+                [ngClass]="{
+                  error:
+                    form.controls['email'].invalid &&
+                    (form.controls['email'].dirty ||
+                      form.controls['email'].touched)
+                }"
+              />
             </label>
             <label class="form-login__label form__label">
-              <input class="input-reset form__input form-login__input" placeholder="Пароль" required type="password">
+              <input
+                class="input-reset form__input form-login__input"
+                placeholder="Пароль"
+                required
+                type="password"
+                formControlName="password"
+                [ngClass]="{
+                  error:
+                    form.controls['password'].invalid &&
+                    (form.controls['password'].dirty ||
+                      form.controls['password'].touched)
+                }"
+              />
             </label>
-            <button class="btn-reset form-login__btn btn-anim">
+            <button
+              class="btn-reset form-login__btn btn-anim"
+              [disabled]="form.invalid"
+            >
               <span class="btn-anim__text">войти</span>
             </button>
+            <a
+              routerLink="../recovery"
+              class="form-login__link form-login__link--right"
+            >
+              Забыли пароль?
+            </a>
             <span class="form-login__text">
-              Еще не зарегистрированы? <br>
+              Еще не зарегистрированы? <br />
               <a routerLink="../registration" class="form-login__link">
                 Зарегистрироваться
               </a>
@@ -30,9 +67,15 @@
         </div>
       </div>
       <picture class="authorization__image">
-        <source srcset="assets/img/login-fon.webp" type="image/webp">
-        <img alt="login-img" class="image authorization__img" height="650" loading="lazy" src="assets/img/login-fon.jpg"
-             width="1920">
+        <source srcset="assets/img/login-fon.webp" type="image/webp" />
+        <img
+          alt="login-img"
+          class="image authorization__img"
+          height="650"
+          loading="lazy"
+          src="assets/img/login-fon.jpg"
+          width="1920"
+        />
       </picture>
     </div>
   </div>

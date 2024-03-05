@@ -3,7 +3,10 @@
     <div class="header__top top-header">
       <div class="small-container">
         <div class="top-header__wrap">
-          <a href="mailto:info@jamni.ru" class="header__text">Есть вопросы? <span class="header__text--underline">Напишите нам</span></a>
+          <a href="mailto:info@jamni.ru" class="header__text"
+            >Есть вопросы?
+            <span class="header__text--underline">Напишите нам</span></a
+          >
           <div class="header__links">
             <a href="tel:+79160257790" class="header__link">+7 916 025-77-90</a>
             <a href="tel:+74951501091" class="header__link">+7 495 150-10-91</a>
@@ -19,22 +22,42 @@
               <svg class="search-form__icon">
                 <use xlink:href="assets/img/sprite.svg#search"></use>
               </svg>
-              <input type="search" class="search-form__input" placeholder="Что будем искать?">
+              <input
+                type="search"
+                class="search-form__input"
+                placeholder="Что будем искать?"
+              />
             </label>
           </form>
-          <button class="burger" aria-label="Открыть меню" aria-expanded="false" data-burger (click)="openBurger()"
-                  [ngClass]="{active: burgerMenu}">
-          </button>
-          <nav class="header__burger burger-menu" data-menu [ngClass]="{active: burgerMenu}">
+          <button
+            class="burger"
+            aria-label="Открыть меню"
+            aria-expanded="false"
+            data-burger
+            (click)="openBurger()"
+            [ngClass]="{ active: burgerMenu }"
+          ></button>
+          <nav
+            class="header__burger burger-menu"
+            data-menu
+            [ngClass]="{ active: burgerMenu }"
+          >
             <div class="burger-menu__content">
               <div class="burger-menu__header">
-                <a routerLink="login" class="burger-menu__link burger-menu__link--icon" (click)="openBurger()">
+                <a
+                  routerLink="login"
+                  class="burger-menu__link burger-menu__link--icon"
+                  (click)="openBurger()"
+                >
                   <svg class="burger-menu__icon burger-menu__icon--stroke">
                     <use xlink:href="assets/img/sprite.svg#user"></use>
                   </svg>
                 </a>
-                <a [routerLink]="'category/382'" class="burger-menu__link burger-menu__link--icon"
-                   (click)="openBurger()">
+                <a
+                  [routerLink]="'category/382'"
+                  class="burger-menu__link burger-menu__link--icon"
+                  (click)="openBurger()"
+                >
                   <svg class="burger-menu__icon">
                     <use xlink:href="assets/img/sprite.svg#favorites"></use>
                   </svg>
@@ -43,100 +66,226 @@
               </div>
               <menu class="burger-menu__list">
                 <li class="burger-menu__item accordion">
-                  <span (click)="expand()">каталог
-                    <svg class="accordion__icon" [ngClass]="{'accordion__icon--active': catalog}">
-                    <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
-                  </svg></span>
+                  <span (click)="expand()"
+                    >каталог
+                    <svg
+                      class="accordion__icon"
+                      [ngClass]="{ 'accordion__icon--active': catalog }"
+                    >
+                      <use
+                        xlink:href="assets/img/sprite.svg#arrow-down"
+                      ></use></svg
+                  ></span>
 
-                  <div *ngIf="catalog" [@showAccordion] = 'state'>
-                    <ul class="burger-menu__list-level2" *ngFor="let categoryColumn of categoryColumns">
-                      <li class="burger-menu__item-level2" *ngFor="let category of categoryColumn"
-                          (click)="openBurger()">
-                        <a [routerLink]="'category/' + category.id"
-                           class="burger-menu__link-level2">{{category.name}}</a>
+                  <div *ngIf="catalog" [@showAccordion]="state">
+                    <ul
+                      class="burger-menu__list-level2"
+                      *ngFor="let categoryColumn of categoryColumns"
+                    >
+                      <li
+                        class="burger-menu__item-level2"
+                        *ngFor="let category of categoryColumn"
+                        (click)="openBurger()"
+                      >
+                        <a
+                          [routerLink]="'category/' + category.id"
+                          class="burger-menu__link-level2"
+                          >{{ category.name }}</a
+                        >
                       </li>
                     </ul>
                   </div>
                 </li>
-                <li class="burger-menu__item" (click)="openBurger()"><a [routerLink]="'all-news'" class="burger-menu__link">новости</a></li>
-                <li class="burger-menu__item" (click)="openBurger()"><a [routerLink]="'about-company'" class="burger-menu__link">о нас</a></li>
-                <li class="burger-menu__item" (click)="openBurger()"><a [routerLink]="'reviews'" class="burger-menu__link">отзывы</a></li>
-                <li class="burger-menu__item" (click)="openBurger()"><a [routerLink]="'contacts-page'" class="burger-menu__link">контакты</a>
+                <li class="burger-menu__item" (click)="openBurger()">
+                  <a [routerLink]="'all-news'" class="burger-menu__link"
+                    >новости</a
+                  >
+                </li>
+                <li class="burger-menu__item" (click)="openBurger()">
+                  <a [routerLink]="'about-company'" class="burger-menu__link"
+                    >о нас</a
+                  >
+                </li>
+                <li class="burger-menu__item" (click)="openBurger()">
+                  <a [routerLink]="'reviews'" class="burger-menu__link"
+                    >отзывы</a
+                  >
+                </li>
+                <li class="burger-menu__item" (click)="openBurger()">
+                  <a [routerLink]="'contacts-page'" class="burger-menu__link"
+                    >контакты</a
+                  >
                 </li>
               </menu>
               <div class="burger-menu__footer footer-burger">
-
-                <a href="tel:+79160257790" class="footer-burger__link">+7 916 025-77-90</a>
-                <a href="tel:+74951501091" class="footer-burger__link">+7 495 150-10-91</a>
+                <a href="tel:+79160257790" class="footer-burger__link"
+                  >+7 916 025-77-90</a
+                >
+                <a href="tel:+74951501091" class="footer-burger__link"
+                  >+7 495 150-10-91</a
+                >
               </div>
             </div>
-
           </nav>
-          <a [routerLink]="'.'" href="." class="header__logo"><img src="assets/img/logo.svg" alt="logo" loading="lazy"
-                                                                   width="148" height="55"></a>
+          <a [routerLink]="'.'" href="." class="header__logo"
+            ><img
+              src="assets/img/logo.svg"
+              alt="logo"
+              loading="lazy"
+              width="148"
+              height="55"
+          /></a>
           <div class="header__icons icons-header">
-            <button class="btn-reset icons-header__link icons-header__link--user" routerLink="login">
-              <svg class="icons-header__icon icons-header__icon--stroke">
+            <button
+              class="btn-reset icons-header__link icons-header__link--user"
+              (click)="login()"
+            >
+              <svg
+                class="icons-header__icon icons-header__icon--stroke"
+                [ngClass]="{ active: auth.getToken() }"
+              >
                 <use xlink:href="assets/img/sprite.svg#user"></use>
               </svg>
             </button>
-            <a [routerLink]="'catalog'" class="icons-header__link icons-header__link--favorites">
+            <a
+              [routerLink]="'catalog'"
+              class="icons-header__link icons-header__link--favorites"
+            >
               <svg class="icons-header__icon">
                 <use xlink:href="assets/img/sprite.svg#favorites"></use>
               </svg>
-              <!--              <span class="icons-header__link&#45;&#45;count">2</span>-->
+              <!-- <span class="icons-header__link--count">2</span> -->
             </a>
-            <button #cart class=" btn-reset icons-header__link icons-header__link--cut icons-header__icon--stroke"
-                    (click)="viewsCartModal()">
+            <button
+              #cart
+              class="btn-reset icons-header__link icons-header__link--cut icons-header__icon--stroke"
+              (click)="viewsCartModal()"
+            >
               <svg class="icons-header__icon">
                 <use xlink:href="assets/img/sprite.svg#cut"></use>
               </svg>
-              <span class="icons-header__link--count"
-                    *ngIf="generalService.getProductsAmount() !== 0">{{generalService.getProductsAmount()}}</span>
+              <span
+                class="icons-header__link--count"
+                *ngIf="generalService.getProductsAmount() !== 0"
+                >{{ generalService.getProductsAmount() }}</span
+              >
             </button>
-            <div class="modal" [ngClass]="{'open':cartModal}" (click)="viewsCartModal()">
-            </div>
-            <div class="modal__container cut-modal" role="dialog" [ngClass]="{'open':cartModal}" data-simplebar>
+            <div
+              class="modal"
+              [ngClass]="{ open: cartModal }"
+              (click)="viewsCartModal()"
+            ></div>
+            <div
+              class="modal__container cut-modal"
+              role="dialog"
+              [ngClass]="{ open: cartModal }"
+              data-simplebar
+            >
               <div class="cut-modal__header">
                 <h2 class="cut-modal__title">корзина</h2>
-                <button class="btn-reset modal__close" aria-label="Закрыть модальное окно" (click)="viewsCartModal()">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                    <line x1="1.98995" y1="1" x2="29.2843" y2="28.2943" stroke="black" stroke-width="1.4"
-                          stroke-linecap="round"/>
-                    <line x1="0.7" y1="-0.7" x2="39.3" y2="-0.7"
-                          transform="matrix(-0.707107 0.707107 0.707107 0.707107 29.2852 1)" stroke="black"
-                          stroke-width="1.4" stroke-linecap="round"/>
+                <button
+                  class="btn-reset modal__close"
+                  aria-label="Закрыть модальное окно"
+                  (click)="viewsCartModal()"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="30"
+                    height="30"
+                    viewBox="0 0 30 30"
+                    fill="none"
+                  >
+                    <line
+                      x1="1.98995"
+                      y1="1"
+                      x2="29.2843"
+                      y2="28.2943"
+                      stroke="black"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                    />
+                    <line
+                      x1="0.7"
+                      y1="-0.7"
+                      x2="39.3"
+                      y2="-0.7"
+                      transform="matrix(-0.707107 0.707107 0.707107 0.707107 29.2852 1)"
+                      stroke="black"
+                      stroke-width="1.4"
+                      stroke-linecap="round"
+                    />
                   </svg>
                 </button>
               </div>
               <div class="cut-modal__content content-cut" data-simplebar>
-                <p class="cut-modal__text" *ngIf="generalService.getProductsAmount() === 0">Ваша корзина пуста</p>
-                <div class="content-cut__item item-cut" *ngFor="let item of generalService.selectedItems">
+                <p
+                  class="cut-modal__text"
+                  *ngIf="generalService.getProductsAmount() === 0"
+                >
+                  Ваша корзина пуста
+                </p>
+                <div
+                  class="content-cut__item item-cut"
+                  *ngFor="let item of generalService.selectedItems"
+                >
                   <div class="item-cut__wrap">
                     <picture>
-                      <source [srcset]="item.product.coverImage || 'assets/img/no-img-placeholder.svg'"
-                              type="image/webp">
-                      <img loading="lazy" [src]="item.product.coverImage || 'assets/img/no-img-placeholder.svg'"
-                           class="image" width="130" height="130"
-                           alt="prod-image">
+                      <source
+                        [srcset]="
+                          item.product.coverImage ||
+                          'assets/img/no-img-placeholder.svg'
+                        "
+                        type="image/webp"
+                      />
+                      <img
+                        loading="lazy"
+                        [src]="
+                          item.product.coverImage ||
+                          'assets/img/no-img-placeholder.svg'
+                        "
+                        class="image"
+                        width="130"
+                        height="130"
+                        alt="prod-image"
+                      />
                     </picture>
                     <div class="item-cut__content" data-prod="modal-cut">
-                      <h3 class="item-cut__title">{{item.product.name}}</h3>
-                      <span class="item-cut__price" data-price="modal-cut">{{item.product.price * item.amount}}
-                        руб</span>
+                      <h3 class="item-cut__title">{{ item.product.name }}</h3>
+                      <span class="item-cut__price" data-price="modal-cut"
+                        >{{ item.product.price * item.amount }} руб</span
+                      >
                       <div class="item-cut__count count-prod">
-                        <button class="btn-reset count-prod__minus" (click)="generalService.deleteProduct(item)">-
+                        <button
+                          class="btn-reset count-prod__minus"
+                          (click)="generalService.deleteProduct(item)"
+                        >
+                          -
                         </button>
-                        <span class="count-prod__count">{{item.amount}}</span>
-                        <button class="btn-reset count-prod__plus"
-                                (click)="generalService.addProduct({product: item.product, appliedSpecs: item.appliedSpecs})">
+                        <span class="count-prod__count">{{ item.amount }}</span>
+                        <button
+                          class="btn-reset count-prod__plus"
+                          (click)="
+                            generalService.addProduct({
+                              product: item.product,
+                              appliedSpecs: item.appliedSpecs
+                            })
+                          "
+                        >
                           +
                         </button>
                       </div>
                     </div>
-                    <button class="btn-reset item-cut__delete" (click)="generalService.deleteProduct(item)">
-                      <img src="assets/img/cut-img/delete-prod.png" width="20" height="20" alt="delete-icon"
-                           class="item-cut__icon-delete">
+                    <button
+                      class="btn-reset item-cut__delete"
+                      (click)="generalService.deleteProduct(item)"
+                    >
+                      <img
+                        src="assets/img/cut-img/delete-prod.png"
+                        width="20"
+                        height="20"
+                        alt="delete-icon"
+                        class="item-cut__icon-delete"
+                      />
                     </button>
                   </div>
                 </div>
@@ -166,9 +315,17 @@
               <div class="cut-modal__footer footer-cut">
                 <div class="footer-cut__row">
                   <span class="footer-cut__txt">Итого</span>
-                  <span class="footer-cut__fullprice">{{generalService.getTotalCartPrice()}} руб</span>
+                  <span class="footer-cut__fullprice"
+                    >{{ generalService.getTotalCartPrice() }} руб</span
+                  >
                 </div>
-                <div class="footer-cut__link" [routerLink]="'cut-info'" (click)="viewsCartModal()">перейти к оплате</div>
+                <div
+                  class="footer-cut__link"
+                  [routerLink]="'cut-info'"
+                  (click)="viewsCartModal()"
+                >
+                  перейти к оплате
+                </div>
               </div>
             </div>
           </div>
@@ -178,19 +335,43 @@
     <nav class="header__nav nav-header">
       <div class="small-container">
         <menu class="nav-header__list">
-          <li class="nav-header__item" ><span class="nav-header__level1" [routerLink]="'catalog'">каталог</span>
+          <li class="nav-header__item">
+            <span class="nav-header__level1" [routerLink]="'catalog'"
+              >каталог</span
+            >
             <div class="nav-header__level2-menu">
-              <ul class="nav-header__list-level2" *ngFor="let categoryColumn of categoryColumns">
-                <li class="nav-header__item-level2" *ngFor="let category of categoryColumn" data-menu-item>
-                  <a [routerLink]="'category/' + category.id" class="nav-header__link-level2">{{category.name}}</a>
+              <ul
+                class="nav-header__list-level2"
+                *ngFor="let categoryColumn of categoryColumns"
+              >
+                <li
+                  class="nav-header__item-level2"
+                  *ngFor="let category of categoryColumn"
+                  data-menu-item
+                >
+                  <a
+                    [routerLink]="'category/' + category.id"
+                    class="nav-header__link-level2"
+                    >{{ category.name }}</a
+                  >
                 </li>
               </ul>
             </div>
           </li>
-          <li class="nav-header__item"><a [routerLink]="'all-news'" class="nav-header__link">новости</a></li>
-          <li class="nav-header__item"><a [routerLink]="'about-company'" class="nav-header__link">о нас</a></li>
-          <li class="nav-header__item"><a [routerLink]="'reviews'" class="nav-header__link">отзывы</a></li>
-          <li class="nav-header__item"><a [routerLink]="'contacts-page'" class="nav-header__link">контакты</a></li>
+          <li class="nav-header__item">
+            <a [routerLink]="'all-news'" class="nav-header__link">новости</a>
+          </li>
+          <li class="nav-header__item">
+            <a [routerLink]="'about-company'" class="nav-header__link">о нас</a>
+          </li>
+          <li class="nav-header__item">
+            <a [routerLink]="'reviews'" class="nav-header__link">отзывы</a>
+          </li>
+          <li class="nav-header__item">
+            <a [routerLink]="'contacts-page'" class="nav-header__link"
+              >контакты</a
+            >
+          </li>
         </menu>
       </div>
     </nav>
@@ -206,30 +387,72 @@
         <div class="footer__wrap">
           <div class="footer__social social-footer">
             <a href="main-page.html" class="footer__logo">
-              <img src="assets/img/logo_black.png" alt="logo" width="148" height="55" loading="lazy">
+              <img
+                src="assets/img/logo_black.png"
+                alt="logo"
+                width="148"
+                height="55"
+                loading="lazy"
+              />
             </a>
             <div class="social-footer__wrap">
-              <a href="https://www.instagram.com/jamni_fabrique/" class="social-footer__link">
-                <img src="assets/img/Instagram_white.svg" alt="instagram" width="20" height="20" loading="lazy">
+              <a
+                href="https://www.instagram.com/jamni_fabrique/"
+                class="social-footer__link"
+              >
+                <img
+                  src="assets/img/Instagram_white.svg"
+                  alt="instagram"
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                />
               </a>
-              <a href="https://www.facebook.com/jamnidecor" class="social-footer__link">
-                <img src="assets/img/Facebook_white.svg" alt="instagram" width="20" height="20" loading="lazy">
+              <a
+                href="https://www.facebook.com/jamnidecor"
+                class="social-footer__link"
+              >
+                <img
+                  src="assets/img/Facebook_white.svg"
+                  alt="instagram"
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                />
               </a>
               <a href="https://vk.com/jamni" class="social-footer__link">
-                <img src="assets/img/VK_white.svg" alt="instagram" width="20" height="20" loading="lazy">
+                <img
+                  src="assets/img/VK_white.svg"
+                  alt="instagram"
+                  width="20"
+                  height="20"
+                  loading="lazy"
+                />
               </a>
             </div>
           </div>
           <nav class="footer__nav nav-footer">
-            <menu class="nav-footer__list" *ngFor="let categoryColumn of categoryColumns">
-              <li class="nav-footer__item" *ngFor="let category of categoryColumn">
-                <a class="nav-footer__link" [routerLink]="'category/' + category.id"
-                   [href]="'category/' + category.id">{{category.name}}</a>
+            <menu
+              class="nav-footer__list"
+              *ngFor="let categoryColumn of categoryColumns"
+            >
+              <li
+                class="nav-footer__item"
+                *ngFor="let category of categoryColumn"
+              >
+                <a
+                  class="nav-footer__link"
+                  [routerLink]="'category/' + category.id"
+                  [href]="'category/' + category.id"
+                  >{{ category.name }}</a
+                >
               </li>
             </menu>
             <menu class="nav-footer__list">
               <li class="nav-footer__item">
-                <a class="nav-footer__link" [routerLink]="'pay-delivery'">Оплата и доставка</a>
+                <a class="nav-footer__link" [routerLink]="'pay-delivery'"
+                  >Оплата и доставка</a
+                >
               </li>
             </menu>
           </nav>
@@ -239,10 +462,10 @@
                 <use xlink:href="assets/img/sprite.svg#phone"></use>
               </svg>
               <div class="contacts-footer__links">
-                <a href='tel:+74951501091' class="contacts-footer__link">
+                <a href="tel:+74951501091" class="contacts-footer__link">
                   +7 495 150-10-91
                 </a>
-                <a href='tel:+79160257790' class="contacts-footer__link">
+                <a href="tel:+79160257790" class="contacts-footer__link">
                   +7 916 025-77-90
                 </a>
               </div>
@@ -252,7 +475,9 @@
                 <use xlink:href="assets/img/sprite.svg#location"></use>
               </svg>
               <p class="contacts-footer__text">
-                Москва,<br> метро Водный Стадион,<br> Солнечногорская улица 4с30
+                Москва,<br />
+                метро Водный Стадион,<br />
+                Солнечногорская улица 4с30
               </p>
             </div>
             <div class="contacts-footer__row">
@@ -260,7 +485,7 @@
                 <use xlink:href="assets/img/sprite.svg#mail"></use>
               </svg>
               <div class="contacts-footer__links">
-                <a href='mailto:info@jamni.ru' class="contacts-footer__link">
+                <a href="mailto:info@jamni.ru" class="contacts-footer__link">
                   info@jamni.ru
                 </a>
               </div>
@@ -275,5 +500,6 @@
       </div>
     </div>
   </footer>
-
 </div>
+<app-error></app-error>
+<app-success></app-success>

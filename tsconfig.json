@@ -26,10 +26,11 @@
       "@pay-delivery": ["src/app/modules/pay-delivery/index.ts"],
       "@catalog": ["src/app/modules/catalog/index.ts"],
       "@login": ["src/app/modules/log-in/index.ts"],
+      "@recovery": ["src/app/modules/recovery/index.ts"],
       "@registration": ["src/app/modules/registration/index.ts"],
       "@client-area": ["src/app/modules/personal-area-client/index.ts"],
       "@designer-area": ["src/app/modules/designer-area/index.ts"],
-      "@wholesaler-area": ["src/app/modules/resaler-area/index.ts"],
+      "@wholesaler-area": ["src/app/modules/resaler-area/index.ts"]
     },
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -45,10 +46,7 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "lib": ["es2020", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

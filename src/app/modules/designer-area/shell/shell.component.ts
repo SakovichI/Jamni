@@ -9,6 +9,7 @@ import {
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-shell',
@@ -48,7 +49,7 @@ import { RouterOutlet } from '@angular/router';
   ],
 })
 export class ShellComponent implements OnInit {
-  constructor() {}
+  constructor(public auth: AuthService) {}
 
   ngOnInit(): void {}
   prepareRoute(outlet: RouterOutlet) {

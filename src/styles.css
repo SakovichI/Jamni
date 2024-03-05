@@ -477,7 +477,11 @@ main {
   width: 340px;
   height: 409px;
 }
-
+.product__image-wrap > picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .slider-elseProduct__slide:nth-child(even) .product__image-wrap {
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
@@ -502,9 +506,9 @@ main {
   transition: -webkit-transform 0.2s ease-in;
   transition: transform 0.2s ease-in;
   transition: transform 0.2s ease-in, -webkit-transform 0.2s ease-in;
-  -webkit-transform: scale(1.03);
-  -ms-transform: scale(1.03);
-  transform: scale(1.03);
+  -webkit-transform: scale(1.01);
+  -ms-transform: scale(1.01);
+  transform: scale(1.01);
 }
 
 @media all and (max-width: 1250px) {
@@ -1329,10 +1333,10 @@ main {
 .custom-checkbox__content:after {
   content: "";
   position: absolute;
-  left: 1.4px;
-  top: 1.4px;
-  width: 15px;
-  height: 15px;
+  left: 2px;
+  top: 2px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   box-sizing: border-box;
   background-color: black;
@@ -2015,6 +2019,9 @@ main {
   height: 23px;
   fill: none;
   stroke: #000000;
+  &.active {
+    fill: #000000;
+  }
 }
 
 .burger {
@@ -5169,9 +5176,9 @@ main {
 .product__item:hover {
   -webkit-transition: 0.2s ease-in;
   transition: 0.2s ease-in;
-  -webkit-transform: scale(1.03);
-  -ms-transform: scale(1.03);
-  transform: scale(1.03);
+  -webkit-transform: scale(1.01);
+  -ms-transform: scale(1.01);
+  transform: scale(1.01);
 }
 
 .product__wrap {
@@ -5219,6 +5226,7 @@ main {
 }
 
 .product__title {
+  padding: 0 2px;
   color: var(--black);
   font-size: 14px;
   font-style: normal;
@@ -5227,6 +5235,7 @@ main {
 }
 
 .product__price {
+  padding: 0 2px;
   color: #a5a5a5;
   font-size: 12px;
   font-style: normal;
@@ -7021,10 +7030,10 @@ main {
 .nav-kit__title {
   color: #23221e;
   font-family: Romile, sans-serif;
-  font-size: 40px;
+  font-size: 34px;
   font-style: normal;
   font-weight: 400;
-  line-height: 42px; /* 105% */
+  line-height: 36px; /* 105% */
 }
 
 .nav-kit__text {
@@ -10859,7 +10868,7 @@ main {
   background-color: #f5f5f5;
   border: 0.5px solid transparent;
   transition: 0.2s ease;
-  &:hover {
+  &:hover:not(.error) {
     transition: 0.2s ease;
     border: 0.5px solid #000000;
   }
@@ -10871,7 +10880,7 @@ main {
 }
 
 .form-login__text {
-  margin: 20px auto 0 auto;
+  margin: 10px auto 0 auto;
   font-weight: 400;
   font-size: 14px;
   text-align: center;
@@ -10887,6 +10896,11 @@ main {
   color: #000000;
   -webkit-transition: 0.1s ease-in;
   transition: 0.1s ease-in;
+}
+.form-login__link--right {
+  display: block;
+  margin-top: 10px;
+  text-align: right;
 }
 
 .form-login__link:hover {

@@ -3,7 +3,7 @@
     transform: translateX(100%);
     opacity: 0;
   }
-  to{
+  to {
     transform: translateX(0);
     opacity: 1;
   }
@@ -43,12 +43,12 @@
     position: absolute;
     left: 0;
     top: 4px;
-    border: 1px solid #D3D3D3;
+    border: 1px solid #d3d3d3;
     width: 18px;
     height: 18px;
     border-radius: 50%;
     box-sizing: border-box;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
 
   &:after {
@@ -56,8 +56,8 @@
     position: absolute;
     left: 2px;
     top: 5.5px;
-    width: 14.2px;
-    height: 14.2px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     box-sizing: border-box;
     background-color: black;
@@ -71,7 +71,6 @@
   align-items: center;
 }
 
-
 .registration-head__checkbox-content {
   font-family: "ProximaNova", sans-serif;
   font-weight: 400;
@@ -81,14 +80,13 @@
   color: #000;
 }
 
-
 .form-reg {
   width: 580px;
   padding: 0;
   display: none;
   &.active {
     display: block;
-    animation: openForm .3s linear .1s;
+    animation: openForm 0.3s linear 0.1s;
   }
 }
 
@@ -100,31 +98,32 @@
 
 .form-reg__label {
   flex: 1 1 50%;
-
 }
-
 
 .form-reg__input {
   display: block;
   width: 100%;
   background: #f5f5f5;
   border: 0.5px solid transparent;
-  transition: .2s ease;
-
+  transition: 0.2s ease;
   &:focus {
     border: 0.5px solid #000;
-    transition: .2s ease;
+    transition: 0.2s ease;
+  }
+  &.error {
+    border: 0.5px solid #e17070;
+    transition: 0.2s ease;
   }
 }
 
-textarea.form-reg__input{
+textarea.form-reg__input {
   resize: none;
   min-height: 82px;
 }
 
 .form-reg__input.p-inputwrapper-focus {
   border: 0.5px solid #000;
-  transition: .2s ease;
+  transition: 0.2s ease;
 }
 
 .form-reg__btn {
@@ -150,7 +149,6 @@ textarea.form-reg__input{
   height: max-content;
 }
 
-
 .form-reg__checkbox-content {
   font-family: "ProximaNova", sans-serif;
   font-weight: 300;
@@ -163,12 +161,12 @@ textarea.form-reg__input{
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    border: 1px solid #D3D3D3;
+    border: 1px solid #d3d3d3;
     width: 18px;
     height: 18px;
     border-radius: 50%;
     box-sizing: border-box;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
 
   &:after {
@@ -181,7 +179,6 @@ textarea.form-reg__input{
     width: 18px;
     height: 12px;
   }
-
 }
 
 .custom-checkbox__field:checked + .form-reg__checkbox-content::before {
@@ -205,7 +202,7 @@ textarea.form-reg__input{
     display: none;
     &.active {
       display: block;
-      animation: openForm .3s linear .1s;
+      animation: openForm 0.3s linear 0.1s;
     }
   }
 }

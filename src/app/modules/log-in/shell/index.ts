@@ -1,1 +1,1 @@
-export * from '../../load-project/shell/shell.component';
+export * from '../../log-in/shell/shell.component';

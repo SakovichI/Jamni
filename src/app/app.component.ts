@@ -1,8 +1,25 @@
-import {AfterViewInit, Component, ElementRef, OnInit, Output, ViewChild} from '@angular/core';
-import {ApiCategoryService} from "./core";
-import {GeneralService} from "./core/services/general.service";
-import {animate, animateChild, group, query, sequence, style, transition, trigger} from "@angular/animations";
-import {ChildrenOutletContexts, RouterOutlet} from "@angular/router";
+import {
+  animate,
+  animateChild,
+  query,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { ChildrenOutletContexts, Router, RouterOutlet } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { ApiCategoryService } from './core';
+import { ApiUserService } from './core/api/api-user.service';
+import { AuthService } from './core/services/auth.service';
+import { GeneralService } from './core/services/general.service';
 
 @Component({
   selector: 'app-root',
@@ -11,36 +28,36 @@ import {ChildrenOutletContexts, RouterOutlet} from "@angular/router";
   animations: [
     trigger('showAccordion', [
       transition(':enter', [
-        style({height: 0}),
-        animate('0.3s linear', style({height: '*'})),
+        style({ height: 0 }),
+        animate('0.3s linear', style({ height: '*' })),
       ]),
-      transition(':leave', [
-        animate('0.3s linear', style({height: 0})),
+      transition(':leave', [animate('0.3s linear', style({ height: 0 }))]),
+    ]),
+    trigger('routeAnimations', [
+      transition('* => *', [
+        query(':leave', animateChild(), { optional: true }),
+        query(
+          ':leave',
+          [
+            style({ opacity: 1 }),
+            animate('300ms linear', style({ opacity: 0 })),
+          ],
+          { optional: true }
+        ),
+        query(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate('300ms linear', style({ opacity: 1 })),
+          ],
+          { optional: true }
+        ),
+        query(':enter', animateChild(), { optional: true }),
       ]),
     ]),
-    trigger("routeAnimations", [
-      transition("* => *", [
-        query(":leave", animateChild(), {optional:true}),
-        query(":leave", [
-          style({ opacity: 1 }),
-          animate(
-            "300ms linear",
-            style({ opacity: 0 })
-          )
-        ],{optional:true}),
-        query(":enter", [
-          style({opacity: 0 }),
-          animate(
-            "300ms linear",
-            style({ opacity: 1 })
-          )
-        ], {optional:true}),
-        query(":enter", animateChild(), {optional:true})
-      ])
-    ])
-  ]
+  ],
 })
-export class AppComponent implements AfterViewInit, OnInit {
+export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild('closeBag') closeBag?: ElementRef;
   @ViewChild('cart') cart?: ElementRef;
   public categoryColumns: any[][] = [];
@@ -50,19 +67,24 @@ export class AppComponent implements AfterViewInit, OnInit {
   catalog: boolean = false;
   state: string = 'initial';
   routerOutlet: any;
+  public destroy$ = new Subject<void>();
 
   expand() {
     this.catalog = !this.catalog;
-    this.state = this.catalog
-      ? 'expanded'
-      : 'initial';
+    this.state = this.catalog ? 'expanded' : 'initial';
   }
 
-  constructor(private apiCategoryService: ApiCategoryService,
-              public generalService: GeneralService,
-              public contexts: ChildrenOutletContexts
-              ) {
-    const script: Element | null = document.querySelector('script[src="assets/main.js"]');
+  constructor(
+    private apiCategoryService: ApiCategoryService,
+    public generalService: GeneralService,
+    public contexts: ChildrenOutletContexts,
+    public auth: AuthService,
+    public userApi: ApiUserService,
+    public route: Router
+  ) {
+    const script: Element | null = document.querySelector(
+      'script[src="assets/main.js"]'
+    );
     // if (script){
     //   document.body.removeChild(script)
     // }
@@ -78,9 +100,9 @@ export class AppComponent implements AfterViewInit, OnInit {
       let cat1: object;
       categories = categories.filter((el: any) => {
         if (el.id !== 382) {
-          return categories
+          return categories;
         }
-      })
+      });
       categories.forEach((category: any, i: number) => {
         if (i === 0) {
           cat0 = categories[0];
@@ -88,35 +110,41 @@ export class AppComponent implements AfterViewInit, OnInit {
         }
         if (category.name.toLowerCase() === 'кровати') {
           categories[0] = categories[i];
-          categories[i] = cat0
+          categories[i] = cat0;
         }
         if (category.name.toLowerCase() === 'диваны') {
           categories[1] = categories[i];
-          categories[i] = cat1
+          categories[i] = cat1;
         }
-      })
+      });
       categories.forEach((category: any) => {
-        arr.push(category)
+        arr.push(category);
         i += 1;
         if (i === 2) {
           i = 0;
           this.categoryColumns.push([...arr]);
           arr = [];
         }
-      })
-    })
+      });
+    });
   }
 
   openBurger() {
-    this.burgerMenu = !this.burgerMenu
-    document.body.classList.toggle('disable-scroll')
+    this.burgerMenu = !this.burgerMenu;
+    document.body.classList.toggle('disable-scroll');
   }
 
   ngOnInit() {
+    if (this.auth.getToken()) {
+      this.userApi.getUser().pipe(takeUntil(this.destroy$)).subscribe();
+    }
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   public closeModal(): void {
     this.closeBag?.nativeElement.click();
@@ -124,21 +152,50 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   viewsCartModal() {
     this.cartModal = !this.cartModal;
-    document.body.classList.toggle('disable-scroll')
+    document.body.classList.toggle('disable-scroll');
   }
 
   viewsLoginModal() {
     this.loginModal = !this.loginModal;
-    document.body.classList.toggle('disable-scroll')
+    document.body.classList.toggle('disable-scroll');
   }
 
   getRouteAnimationData() {
-    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.[
+      'animation'
+    ];
   }
 
   prepareRoute(outlet: RouterOutlet) {
     return (
-      outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation']
+      outlet &&
+      outlet.activatedRouteData &&
+      outlet.activatedRouteData['animation']
     );
+  }
+
+  login() {
+    if (this.auth.getToken()) {
+      this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe((resp) => {
+        switch (resp.userType) {
+          case 'CLIENT':
+            this.route.navigate(['../client-area']);
+            break;
+          case 'DESIGNER':
+            this.route.navigate(['../designer-area']);
+            break;
+          case 'WHOLESALER':
+            this.route.navigate(['../wholesaler-area']);
+            break;
+          case 'ADMIN':
+            this.route.navigate(['../admin']);
+            break;
+          default:
+            this.route.navigate(['/']);
+        }
+      });
+    } else {
+      this.route.navigate(['login']);
+    }
   }
 }

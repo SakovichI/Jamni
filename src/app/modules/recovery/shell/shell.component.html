@@ -1,0 +1,117 @@
+<section class="authorization">
+  <div class="bg-gray">
+    <div class="authorization__wrap">
+      <h1 class="authorization__title">Восстановление пароля</h1>
+      <p class="authorization__subtitle">
+        Забыли пароль? введите ваш E-mail для получения кода восстановления
+      </p>
+      <div class="small-container">
+        <div class="authorization__inner">
+          <form
+            *ngIf="!codeSend"
+            action="#"
+            class="authorization__form form form-login"
+            [formGroup]="form"
+            (ngSubmit)="submit(form)"
+          >
+            <div class="form-login__title">Восстановить</div>
+            <label class="form-login__label form__label">
+              <input
+                class="input-reset form__input form-login__input"
+                placeholder="E-mail*"
+                required
+                type="text"
+                formControlName="email"
+                [ngClass]="{
+                  error:
+                    form.controls['email'].invalid &&
+                    (form.controls['email'].touched ||
+                      form.controls['email'].dirty)
+                }"
+              />
+            </label>
+            <button
+              class="btn-reset form-login__btn btn-anim"
+              [disabled]="form.invalid"
+            >
+              <span class="btn-anim__text">Получить код</span>
+            </button>
+            <span class="form-login__text">
+              <a routerLink="../login" class="form-login__link">
+                Вернуться к авторизации
+              </a>
+            </span>
+          </form>
+          <form
+            *ngIf="codeSend"
+            action="#"
+            class="authorization__form form form-login"
+            [formGroup]="formFinish"
+            (ngSubmit)="submitFinish(form)"
+          >
+            <div class="form-login__title">Восстановить</div>
+            <label class="form-login__label form__label">
+              <input
+                class="input-reset form__input form-login__input"
+                placeholder="E-mail*"
+                type="text"
+                formControlName="email"
+                [ngClass]="{
+                  error:
+                    formFinish.controls['email'].invalid &&
+                    (formFinish.controls['email'].touched ||
+                      formFinish.controls['email'].dirty)
+                }"
+              />
+            </label>
+            <label class="form-login__label form__label">
+              <input
+                class="input-reset form__input form-login__input"
+                placeholder="Код восстановления"
+                type="text"
+                formControlName="code"
+                [ngClass]="{
+                  error:
+                    formFinish.controls['code'].invalid &&
+                    (formFinish.controls['code'].touched ||
+                      formFinish.controls['code'].dirty)
+                }"
+              />
+            </label>
+            <label class="form-login__label form__label">
+              <input
+                class="input-reset form__input form-login__input"
+                placeholder="Новый пароль"
+                type="text"
+                formControlName="password"
+                [ngClass]="{
+                  error:
+                    formFinish.controls['password'].invalid &&
+                    (formFinish.controls['password'].touched ||
+                      formFinish.controls['password'].dirty)
+                }"
+              />
+            </label>
+            <button
+              class="btn-reset form-login__btn btn-anim"
+              [disabled]="formFinish.invalid"
+            >
+              <span class="btn-anim__text">Восстановить</span>
+            </button>
+          </form>
+        </div>
+      </div>
+      <picture class="authorization__image">
+        <source srcset="assets/img/login-fon.webp" type="image/webp" />
+        <img
+          alt="login-img"
+          class="image authorization__img"
+          height="650"
+          loading="lazy"
+          src="assets/img/login-fon.jpg"
+          width="1920"
+        />
+      </picture>
+    </div>
+  </div>
+</section>

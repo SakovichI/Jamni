@@ -1,13 +1,18 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Route, RouterModule, provideRoutes } from '@angular/router';
 import { InputMaskModule } from 'primeng/inputmask';
+import { PaginatorModule } from 'primeng/paginator';
 import { SliderModule } from 'primeng/slider';
 import { TableModule } from 'primeng/table';
 import { AppComponent } from './app.component';
+import { AuthGuard } from './guards/auth-guard';
+import { AuthInterceptor } from './interceptors/auth-interceptors';
+import { ErrorComponent } from './modals/error/error.component';
+import { SuccessComponent } from './modals/success/success.component';
 import { AddressFormComponent } from './personal-area/components/address-form/address-form.component';
 import { BonusComponent } from './personal-area/components/bonus/bonus.component';
 import { DeliveryAdresComponent } from './personal-area/components/delivery-adres/delivery-adres.component';
@@ -19,7 +24,6 @@ import { PriceComponent } from './personal-area/components/price/price.component
 import { ProfileIpComponent } from './personal-area/components/profile-ip/profile-ip.component';
 import { ProfileComponent } from './personal-area/components/profile/profile.component';
 import { SharedModule } from './shared';
-import {PaginatorModule} from "primeng/paginator";
 
 const personalRoutes: Route[] = [
   {
@@ -31,6 +35,7 @@ const personalRoutes: Route[] = [
 const routes: Route[] = [
   {
     path: '',
+    pathMatch: 'full',
     loadChildren: () => import('@landing').then((m) => m.LandingModule),
   },
   {
@@ -135,6 +140,11 @@ const routes: Route[] = [
     data: { animation: 'login' },
   },
   {
+    path: 'recovery',
+    loadChildren: () => import('@recovery').then((m) => m.RecoveryModule),
+    data: { animation: 'recovery' },
+  },
+  {
     path: 'registration',
     loadChildren: () =>
       import('@registration').then((m) => m.RegistrationModule),
@@ -145,18 +155,25 @@ const routes: Route[] = [
     loadChildren: () =>
       import('@client-area').then((m) => m.PersonalAreaClientModule),
     data: { animation: 'client-area' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'designer-area',
     loadChildren: () =>
       import('@designer-area').then((m) => m.DesignerAreaModule),
     data: { animation: 'designer-area' },
+    canActivate: [AuthGuard],
   },
   {
     path: 'wholesaler-area',
     loadChildren: () =>
       import('@wholesaler-area').then((m) => m.ResalerAreaModule),
     data: { animation: 'wholesaler' },
+    canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    loadChildren: () => import('@landing').then((m) => m.LandingModule),
   },
 ];
 
@@ -172,19 +189,26 @@ const routes: Route[] = [
     PriceComponent,
     BonusComponent,
     ModelsComponent,
+    ErrorComponent,
+    SuccessComponent,
   ],
-    imports: [
-        HttpClientModule,
-        BrowserAnimationsModule,
-        BrowserModule,
-        SharedModule,
-        RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'}),
-        TableModule,
-        InputMaskModule,
-        SliderModule,
-        PaginatorModule,
-    ],
-  providers: [provideRoutes(routes), NgModel],
+  imports: [
+    HttpClientModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    SharedModule,
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+    TableModule,
+    InputMaskModule,
+    SliderModule,
+    PaginatorModule,
+  ],
+  providers: [
+    provideRoutes(routes),
+    NgModel,
+    AuthGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
