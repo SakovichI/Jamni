@@ -1,35 +1,40 @@
-import {AfterViewInit, Component, ElementRef, Inject, OnDestroy, OnInit, Renderer2, ViewChild} from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
-import {ApiCategoryService, ApiItemService} from "../../../core";
-import {FormArray, FormControl, FormGroup} from "@angular/forms";
+import { animate, style, transition, trigger } from '@angular/animations';
+import { HttpParams } from '@angular/common/http';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import nouislider from 'nouislider';
-import {Subject, takeUntil} from "rxjs";
-import {animate, style, transition, trigger} from "@angular/animations";
-import * as events from "events";
-import {HttpParams} from "@angular/common/http";
+import { Subject, takeUntil } from 'rxjs';
+import { ApiUserService } from 'src/app/core/api/api-user.service';
+import { IUserFavorites } from 'src/app/interfaces/users-interface';
+import { ApiCategoryService, ApiItemService } from '../../../core';
 @Component({
   styleUrls: ['./shell.component.css'],
   templateUrl: './shell.component.html',
   animations: [
     trigger('showAccordion', [
       transition(':enter', [
-        style({height: 0}),
-        animate('0.3s linear', style({height: '*'})),
+        style({ height: 0 }),
+        animate('0.3s linear', style({ height: '*' })),
       ]),
-      transition(':leave', [
-        animate('0.3s linear', style({height: 0})),
-      ]),
-    ])
+      transition(':leave', [animate('0.3s linear', style({ height: 0 }))]),
+    ]),
   ],
 })
-export class ShellComponent implements OnInit, OnDestroy{
+export class ShellComponent implements OnInit, OnDestroy {
   @ViewChild('filter') filterMenu?: ElementRef;
   @ViewChild('sort') sortMenu?: ElementRef;
-  public specId?: number;
-  public values:any[]=[]
-  public term:any;
-  public price?:number;
-  public categoryId?: number;
+  public specId: number = 0;
+  public values: any[] = [];
+  public term: any;
+  public price?: number;
+  public categoryId: number = 0;
   public category: any;
   public products: any[] = [];
   public specsFormArray = new FormArray([]);
@@ -37,215 +42,250 @@ export class ShellComponent implements OnInit, OnDestroy{
   public sofasProduct: any[] = [];
   private destroyed$: Subject<any> = new Subject<any>();
   private lastScript: any;
-  catalog:boolean=false;
+  catalog: boolean = false;
   state: string = 'initial';
+  public favoriteList: IUserFavorites[] = [];
   expand() {
     this.catalog = !this.catalog;
-    this.state = this.catalog
-      ? 'expanded'
-      : 'initial';
+    this.state = this.catalog ? 'expanded' : 'initial';
   }
-  constructor(private activatedRoute: ActivatedRoute,
-              private apiCategoryService: ApiCategoryService,
-              private apiItemService: ApiItemService) {
-    this.activatedRoute.paramMap.pipe(takeUntil(this.destroyed$)).subscribe((paramMap) => {
-      const id: string | null = paramMap.get('id');
-      if (!id) {
-        return;
-      }
-      setTimeout(()=>{
-        const scriptOld = document.querySelector('[src="assets/main.js"]');
-        if (scriptOld){
-          document.body.removeChild(scriptOld)
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private apiCategoryService: ApiCategoryService,
+    private apiItemService: ApiItemService,
+    public userApi: ApiUserService
+  ) {
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((paramMap) => {
+        this.categoryId = Number(paramMap.get('id'));
+        if (this.categoryId) {
+          return;
         }
-        }, 1000)
-      setTimeout(()=>{
-        const script = document.createElement('script');
-        script.src = 'assets/main.js';
-        document.body.appendChild(script)
-      }, 1200)
-      this.categoryId = parseInt(id, 10);
-      this.fetchCategory();
-    });
-
-
+        setTimeout(() => {
+          const scriptOld = document.querySelector('[src="assets/main.js"]');
+          if (scriptOld) {
+            document.body.removeChild(scriptOld);
+          }
+        }, 1000);
+        setTimeout(() => {
+          const script = document.createElement('script');
+          script.src = 'assets/main.js';
+          document.body.appendChild(script);
+        }, 1200);
+      });
   }
-
 
   ngOnDestroy() {
     this.destroyed$.next({});
     this.destroyed$.complete();
-
-
   }
   ngOnInit() {
-    if(this.filterMenu?.nativeElement.classList.contains('active')){
-      this.filterMenu?.nativeElement.classList.remove('active')
+    this.fetchCategory();
+    if (this.filterMenu?.nativeElement.classList.contains('active')) {
+      this.filterMenu?.nativeElement.classList.remove('active');
     }
-    if(this.sortMenu?.nativeElement.classList.contains('active')){
-      this.sortMenu?.nativeElement.classList.remove('active')
+    if (this.sortMenu?.nativeElement.classList.contains('active')) {
+      this.sortMenu?.nativeElement.classList.remove('active');
     }
+    this.userApi.userFavoriteS
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((resp) => {
+        this.favoriteList = resp;
+      });
   }
 
   private fetchCategory(): void {
-    if (!this.categoryId){
+    if (!this.categoryId) {
       return;
     }
 
-    this.apiCategoryService.getCategory(this.categoryId).subscribe((elem) =>{
+    this.apiCategoryService.getCategory(this.categoryId).subscribe((elem) => {
       this.category = elem;
-      console.log(elem)
-    })
-    this.apiCategoryService.getCategory(this.categoryId).subscribe((category) => {
-      this.category = category;
-      this.specsFormArray = new FormArray([
-        new FormGroup({
-          specification: new FormControl({
-            id: 3,
-            name: 'цена',
-            valueType: 'NUMBER',
-            filtered: true,
-            values: [
-              {
-                id: 1,
-                specId: 3,
-                value: 0,
-              },
-              {
-                id: 2,
-                specId: 3,
-                value: 500000,
-              }
-            ]
+    });
+    this.apiCategoryService
+      .getCategory(this.categoryId)
+      .subscribe((category) => {
+        this.category = category;
+
+        this.specsFormArray = new FormArray([
+          new FormGroup({
+            specification: new FormControl({
+              id: 3,
+              name: 'цена',
+              valueType: 'NUMBER',
+              filtered: true,
+              values: [
+                {
+                  id: 1,
+                  specId: 3,
+                  value: 0,
+                },
+                {
+                  id: 2,
+                  specId: 3,
+                  value: 500000,
+                },
+              ],
+            }),
+            from: new FormControl(0),
+            to: new FormControl(600000),
           }),
-          from: new FormControl(0),
-          to: new FormControl(600000),
-        })
-      ])
-      category.specifications.forEach((spec: any) => {
-        let formGroup: FormGroup;
-        if (spec.valueType === 'CHAR'){
-          formGroup = new FormGroup({
-            specification: new FormControl(spec),
-            values: new FormControl([])
-          });
-        } else if (spec.valueType === 'NUMBER'){
-          const values = spec.values.map((v: any) => parseInt(v.value, 10));
-          formGroup = new FormGroup({
-            specification: new FormControl(spec),
-            from: new FormControl(Math.min(...values)),
-            to: new FormControl(Math.max(...values)),
-          });
-        } else if (spec.valueType === 'COLOR'){
-          formGroup = new FormGroup({
-            specification: new FormControl(spec),
-            values: new FormControl([])
-          })
-        } else if (spec.valueType == 'BOOLEAN') {
-          formGroup = new FormGroup({
-            specification: new FormControl(spec),
-            value: new FormControl(null)
-          })
-        }
-        // @ts-ignore
-        this.specsFormArray.push(formGroup);
+        ]);
+        category.specifications.forEach((spec: any) => {
+          let formGroup: FormGroup;
+          if (spec.valueType === 'CHAR') {
+            formGroup = new FormGroup({
+              specification: new FormControl(spec),
+              values: new FormControl([]),
+            });
+          } else if (spec.valueType === 'NUMBER') {
+            const values = spec.values.map((v: any) => parseInt(v.value, 10));
+            formGroup = new FormGroup({
+              specification: new FormControl(spec),
+              from: new FormControl(Math.min(...values)),
+              to: new FormControl(Math.max(...values)),
+            });
+          } else if (spec.valueType === 'COLOR') {
+            formGroup = new FormGroup({
+              specification: new FormControl(spec),
+              values: new FormControl([]),
+            });
+          } else if (spec.valueType == 'BOOLEAN') {
+            formGroup = new FormGroup({
+              specification: new FormControl(spec),
+              value: new FormControl(null),
+            });
+          }
+          // @ts-ignore
+          this.specsFormArray.push(formGroup);
+        });
+        setTimeout(() => {
+          this.initSliders();
+        }, 0);
+        this.initOtherProducts();
       });
-      setTimeout(() => {
-        this.initSliders();
-      }, 0)
-      this.initOtherProducts();
-    })
   }
 
   private initSliders(): void {
-    const sliders = this.specsFormArray.controls.filter((fg: any) => fg.controls.specification.value.valueType === 'NUMBER');
+    const sliders = this.specsFormArray.controls.filter(
+      (fg: any) => fg.controls.specification.value.valueType === 'NUMBER'
+    );
     const sliderContainers = document.querySelectorAll('.nouislider-container');
-    if (!sliders?.length){
+    if (!sliders?.length) {
       return;
     }
 
-    for (let i=0; i < sliders.length; i++){
+    for (let i = 0; i < sliders.length; i++) {
       nouislider.create(sliderContainers[i] as HTMLElement, {
         start: [sliders[i].value.from, sliders[i].value.to],
         connect: true,
         range: {
-          'min': [sliders[i].value.from],
-          'max': [sliders[i].value.to]
+          min: [sliders[i].value.from],
+          max: [sliders[i].value.to],
+        },
+      });
+
+      (sliderContainers[i] as any).noUiSlider.on(
+        'update',
+        function (values: any, handle: any) {
+          (sliders[i] as FormGroup).controls[
+            handle === 0 ? 'from' : 'to'
+          ].setValue(Math.round(values[handle]));
         }
-      });
-
-      (sliderContainers[i] as any).noUiSlider.on('update', function (values: any, handle: any) {
-        (sliders[i] as FormGroup).controls[handle === 0 ? 'from' : 'to'].setValue(Math.round(values[handle]));
-      });
+      );
     }
-
   }
-  public addFilter(specId:number, values:any[], categoryId:number){
-    const filters = new HttpParams()
-      .append('filters', JSON.stringify({
-        'specId': specId,
-        'values': values,
-      }))
-    this.apiCategoryService.getFilter(categoryId, filters).subscribe((el)=>{
-      this.category=el
-    })
-  }
-  public deleteFilter(specId:number, values:any[], categoryId:number){
-    const filters = new HttpParams()
-      .delete('filters', JSON.stringify({
-        'specId': specId,
-        'values': values,
-      }))
-
-    this.apiCategoryService.getFilter(categoryId, filters).subscribe((el)=>{
-      this.category=el
-    })
-  }
-
-  public onCharSpecChange(specFormGroup: any, spec: any, checked: boolean, categoryId:number) {
-
-    if (checked) {
-      specFormGroup.get('values').setValue([...specFormGroup.get('values').value, spec])
-      let params
-      const values = specFormGroup.value.values
-        values.forEach((el:any)=>{
-          const filters = new HttpParams()
-          .append('filters', JSON.stringify({
-            'specId': el.specId,
-            'values': [el.id],
-          }))
-          return params = filters
-        })
-      this.apiCategoryService.getFilter(categoryId, params).subscribe((el)=>{
-        this.category=el
+  public addFilter(specId: number, values: any[], categoryId: number) {
+    const filters = new HttpParams().append(
+      'filters',
+      JSON.stringify({
+        specId: specId,
+        values: values,
       })
+    );
+    this.apiCategoryService.getFilter(categoryId, filters).subscribe((el) => {
+      this.category = el;
+    });
+  }
+  public deleteFilter(specId: number, values: any[], categoryId: number) {
+    const filters = new HttpParams().delete(
+      'filters',
+      JSON.stringify({
+        specId: specId,
+        values: values,
+      })
+    );
 
+    this.apiCategoryService.getFilter(categoryId, filters).subscribe((el) => {
+      this.category = el;
+    });
+  }
+
+  public onCharSpecChange(
+    specFormGroup: any,
+    spec: any,
+    checked: boolean,
+    categoryId: number
+  ) {
+    if (checked) {
+      specFormGroup
+        .get('values')
+        .setValue([...specFormGroup.get('values').value, spec]);
+      let params;
+      const values = specFormGroup.value.values;
+      values.forEach((el: any) => {
+        const filters = new HttpParams().append(
+          'filters',
+          JSON.stringify({
+            specId: el.specId,
+            values: [el.id],
+          })
+        );
+        return (params = filters);
+      });
+      this.apiCategoryService.getFilter(categoryId, params).subscribe((el) => {
+        this.category = el;
+      });
     } else {
-      specFormGroup.get('values').setValue(specFormGroup.get('values').value.filter((v: any) => v.id != spec.id))
-      this.deleteFilter(spec.specId, [spec.id], categoryId)
+      specFormGroup
+        .get('values')
+        .setValue(
+          specFormGroup.get('values').value.filter((v: any) => v.id != spec.id)
+        );
+      this.deleteFilter(spec.specId, [spec.id], categoryId);
     }
-
   }
   public onBooleanSpecChange(specFormGroup: any, value: any) {
     if (value) {
-      specFormGroup.get('value').setValue(value)
+      specFormGroup.get('value').setValue(value);
     } else {
-      specFormGroup.get('value').setValue(null)
+      specFormGroup.get('value').setValue(null);
     }
   }
 
   private initOtherProducts(): void {
     this.apiItemService.listItems().subscribe((items) => {
-      this.otherProducts = items.slice(0,10);
-    })
+      this.otherProducts = items.slice(0, 10);
+    });
   }
 
   openFilter() {
-    this.filterMenu?.nativeElement.classList.toggle('active')
+    this.filterMenu?.nativeElement.classList.toggle('active');
   }
   openSort() {
-    this.sortMenu?.nativeElement.classList.toggle('active')
+    this.sortMenu?.nativeElement.classList.toggle('active');
   }
-
-  protected readonly events = events;
+  favorites(id: number) {
+    let data = { itemId: id, enabled: true };
+    if (this.favoriteList.filter((el) => el.id === id).length > 0) {
+      data = { itemId: id, enabled: false };
+    } else {
+      data = { itemId: id, enabled: true };
+    }
+    this.userApi
+      .editFavorites(data)
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((resp) => {});
+  }
 }

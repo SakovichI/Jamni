@@ -1988,6 +1988,7 @@ main {
 
 .icons-header__link {
   position: relative;
+  cursor: pointer;
 }
 
 .icons-header__link--count {
@@ -2198,6 +2199,12 @@ main {
   margin-left: 17px;
   fill: none;
   stroke: black;
+  transition: 0.2s ease;
+  &.active {
+    fill: black;
+    stroke: black;
+    transition: 0.2s ease;
+  }
 }
 
 .burger-menu__list {
@@ -5013,6 +5020,7 @@ main {
 }
 
 .product__item {
+  position: relative;
   -webkit-transition: 0.2s ease-in;
   transition: 0.2s ease-in;
 }
@@ -5205,6 +5213,12 @@ main {
   height: 23px;
   fill: none;
   stroke: black;
+  transition: .2s ease;
+  &.active{
+    fill: black;
+    stroke: black;
+    transition: .2s ease;
+  }
 }
 
 .product__icon:hover {

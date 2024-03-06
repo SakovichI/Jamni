@@ -67,6 +67,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   catalog: boolean = false;
   state: string = 'initial';
   routerOutlet: any;
+  countFavorite: number = 0;
   public destroy$ = new Subject<void>();
 
   expand() {
@@ -138,6 +139,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     if (this.auth.getToken()) {
       this.userApi.getUser().pipe(takeUntil(this.destroy$)).subscribe();
     }
+    this.userApi.getFavorites().pipe(takeUntil(this.destroy$)).subscribe();
+    this.userApi.userFavoriteS
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((resp) => {
+        this.countFavorite = resp.length;
+      });
   }
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -196,6 +203,25 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       });
     } else {
       this.route.navigate(['login']);
+    }
+  }
+  routeFavorites() {
+    if (this.auth.getToken()) {
+      this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe((resp) => {
+        switch (resp.userType) {
+          case 'CLIENT':
+            this.route.navigate(['../client-area/favorites']);
+            break;
+          case 'DESIGNER':
+            this.route.navigate(['../designer-area/favorites']);
+            break;
+          case 'WHOLESALER':
+            this.route.navigate(['../wholesaler-area/favorites']);
+            break;
+        }
+      });
+    } else {
+      this.route.navigate(['catalog']);
     }
   }
 }

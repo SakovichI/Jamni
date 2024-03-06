@@ -45,23 +45,29 @@
             <div class="burger-menu__content">
               <div class="burger-menu__header">
                 <a
-                  routerLink="login"
                   class="burger-menu__link burger-menu__link--icon"
-                  (click)="openBurger()"
+                  (click)="login()"
                 >
-                  <svg class="burger-menu__icon burger-menu__icon--stroke">
+                  <svg
+                    class="burger-menu__icon burger-menu__icon--stroke"
+                    (click)="openBurger()"
+                    [ngClass]="{ active: auth.getToken() }"
+                  >
                     <use xlink:href="assets/img/sprite.svg#user"></use>
                   </svg>
                 </a>
                 <a
-                  [routerLink]="'category/382'"
+                  (click)="routeFavorites()"
                   class="burger-menu__link burger-menu__link--icon"
-                  (click)="openBurger()"
                 >
-                  <svg class="burger-menu__icon">
+                  <svg (click)="openBurger()" class="burger-menu__icon">
                     <use xlink:href="assets/img/sprite.svg#favorites"></use>
                   </svg>
-                  <!--                  <span class="burger-menu__link&#45;&#45;count">0</span>-->
+                  <span
+                    class="burger-menu__link--count"
+                    *ngIf="this.auth.getToken()"
+                    >{{ this.countFavorite }}</span
+                  >
                 </a>
               </div>
               <menu class="burger-menu__list">
@@ -148,13 +154,17 @@
               </svg>
             </button>
             <a
-              [routerLink]="'catalog'"
+              (click)="routeFavorites()"
               class="icons-header__link icons-header__link--favorites"
             >
               <svg class="icons-header__icon">
                 <use xlink:href="assets/img/sprite.svg#favorites"></use>
               </svg>
-              <!-- <span class="icons-header__link--count">2</span> -->
+              <span
+                class="icons-header__link--count"
+                *ngIf="this.auth.getToken()"
+                >{{ this.countFavorite }}</span
+              >
             </a>
             <button
               #cart

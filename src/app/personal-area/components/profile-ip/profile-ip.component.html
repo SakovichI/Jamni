@@ -1,46 +1,135 @@
-<form class="form">
+<form class="form" [formGroup]="formClient" (ngSubmit)="submit(formClient)">
   <h2 class="form__title">контакты</h2>
   <div class="form__wrap">
     <div class="form__row">
       <label class="form__label">
-        <input type="text" class="input-reset form__input" placeholder="Электронная почта">
+        <input
+          type="text"
+          class="input-reset form__input"
+          placeholder="Электронная почта"
+          formControlName="email"
+          [ngClass]="{
+            error:
+              formClient.controls['email'].invalid &&
+              (formClient.controls['email'].dirty ||
+                formClient.controls['email'].touched)
+          }"
+        />
       </label>
       <label class="form__label">
-        <p-inputMask mask="+7(999) 999-99-99" class="form__input" placeholder="Телефон"></p-inputMask>
+        <p-inputMask
+          mask="+7(999) 999-99-99"
+          class="form__input"
+          placeholder="Телефон"
+          formControlName="phone"
+          [ngClass]="{
+            error:
+              formClient.controls['phone'].invalid &&
+              (formClient.controls['phone'].dirty ||
+                formClient.controls['phone'].touched)
+          }"
+        ></p-inputMask>
       </label>
-
     </div>
     <label class="custom-checkbox form-reg__checkbox">
-      <input type="checkbox" class="custom-checkbox__field" name="mailing" value="true">
-      <span
-        class="custom-checkbox__content form-reg__checkbox-content">Присылайте мне электронные письма с новостями и предложениями </span>
+      <input
+        type="checkbox"
+        class="custom-checkbox__field"
+        name="mailing"
+        value="true"
+        formControlName="isAdvertisementNotifications"
+        [ngClass]="{
+          error:
+            formClient.controls['isAdvertisementNotifications'].invalid &&
+            (formClient.controls['isAdvertisementNotifications'].dirty ||
+              formClient.controls['isAdvertisementNotifications'].touched)
+        }"
+      />
+      <span class="custom-checkbox__content form-reg__checkbox-content"
+        >Присылайте мне электронные письма с новостями и предложениями
+      </span>
     </label>
   </div>
   <h2 class="form__title">основные данные</h2>
   <div class="form__wrap">
     <div class="form__row">
       <label class="form__label">
-        <input type="text" class="input-reset form__input" placeholder="Фамилия">
+        <input
+          type="text"
+          class="input-reset form__input"
+          placeholder="Фамилия"
+          formControlName="surname"
+          [ngClass]="{
+            error:
+              formClient.controls['surname'].invalid &&
+              (formClient.controls['surname'].dirty ||
+                formClient.controls['surname'].touched)
+          }"
+        />
       </label>
       <label class="form__label">
-        <input type="text" class="input-reset form__input" placeholder="Имя">
+        <input
+          type="text"
+          class="input-reset form__input"
+          placeholder="Имя"
+          formControlName="firstName"
+          [ngClass]="{
+            error:
+              formClient.controls['firstName'].invalid &&
+              (formClient.controls['firstName'].dirty ||
+                formClient.controls['firstName'].touched)
+          }"
+        />
       </label>
     </div>
     <div class="form__row">
       <label class="form__label">
-        <input type="text" class="input-reset form__input" placeholder="Отчество">
+        <input
+          type="text"
+          class="input-reset form__input"
+          placeholder="Отчество"
+          formControlName="middleName"
+          [ngClass]="{
+            error:
+              formClient.controls['middleName'].invalid &&
+              (formClient.controls['middleName'].dirty ||
+                formClient.controls['middleName'].touched)
+          }"
+        />
       </label>
       <label class="form__label">
-        <input type="text" class="input-reset form__input" placeholder="Сайт">
+        <input
+          type="text"
+          class="input-reset form__input"
+          placeholder="Сайт"
+          formControlName="site"
+          [ngClass]="{
+            error:
+              formClient.controls['site'].invalid &&
+              (formClient.controls['site'].dirty ||
+                formClient.controls['site'].touched)
+          }"
+        />
       </label>
     </div>
     <div class="form__row">
       <label class="form__label">
-        <input type="text" class="input-reset form__input" placeholder="Юр лицо">
+        <input
+          type="text"
+          class="input-reset form__input"
+          placeholder="Юр лицо"
+          formControlName="juridicalPerson"
+          [ngClass]="{
+            error:
+              formClient.controls['juridicalPerson'].invalid &&
+              (formClient.controls['juridicalPerson'].dirty ||
+                formClient.controls['juridicalPerson'].touched)
+          }"
+        />
       </label>
     </div>
   </div>
-  <button class="form__btn btn-reset btn-anim">
+  <button class="form__btn btn-reset btn-anim" [disabled]="formClient.invalid">
     <span class="btn-anim__text">Сохранить</span>
   </button>
 </form>

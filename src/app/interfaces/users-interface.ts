@@ -19,3 +19,11 @@ export interface IUsers {
 export interface IUserBalance {
   balance: number;
 }
+
+export interface IUserFavorites {
+  id: number;
+  name: string;
+  coverImage: string;
+  price: number;
+  availableColors: string[];
+}
