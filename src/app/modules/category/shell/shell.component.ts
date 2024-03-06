@@ -288,4 +288,11 @@ export class ShellComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroyed$))
       .subscribe((resp) => {});
   }
+  checkFavorites(id: number): boolean {
+    if (this.favoriteList.filter((el) => el.id === id).length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

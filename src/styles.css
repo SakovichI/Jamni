@@ -308,7 +308,9 @@ main {
   transition: 0.4s ease-in;
   white-space: nowrap;
 }
-
+.slider-elseProduct__slide{
+  position: relative;
+}
 .tabs__nav-btn:focus {
   color: inherit;
 }

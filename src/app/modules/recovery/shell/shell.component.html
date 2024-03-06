@@ -47,7 +47,7 @@
             action="#"
             class="authorization__form form form-login"
             [formGroup]="formFinish"
-            (ngSubmit)="submitFinish(form)"
+            (ngSubmit)="submitFinish(formFinish)"
           >
             <div class="form-login__title">Восстановить</div>
             <label class="form-login__label form__label">
@@ -75,20 +75,6 @@
                     formFinish.controls['code'].invalid &&
                     (formFinish.controls['code'].touched ||
                       formFinish.controls['code'].dirty)
-                }"
-              />
-            </label>
-            <label class="form-login__label form__label">
-              <input
-                class="input-reset form__input form-login__input"
-                placeholder="Новый пароль"
-                type="text"
-                formControlName="password"
-                [ngClass]="{
-                  error:
-                    formFinish.controls['password'].invalid &&
-                    (formFinish.controls['password'].touched ||
-                      formFinish.controls['password'].dirty)
                 }"
               />
             </label>

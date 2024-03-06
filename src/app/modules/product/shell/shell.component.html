@@ -5,24 +5,55 @@
         <div class="product-slider__pagination"></div>
         <div class="product__slider sliderMy product-slider">
           <div class="product-slider__wrapper sliderMy__wrapper">
-            <div class="product-slider__slide sliderMy__slide product-slide" *ngFor="let img of productImages">
+            <div
+              class="product-slider__slide sliderMy__slide product-slide"
+              *ngFor="let img of productImages"
+            >
               <picture>
-                <source [srcset]="product.coverImage || 'assets/img/no-img-placeholder.svg' " type="image/webp">
-                <img loading="lazy" [src]="product.coverImage || 'assets/img/no-img-placeholder.svg'" class="image product-slide__image"
-                     width="736"
-                     height="670" alt="product-image">
+                <source
+                  [srcset]="
+                    product.coverImage || 'assets/img/no-img-placeholder.svg'
+                  "
+                  type="image/webp"
+                />
+                <img
+                  loading="lazy"
+                  [src]="
+                    product.coverImage || 'assets/img/no-img-placeholder.svg'
+                  "
+                  class="image product-slide__image"
+                  width="736"
+                  height="670"
+                  alt="product-image"
+                />
               </picture>
             </div>
           </div>
           <div class="sliderMy__scrollbar"></div>
         </div>
-        <div class="product__slider-thumbs slider product-slider-thumbs sliderMy-thumbs">
-          <div class="product-slider-thumbs__wrapper slider__wrapper sliderMy-thumbs__wrapper">
-            <div class="product-slider-thumbs__slide slider__slide product-thumbs-slide sliderMy-thumbs__slide" *ngFor="let img of productImages">
+        <div
+          class="product__slider-thumbs slider product-slider-thumbs sliderMy-thumbs"
+        >
+          <div
+            class="product-slider-thumbs__wrapper slider__wrapper sliderMy-thumbs__wrapper"
+          >
+            <div
+              class="product-slider-thumbs__slide slider__slide product-thumbs-slide sliderMy-thumbs__slide"
+              *ngFor="let img of productImages"
+            >
               <picture>
-                <source [srcset]="img || 'assets/img/no-img-placeholder.svg'" type="image/webp">
-                <img loading="lazy" [src]="img || 'assets/img/no-img-placeholder.svg'" class="image product-slide__image"
-                     width="140" height="140" alt="product-image-prev">
+                <source
+                  [srcset]="img || 'assets/img/no-img-placeholder.svg'"
+                  type="image/webp"
+                />
+                <img
+                  loading="lazy"
+                  [src]="img || 'assets/img/no-img-placeholder.svg'"
+                  class="image product-slide__image"
+                  width="140"
+                  height="140"
+                  alt="product-image-prev"
+                />
               </picture>
             </div>
           </div>
@@ -30,109 +61,192 @@
       </div>
       <div class="product__description description-prod">
         <div class="breadcrumbs description-prod__breadcrumbs">
-          <a [routerLink]="'/'" [href]="'.'" class="breadcrumbs__link">главная</a>
+          <a [routerLink]="'/'" [href]="'.'" class="breadcrumbs__link"
+            >главная</a
+          >
           <!--          <a href="sofas.html" class="breadcrumbs__link">кровати</a>-->
-          <a [routerLink]="'/product/' + product?.id" [href]="'/product/' + product?.id"
-             class="breadcrumbs__link breadcrumbs__link--active">{{product?.name}}</a>
+          <a
+            [routerLink]="'/product/' + product?.id"
+            [href]="'/product/' + product?.id"
+            class="breadcrumbs__link breadcrumbs__link--active"
+            >{{ product?.name }}</a
+          >
         </div>
-        <h1 class="description-prod__title">{{product?.name}}</h1>
-        <span class="description-prod__price">{{product?.price}} руб</span>
-                <div class="description-prod__links prod-link">
-                  <a href="#" class="prod-link__item" [style.pointer-events]="'none'">
-                    <span class="prod-link__icon">
-                      <img src="assets/img/3d-model.png" alt="icon" class="prod-link__image" width="40" height="40">
-                    </span>
-                    <span class="prod-link__text">
-                      Посмотреть<br>3D-модель
-                    </span>
-                  </a>
-                  <a href="#" class="prod-link__item" download="#" [style.pointer-events]="'none'">
-                    <span class="prod-link__icon">
-                      <img src="assets/img/download-doc.svg" alt="icon" class="prod-link__image" width="40" height="40">
-                    </span>
-                    <span class="prod-link__text">
-                      Скачать<br>3D-модель
-                    </span>
-                  </a>
-                </div>
-        <form action="#" class="description-prod__form form-product" [style.margin-top]="'24px'">
-          <ng-container [ngSwitch]="specFormGroup.value.specification.selectType"
-                        *ngFor="let specFormGroup of formArray.controls; let i=index">
+        <h1 class="description-prod__title">{{ product?.name }}</h1>
+        <span class="description-prod__price">{{ product?.price }} руб</span>
+        <div class="description-prod__links prod-link">
+          <a href="#" class="prod-link__item" [style.pointer-events]="'none'">
+            <span class="prod-link__icon">
+              <img
+                src="assets/img/3d-model.png"
+                alt="icon"
+                class="prod-link__image"
+                width="40"
+                height="40"
+              />
+            </span>
+            <span class="prod-link__text"> Посмотреть<br />3D-модель </span>
+          </a>
+          <a
+            href="#"
+            class="prod-link__item"
+            download="#"
+            [style.pointer-events]="'none'"
+          >
+            <span class="prod-link__icon">
+              <img
+                src="assets/img/download-doc.svg"
+                alt="icon"
+                class="prod-link__image"
+                width="40"
+                height="40"
+              />
+            </span>
+            <span class="prod-link__text"> Скачать<br />3D-модель </span>
+          </a>
+        </div>
+        <form
+          action="#"
+          class="description-prod__form form-product"
+          [style.margin-top]="'24px'"
+        >
+          <ng-container
+            [ngSwitch]="specFormGroup.value.specification.selectType"
+            *ngFor="let specFormGroup of formArray.controls; let i = index"
+          >
             <ng-template [ngSwitchCase]="'SELECTING'">
               <div class="form-product__section section-product-form">
                 <div class="section-product-form__inner">
-                  <span class="section-product-form__title">{{specFormGroup.value.specification.name}} : </span>
+                  <span class="section-product-form__title"
+                    >{{ specFormGroup.value.specification.name }} :
+                  </span>
                   <div class="section-product-form__row">
-                    <label class="section-product-form__label"
-                           *ngFor="let option of specFormGroup.value.specification.values">
-                      <input type="radio" class="section-product-form__input input-reset" [value]="option"
-                             [name]="'size' + i" [formControl]="$any(specFormGroup).controls.value">
-                      <span class="section-product-form__text">{{option.value}}</span>
+                    <label
+                      class="section-product-form__label"
+                      *ngFor="
+                        let option of specFormGroup.value.specification.values
+                      "
+                    >
+                      <input
+                        type="radio"
+                        class="section-product-form__input input-reset"
+                        [value]="option"
+                        [name]="'size' + i"
+                        [formControl]="$any(specFormGroup).controls.value"
+                      />
+                      <span class="section-product-form__text">{{
+                        option.value
+                      }}</span>
                     </label>
                   </div>
                 </div>
               </div>
             </ng-template>
             <ng-template [ngSwitchCase]="'DROPDOWN'">
-              <div class="form-product__section section-product-form"
-                   *ngIf="specFormGroup.value.specification.valueType !== 'COLOR'">
+              <div
+                class="form-product__section section-product-form"
+                *ngIf="specFormGroup.value.specification.valueType !== 'COLOR'"
+              >
                 <div class="section-product-form__inner">
-                  <span class="section-product-form__title">{{specFormGroup.value.specification.name}}: </span>
+                  <span class="section-product-form__title"
+                    >{{ specFormGroup.value.specification.name }}:
+                  </span>
                   <div class="section-product-form__row">
                     <div class="form-group section-product-form__select">
                       <div class="dropdown section-product-form__dropdown">
                         <button type="button" class="dropdown__button">
-                          {{$any(specFormGroup).value.value.value}}
+                          {{ $any(specFormGroup).value.value.value }}
                         </button>
                         <svg class="dropdown__icon">
-                          <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
+                          <use
+                            xlink:href="assets/img/sprite.svg#arrow-down"
+                          ></use>
                         </svg>
                         <ul class="dropdown__list">
-                          <li class="dropdown__list-item"
-                              *ngFor="let option of specFormGroup.value.specification.values"
-                              (click)="specFormGroup.get('value')?.setValue(option)">
-                            {{option.value}}
+                          <li
+                            class="dropdown__list-item"
+                            *ngFor="
+                              let option of specFormGroup.value.specification
+                                .values
+                            "
+                            (click)="
+                              specFormGroup.get('value')?.setValue(option)
+                            "
+                          >
+                            {{ option.value }}
                           </li>
                         </ul>
-<!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
+                        <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-
-              <div class="form-product__section section-product-form"
-                   *ngIf="specFormGroup.value.specification.valueType === 'COLOR'">
+              <div
+                class="form-product__section section-product-form"
+                *ngIf="specFormGroup.value.specification.valueType === 'COLOR'"
+              >
                 <div class="section-product-form__inner">
-                  <span class="section-product-form__title">{{specFormGroup.value.specification.name}}: </span>
+                  <span class="section-product-form__title"
+                    >{{ specFormGroup.value.specification.name }}:
+                  </span>
                   <div class="section-product-form__row">
                     <div class="form-group section-product-form__select">
                       <div class="dropdown section-product-form__dropdown">
                         <button type="button" class="dropdown__button">
                           <span class="dropdown__value">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19"
-                                 viewBox="0 0 19 19" fill="none">
-                              <circle cx="9.5" cy="9.5" r="9.5" fill="#C7C4BF"/>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="19"
+                              height="19"
+                              viewBox="0 0 19 19"
+                              fill="none"
+                            >
+                              <circle
+                                cx="9.5"
+                                cy="9.5"
+                                r="9.5"
+                                fill="#C7C4BF"
+                              />
                             </svg>
-                            {{$any(specFormGroup).value.value.value}}
+                            {{ $any(specFormGroup).value.value.value }}
                           </span>
                         </button>
                         <svg class="dropdown__icon">
-                          <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
+                          <use
+                            xlink:href="assets/img/sprite.svg#arrow-down"
+                          ></use>
                         </svg>
                         <ul class="dropdown__list">
-                          <li class="dropdown__list-item"
-                              *ngFor="let option of specFormGroup.value.specification.values"
-                              (click)="specFormGroup.get('value')?.setValue(option)">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19"
-                                 viewBox="0 0 19 19" fill="none">
-                              <circle cx="9.5" cy="9.5" r="9.5" fill="#C7C4BF"/>
+                          <li
+                            class="dropdown__list-item"
+                            *ngFor="
+                              let option of specFormGroup.value.specification
+                                .values
+                            "
+                            (click)="
+                              specFormGroup.get('value')?.setValue(option)
+                            "
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="19"
+                              height="19"
+                              viewBox="0 0 19 19"
+                              fill="none"
+                            >
+                              <circle
+                                cx="9.5"
+                                cy="9.5"
+                                r="9.5"
+                                fill="#C7C4BF"
+                              />
                             </svg>
-                            {{option.value}}
+                            {{ option.value }}
                           </li>
                         </ul>
-<!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
+                        <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
                       </div>
                     </div>
                   </div>
@@ -142,23 +256,35 @@
             <ng-template [ngSwitchCase]="'CHECKBOX'">
               <div class="form-product__section section-product-form">
                 <div class="section-product-form__inner">
-                  <span class="section-product-form__title">{{specFormGroup.value.specification.name}}: </span>
+                  <span class="section-product-form__title"
+                    >{{ specFormGroup.value.specification.name }}:
+                  </span>
                   <div class="section-product-form__row">
                     <div class="form-group section-product-form__select">
                       <div class="dropdown section-product-form__dropdown">
                         <button type="button" class="dropdown__button">
-                          {{specFormGroup.get('value')?.value ? 'Да' : 'Нет'}}
+                          {{ specFormGroup.get("value")?.value ? "Да" : "Нет" }}
                         </button>
                         <svg class="dropdown__icon">
-                          <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
+                          <use
+                            xlink:href="assets/img/sprite.svg#arrow-down"
+                          ></use>
                         </svg>
                         <ul class="dropdown__list">
-                          <li class="dropdown__list-item"
-                              (click)="specFormGroup.get('value')?.setValue(specFormGroup.value.specification)">
+                          <li
+                            class="dropdown__list-item"
+                            (click)="
+                              specFormGroup
+                                .get('value')
+                                ?.setValue(specFormGroup.value.specification)
+                            "
+                          >
                             Да
                           </li>
-                          <li class="dropdown__list-item"
-                              (click)="specFormGroup.get('value')?.setValue(null)">
+                          <li
+                            class="dropdown__list-item"
+                            (click)="specFormGroup.get('value')?.setValue(null)"
+                          >
                             Нет
                           </li>
                         </ul>
@@ -170,24 +296,28 @@
               </div>
             </ng-template>
           </ng-container>
-          <div class="form-product__btn form-product__btn-add btn-reset btn-anim" (click)="onAddToCartClick()" data-path="add-curt">
-            <span class="form-product__btn-text btn-anim__text">добавить в корзину</span>
+          <div
+            class="form-product__btn form-product__btn-add btn-reset btn-anim"
+            (click)="onAddToCartClick()"
+            data-path="add-curt"
+          >
+            <span class="form-product__btn-text btn-anim__text"
+              >добавить в корзину</span
+            >
           </div>
-          <div class="modal add-curt-modal" data-target="add-curt" >
+          <div class="modal add-curt-modal" data-target="add-curt">
             <div class="modal__container add-curt-modal__container">
               <div class="modal__content add-curt-modal__content">
-                <p class="add-curt-modal__title">
-                  товар успешно добавлен
-                </p>
+                <p class="add-curt-modal__title">товар успешно добавлен</p>
               </div>
             </div>
           </div>
-<!--          <button class="form-product__btn form-product__btn-favorites btn-reset">-->
-<!--            <svg class="form-product__icon">-->
-<!--              <use xlink:href="assets/img/sprite.svg#favorites"></use>-->
-<!--            </svg>-->
-<!--            В избранное-->
-<!--          </button>-->
+          <!--          <button class="form-product__btn form-product__btn-favorites btn-reset">-->
+          <!--            <svg class="form-product__icon">-->
+          <!--              <use xlink:href="assets/img/sprite.svg#favorites"></use>-->
+          <!--            </svg>-->
+          <!--            В избранное-->
+          <!--          </button>-->
         </form>
       </div>
     </div>
@@ -195,13 +325,21 @@
 </section>
 <section class="details-product" *ngIf="product?.descriptions">
   <ul class="details-product__wrap">
-    <li aria-expanded="true" class="details-product__item accordion item-details" *ngFor="let desc of product.descriptions">
+    <li
+      aria-expanded="true"
+      class="details-product__item accordion item-details"
+      *ngFor="let desc of product.descriptions"
+    >
       <div class="small-container">
         <div class="item-details__title accordion__title">
-          {{desc.name}}
+          {{ desc.name }}
           <div class="accordion__icon">
-            <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
-            <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--horizontal"
+            ></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--vertical"
+            ></span>
           </div>
         </div>
         <div class="item-details__content accordion__content content-details">
@@ -209,77 +347,101 @@
         </div>
       </div>
     </li>
-    <li aria-expanded="true" class="details-product__item accordion item-details">
+    <li
+      aria-expanded="true"
+      class="details-product__item accordion item-details"
+    >
       <div class="small-container">
         <div class="item-details__title accordion__title">
           обслуживание
           <div class="accordion__icon">
-            <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
-            <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--horizontal"
+            ></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--vertical"
+            ></span>
           </div>
         </div>
         <div class="item-details__content accordion__content content-details">
           <ol class="content-details__list">
             <li class="content-details__item">
-              Регулярная чистка и уход за обивочными тканями предотвращает образование грязи и значительно продлевает
-              срок их службы.
+              Регулярная чистка и уход за обивочными тканями предотвращает
+              образование грязи и значительно продлевает срок их службы.
             </li>
             <li class="content-details__item">
-              В случае попадания жидкости на ткань, немедленно и без нажима сотрите вещество с загрязненной
-              поверхности хорошо впитывающим материалом.
+              В случае попадания жидкости на ткань, немедленно и без нажима
+              сотрите вещество с загрязненной поверхности хорошо впитывающим
+              материалом.
             </li>
             <li class="content-details__item">
-              Пятна можно очень аккуратно вытирать намыленной хлопчатобумажной тканью, стараясь не размазать их.
-              Примечание: длительное оставление пятна на ткани или неправильные методы очистки могут привести к
-              необратимому окрашиванию или повреждению поверхности изделия.
+              Пятна можно очень аккуратно вытирать намыленной хлопчатобумажной
+              тканью, стараясь не размазать их. Примечание: длительное
+              оставление пятна на ткани или неправильные методы очистки могут
+              привести к необратимому окрашиванию или повреждению поверхности
+              изделия.
             </li>
             <li class="content-details__item">
-              Для чистки изделия рекомендуется использовать салфетки из микрофибры. Всегда используйте чистую часть
-              полотенца при вытирании.
+              Для чистки изделия рекомендуется использовать салфетки из
+              микрофибры. Всегда используйте чистую часть полотенца при
+              вытирании.
             </li>
             <li class="content-details__item">
               Не используйте утюг для сушки материала.
             </li>
             <li class="content-details__item">
-              Не рекомендуется использовать для ухода за изделием пылесос и средства для чистки ковров.
+              Не рекомендуется использовать для ухода за изделием пылесос и
+              средства для чистки ковров.
             </li>
           </ol>
         </div>
       </div>
     </li>
-    <li aria-expanded="true" class="details-product__item accordion item-details">
+    <li
+      aria-expanded="true"
+      class="details-product__item accordion item-details"
+    >
       <div class="small-container">
         <div class="item-details__title accordion__title">
           упаковка
           <div class="accordion__icon">
-            <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
-            <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--horizontal"
+            ></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--vertical"
+            ></span>
           </div>
         </div>
         <div class="item-details__content accordion__content content-details">
           <ol class="content-details__list">
             <li class="content-details__item">
-              Регулярная чистка и уход за обивочными тканями предотвращает образование грязи и значительно продлевает
-              срок их службы.
+              Регулярная чистка и уход за обивочными тканями предотвращает
+              образование грязи и значительно продлевает срок их службы.
             </li>
             <li class="content-details__item">
-              В случае попадания жидкости на ткань, немедленно и без нажима сотрите вещество с загрязненной
-              поверхности хорошо впитывающим материалом.
+              В случае попадания жидкости на ткань, немедленно и без нажима
+              сотрите вещество с загрязненной поверхности хорошо впитывающим
+              материалом.
             </li>
             <li class="content-details__item">
-              Пятна можно очень аккуратно вытирать намыленной хлопчатобумажной тканью, стараясь не размазать их.
-              Примечание: длительное оставление пятна на ткани или неправильные методы очистки могут привести к
-              необратимому окрашиванию или повреждению поверхности изделия.
+              Пятна можно очень аккуратно вытирать намыленной хлопчатобумажной
+              тканью, стараясь не размазать их. Примечание: длительное
+              оставление пятна на ткани или неправильные методы очистки могут
+              привести к необратимому окрашиванию или повреждению поверхности
+              изделия.
             </li>
             <li class="content-details__item">
-              Для чистки изделия рекомендуется использовать салфетки из микрофибры. Всегда используйте чистую часть
-              полотенца при вытирании.
+              Для чистки изделия рекомендуется использовать салфетки из
+              микрофибры. Всегда используйте чистую часть полотенца при
+              вытирании.
             </li>
             <li class="content-details__item">
               Не используйте утюг для сушки материала.
             </li>
             <li class="content-details__item">
-              Не рекомендуется использовать для ухода за изделием пылесос и средства для чистки ковров.
+              Не рекомендуется использовать для ухода за изделием пылесос и
+              средства для чистки ковров.
             </li>
           </ol>
         </div>
@@ -289,33 +451,54 @@
 </section>
 <section class="your-kit">
   <div class="small-container">
-    <h1 class="your-kit__title">
-      соберите свой комплект
-    </h1>
+    <h1 class="your-kit__title">соберите свой комплект</h1>
     <span class="your-kit__subtitle">
-      создайте идеальное пространство: дополните<br>свою комнату уникальным декором
+      создайте идеальное пространство: дополните<br />свою комнату уникальным
+      декором
     </span>
     <div class="tabs your-kit__tabs tabs-kit">
       <ul class="tabs__nav tabs-kit__nav">
-        <li class="tabs__nav-item tabs-kit__nav-item"
-            [class.tabs__nav-btn--active]="category.category.id == selectedOwnSetCategory?.category?.id"
-            *ngFor="let category of ownSetCategories" (click)="selectedOwnSetCategory=category">
-          <button class="btn-reset tabs__nav-btn tabs-kit__nav-btn nav-kit" type="button">
+        <li
+          class="tabs__nav-item tabs-kit__nav-item"
+          [class.tabs__nav-btn--active]="
+            category.category.id == selectedOwnSetCategory?.category?.id
+          "
+          *ngFor="let category of ownSetCategories"
+          (click)="selectedOwnSetCategory = category"
+        >
+          <button
+            class="btn-reset tabs__nav-btn tabs-kit__nav-btn nav-kit"
+            type="button"
+          >
             <span class="nav-kit__wrap">
               <span class="nav-kit__image-wrap">
-                      <picture>
-                              <source [srcset]="category.category.image || 'assets/img/no-img-placeholder.svg'" type="image/webp">
-                              <img loading="lazy" [src]="category.category.image || 'assets/img/no-img-placeholder.svg'" class="image nav-kit__image"
-                                   width="140"
-                                   height="130" alt="tabs-img">
-                            </picture>
+                <picture>
+                  <source
+                    [srcset]="
+                      category.category.image ||
+                      'assets/img/no-img-placeholder.svg'
+                    "
+                    type="image/webp"
+                  />
+                  <img
+                    loading="lazy"
+                    [src]="
+                      category.category.image ||
+                      'assets/img/no-img-placeholder.svg'
+                    "
+                    class="image nav-kit__image"
+                    width="140"
+                    height="130"
+                    alt="tabs-img"
+                  />
+                </picture>
               </span>
               <span class="nav-kit__content">
                 <span class="nav-kit__title">
-                  {{category.category.name}}
+                  {{ category.category.name }}
                 </span>
                 <span class="nav-kit__text">
-                  {{category.items?.length || '0'}} наименований
+                  {{ category.items?.length || "0" }} наименований
                 </span>
               </span>
             </span>
@@ -323,41 +506,107 @@
         </li>
       </ul>
       <div class="tabs__content tabs-kit__content">
-        <div class="tabs__panel tabs-kit__panel kit-content" [style.display]="'block'">
+        <div
+          class="tabs__panel tabs-kit__panel kit-content"
+          [style.display]="'block'"
+        >
           <div class="kit-content__slider sliderMy">
             <div class="sliderMy__wrapper kit-content__wrapper">
-              <div class="sliderMy__slide kit-content__slide" *ngFor="let product of selectedOwnSetCategory?.items">
+              <div
+                class="sliderMy__slide kit-content__slide"
+                *ngFor="let product of selectedOwnSetCategory?.items"
+              >
                 <div class="kit-content__item item-configuration">
-                  <div class="item-configuration__amount">{{product.amount}}</div>
+                  <div class="item-configuration__amount">
+                    {{ product.amount }}
+                  </div>
                   <div class="item-configuration__image-wrap">
                     <picture>
-                      <source [srcset]="product.product.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
-                      <img loading="lazy" [src]="product.product.coverImage || 'assets/img/no-img-placeholder.svg'" class="image item-configuration__image"
-                           width="340"
-                           height="400"
-                           alt="prod-image">
+                      <source
+                        [srcset]="
+                          product.product.coverImage ||
+                          'assets/img/no-img-placeholder.svg'
+                        "
+                        type="image/webp"
+                      />
+                      <img
+                        loading="lazy"
+                        [src]="
+                          product.product.coverImage ||
+                          'assets/img/no-img-placeholder.svg'
+                        "
+                        class="image item-configuration__image"
+                        width="340"
+                        height="400"
+                        alt="prod-image"
+                      />
                     </picture>
                   </div>
-                  <h3 class="item-configuration__title">{{product.product.name}}</h3>
-                  <span class="item-configuration__price">{{product.product.price}} руб</span>
+                  <h3 class="item-configuration__title">
+                    {{ product.product.name }}
+                  </h3>
+                  <span class="item-configuration__price"
+                    >{{ product.product.price }} руб</span
+                  >
                   <div class="item-configuration__count count-prod">
-                    <button class="btn-reset count-prod__minus" (click)="onOwnSetProductAmountChange(product, 'pop')">-</button>
-                    <span class="count-prod__count">{{product.amount}}</span>
-                    <button class="btn-reset count-prod__plus" (click)="onOwnSetProductAmountChange(product, 'add')">+</button>
+                    <button
+                      class="btn-reset count-prod__minus"
+                      (click)="onOwnSetProductAmountChange(product, 'pop')"
+                    >
+                      -
+                    </button>
+                    <span class="count-prod__count">{{ product.amount }}</span>
+                    <button
+                      class="btn-reset count-prod__plus"
+                      (click)="onOwnSetProductAmountChange(product, 'add')"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
-            <button class="btn-reset sliderMy__btn sliderMy__btn--prev kit-content__btn kit-content__btn--prev">
-              <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
-                <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
-                <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+            <button
+              class="btn-reset sliderMy__btn sliderMy__btn--prev kit-content__btn kit-content__btn--prev"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="39"
+                height="39"
+                viewBox="0 0 39 39"
+                fill="none"
+              >
+                <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8" />
+                <path
+                  d="M22 25L15.9999 18.9999L22 12.9998"
+                  stroke="black"
+                  stroke-linecap="round"
+                />
               </svg>
             </button>
-            <button class="btn-reset sliderMy__btn sliderMy__btn--next kit-content__btn kit-content__btn--next">
-              <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
-                <circle cx="19.5" cy="19.5" r="19" transform="rotate(180 19.5 19.5)" fill="white" stroke="#E8E8E8"/>
-                <path d="M17 14L23.0001 20.0001L17 26.0002" stroke="#1F1F1F" stroke-linecap="round"/>
+            <button
+              class="btn-reset sliderMy__btn sliderMy__btn--next kit-content__btn kit-content__btn--next"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="39"
+                height="39"
+                viewBox="0 0 39 39"
+                fill="none"
+              >
+                <circle
+                  cx="19.5"
+                  cy="19.5"
+                  r="19"
+                  transform="rotate(180 19.5 19.5)"
+                  fill="white"
+                  stroke="#E8E8E8"
+                />
+                <path
+                  d="M17 14L23.0001 20.0001L17 26.0002"
+                  stroke="#1F1F1F"
+                  stroke-linecap="round"
+                />
               </svg>
             </button>
             <div class="sliderMy__scrollbar"></div>
@@ -371,28 +620,63 @@
   <div class="small-container">
     <h2 class="else-product__title">еще товары</h2>
     <span class="else-product__subtitle">вам может понравится</span>
-    <div class=" sliderMy else-product__slider slider-elseProduct">
-      <div class=" sliderMy__wrapper slider-elseProduct__wrapper" *ngIf="otherProducts.length">
-        <div class="sliderMy__slide slider-elseProduct__slide slider-elseProduct-slide" *ngFor="let product of otherProducts">
-          <a [routerLink]="'/product/' + product.id" [href]="'/product/' + product.id">
+    <div class="sliderMy else-product__slider slider-elseProduct">
+      <div
+        class="sliderMy__wrapper slider-elseProduct__wrapper"
+        *ngIf="otherProducts.length"
+      >
+        <div
+          class="sliderMy__slide slider-elseProduct__slide slider-elseProduct-slide"
+          *ngFor="let product of otherProducts"
+        >
+          <button
+            class="btn-reset product__btn"
+            (click)="favorites(product.id)"
+          >
+            <svg
+              class="product__icon"
+              [ngClass]="{ active: checkFavorites(product.id) }"
+            >
+              <use xlink:href="assets/img/sprite.svg#favorites"></use>
+            </svg>
+          </button>
+          <a
+            [routerLink]="'/product/' + product.id"
+            [href]="'/product/' + product.id"
+          >
             <div class="product__wrap">
-              <button class="btn-reset product__btn">
-                <svg class="product__icon">
-                  <use xlink:href="assets/img/sprite.svg#favorites"></use>
-                </svg>
-              </button>
               <div class="product__image-wrap">
                 <picture>
-                  <source [srcset]="product.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
-                  <img loading="lazy" [src]="product.coverImage || 'assets/img/no-img-placeholder.svg'" class="image product__image"
-                       width="" height="" alt="product-image">
+                  <source
+                    [srcset]="
+                      product.coverImage || 'assets/img/no-img-placeholder.svg'
+                    "
+                    type="image/webp"
+                  />
+                  <img
+                    loading="lazy"
+                    [src]="
+                      product.coverImage || 'assets/img/no-img-placeholder.svg'
+                    "
+                    class="image product__image"
+                    width=""
+                    height=""
+                    alt="product-image"
+                  />
                 </picture>
               </div>
-              <span class="product__title">{{product.name}}</span>
-              <span class="product__price">{{product.price}} руб.</span>
+              <span class="product__title">{{ product.name }}</span>
+              <span class="product__price">{{ product.price }} руб.</span>
 
-              <ul class="product__textiles" *ngIf="product.availableColors?.length">
-                <li class="product__textile" [style.background-color]="color" *ngFor="let color of product.availableColors"></li>
+              <ul
+                class="product__textiles"
+                *ngIf="product.availableColors?.length"
+              >
+                <li
+                  class="product__textile"
+                  [style.background-color]="color"
+                  *ngFor="let color of product.availableColors"
+                ></li>
               </ul>
             </div>
           </a>
@@ -400,16 +684,36 @@
       </div>
       <div class="sliderMy__control slider-elseProduct__control">
         <button class="btn-reset sliderMy__btn sliderMy__btn--prev">
-          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
-            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
-            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="39"
+            height="39"
+            viewBox="0 0 39 39"
+            fill="none"
+          >
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8" />
+            <path
+              d="M22 25L15.9999 18.9999L22 12.9998"
+              stroke="black"
+              stroke-linecap="round"
+            />
           </svg>
         </button>
         <div class="sliderMy__scrollbar"></div>
         <button class="btn-reset sliderMy__btn sliderMy__btn--next">
-          <svg xmlns="http://www.w3.org/2000/svg" width="39" height="39" viewBox="0 0 39 39" fill="none">
-            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8"/>
-            <path d="M22 25L15.9999 18.9999L22 12.9998" stroke="black" stroke-linecap="round"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="39"
+            height="39"
+            viewBox="0 0 39 39"
+            fill="none"
+          >
+            <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8" />
+            <path
+              d="M22 25L15.9999 18.9999L22 12.9998"
+              stroke="black"
+              stroke-linecap="round"
+            />
           </svg>
         </button>
       </div>

@@ -309,7 +309,10 @@
               class="btn-reset product__btn"
               (click)="favorites(product.id)"
             >
-              <svg class="product__icon">
+              <svg
+                class="product__icon"
+                [ngClass]="{ active: checkFavorites(product.id) }"
+              >
                 <use xlink:href="assets/img/sprite.svg#favorites"></use>
               </svg>
             </button>

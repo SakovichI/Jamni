@@ -50,11 +50,11 @@ export class AuthService {
   recoveryFinish(value: {
     email: string;
     code: string;
-    password: string;
   }): Observable<{ jwt: string }> {
     return this.http.post<{ jwt: string }>(
-      `${this.url}/auth/recovery/finish`,
-      value
+      `${this.url}/auth/recovery/confirm`,
+      null,
+      { params: value }
     );
   }
 

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
 import { IUserFavorites } from 'src/app/interfaces/users-interface';
-import { IProduct } from '../../../interfaces/product-interface';
 
 @Component({
   selector: 'app-favorites',
@@ -11,7 +10,7 @@ import { IProduct } from '../../../interfaces/product-interface';
 })
 export class FavoritesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  public category: IProduct[] = [];
+  public category: IUserFavorites[] = [];
   public category$: BehaviorSubject<IUserFavorites[]> = new BehaviorSubject<
     IUserFavorites[]
   >([]);
@@ -31,5 +30,19 @@ export class FavoritesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+  favorites(id: number) {
+    let data = { itemId: id, enabled: true };
+    if (this.category.filter((el) => el.id === id).length > 0) {
+      data = { itemId: id, enabled: false };
+    } else {
+      data = { itemId: id, enabled: true };
+    }
+    this.userApi
+      .editFavorites(data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((resp) => {
+        this.category = resp;
+      });
   }
 }

@@ -19,7 +19,6 @@ export class ShellComponent implements OnInit, OnDestroy {
   public formFinish: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     code: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
   });
   constructor(
     private auth: AuthService,
@@ -49,17 +48,18 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   submitFinish(form: FormGroup) {
+    const data = {
+      email: form.value.email,
+      code: form.value.code.toString(),
+    };
     this.auth
-      .recoveryFinish(form.value)
+      .recoveryFinish(data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (resp) => {
           form.reset();
-          this.modal.showSuccess('Пароль успешно изменен');
+          this.modal.showSuccess('Новый пароль отправлен вам на почту');
           this.route.navigate(['./login']);
-          setTimeout(() => {
-            this.modal.showSuccess('');
-          }, 10000);
         },
         (error) => {
           this.modal.showError('Неверный проверочный код');
