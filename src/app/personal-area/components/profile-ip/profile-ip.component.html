@@ -72,12 +72,12 @@
           type="text"
           class="input-reset form__input"
           placeholder="Имя"
-          formControlName="firstName"
+          formControlName="firstname"
           [ngClass]="{
             error:
-              formClient.controls['firstName'].invalid &&
-              (formClient.controls['firstName'].dirty ||
-                formClient.controls['firstName'].touched)
+              formClient.controls['firstname'].invalid &&
+              (formClient.controls['firstname'].dirty ||
+                formClient.controls['firstname'].touched)
           }"
         />
       </label>
@@ -88,12 +88,12 @@
           type="text"
           class="input-reset form__input"
           placeholder="Отчество"
-          formControlName="middleName"
+          formControlName="middlename"
           [ngClass]="{
             error:
-              formClient.controls['middleName'].invalid &&
-              (formClient.controls['middleName'].dirty ||
-                formClient.controls['middleName'].touched)
+              formClient.controls['middlename'].invalid &&
+              (formClient.controls['middlename'].dirty ||
+                formClient.controls['middlename'].touched)
           }"
         />
       </label>

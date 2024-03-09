@@ -137,7 +137,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.auth.getToken()) {
-      this.userApi.getUser().pipe(takeUntil(this.destroy$)).subscribe();
+      this.userApi
+        .getUser()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((resp) => {
+          this.userApi.userS.next(resp);
+        });
       this.userApi.getFavorites().pipe(takeUntil(this.destroy$)).subscribe();
       this.userApi.userFavoriteS
         .pipe(takeUntil(this.destroy$))

@@ -5,7 +5,7 @@
   max-width: 800px;
 }
 
-.address__content{
+.address__content {
   padding-bottom: 45px;
   margin-bottom: 45px;
   border-bottom: 1px solid #d3d3d3;
@@ -19,7 +19,15 @@
   text-transform: uppercase;
   color: #23221e;
 }
-
+.address__empty {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #23221e;
+  font-family: Romile, sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+}
 .address__list {
   list-style: none;
   padding: 16px 24px 20px 24px;
@@ -28,7 +36,7 @@
 }
 
 .address__item {
-  &:not(:first-child){
+  &:not(:first-child) {
     padding-top: 16px;
     margin-top: 16px;
     border-top: 1px solid #d3d3d3;
@@ -51,6 +59,7 @@
   line-height: normal;
   text-transform: uppercase;
   color: #23221e;
+  white-space: nowrap;
 }
 
 .address__info {
@@ -68,13 +77,12 @@
   text-decoration: underline;
   text-align: right;
   color: #a7a7a7;
-  transition: .2s ease-in;
-  &:hover{
-    transition: .2s ease-in;
+  transition: 0.2s ease-in;
+  &:hover {
+    transition: 0.2s ease-in;
     color: #000;
   }
 }
-
 
 .address__btn-add {
   width: 100%;
@@ -90,9 +98,10 @@
     justify-content: space-between;
   }
   .address__info {
-    order: 3
+    flex: 1 1 100%;
+    order: 3;
   }
-  .address__content{
+  .address__content {
     padding-bottom: 28px;
     margin-bottom: 28px;
     border-bottom: 1px solid #d3d3d3;

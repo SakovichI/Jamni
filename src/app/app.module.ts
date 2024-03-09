@@ -180,10 +180,12 @@ const routes: Route[] = [
 @NgModule({
   declarations: [
     AppComponent,
+    FavoritesComponent,
     OrdersComponent,
     OrderComponent,
     DeliveryAdresComponent,
     AddressFormComponent,
+
     ProfileComponent,
     ProfileIpComponent,
     PriceComponent,

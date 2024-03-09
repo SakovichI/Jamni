@@ -23,9 +23,7 @@ export class ApiUserService {
   }
 
   editUser(user: IUsers): Observable<IUsers> {
-    return this.http
-      .put<IUsers>(`${this.url}/users/edit`, user)
-      .pipe(switchMap(() => this.getUser()));
+    return this.http.put<IUsers>(`${this.url}/users/edit`, user);
   }
 
   getFavorites(): Observable<IUserFavorites[]> {

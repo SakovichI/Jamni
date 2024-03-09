@@ -1,20 +1,23 @@
-<form action="#" class="cut-info__form form form-info">
+<form
+  action="#"
+  class="cut-info__form form form-info"
+  [formGroup]="form"
+  (ngSubmit)="submit(form)"
+>
   <div class="form-info__wrap form__wrap">
     <div class="form-info__inner">
-      <h2 class="form-info__title">добавьте адрес доставки</h2>
+      <h2 class="form-info__title">
+        {{ id === 0 ? "добавьте адрес доставки" : "Изменение адреса доставки" }}
+      </h2>
       <div class="form__row">
         <div class="form-group form-info__select form__select">
           <div class="dropdown form-info__dropdown form__dropdown">
-            <button type="button" class="dropdown__button">
-              Россия
-            </button>
+            <button type="button" class="dropdown__button">Россия</button>
             <svg class="dropdown__icon">
               <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
             </svg>
             <ul class="dropdown__list">
-              <li class="dropdown__list-item" data-value="Россия">
-                Россия
-              </li>
+              <li class="dropdown__list-item" data-value="Россия">Россия</li>
               <li class="dropdown__list-item" data-value="Беларусь">
                 Беларусь
               </li>
@@ -22,43 +25,139 @@
                 Казахстан
               </li>
             </ul>
-            <input type="text" name="select-category" value="" class="dropdown__input-hidden">
+            <input
+              type="text"
+              name="select-category"
+              value=""
+              class="dropdown__input-hidden"
+            />
           </div>
         </div>
       </div>
     </div>
     <div class="form-info__row form__row">
       <label class="form__label form-info__label">
-        <input name="name" type="text" class="form__input form-info__input input-reset" placeholder="Имя">
+        <input
+          name="name"
+          type="text"
+          class="form__input form-info__input input-reset"
+          placeholder="Имя"
+          formControlName="firstname"
+          [ngClass]="{
+            error:
+              form.controls['firstname'].invalid &&
+              (form.controls['firstname'].touched ||
+                form.controls['firstname'].dirty)
+          }"
+        />
       </label>
       <label class="form__label form-info__label">
-        <input name="surname" type="text" class="form__input form-info__input input-reset" placeholder="Фамилия">
+        <input
+          name="surname"
+          type="text"
+          class="form__input form-info__input input-reset"
+          placeholder="Фамилия"
+          formControlName="surname"
+          [ngClass]="{
+            error:
+              form.controls['surname'].invalid &&
+              (form.controls['surname'].touched ||
+                form.controls['surname'].dirty)
+          }"
+        />
       </label>
     </div>
     <div class="form-info__row form__row">
       <label class="form__label form-info__label">
-        <input name="city" type="text" class="form__input form-info__input input-reset" placeholder="Город">
+        <input
+          name="city"
+          type="text"
+          class="form__input form-info__input input-reset"
+          placeholder="Город"
+          formControlName="city"
+          [ngClass]="{
+            error:
+              form.controls['city'].invalid &&
+              (form.controls['city'].touched || form.controls['city'].dirty)
+          }"
+        />
       </label>
       <label class="form__label form-info__label">
-        <input name="index" type="text" class="form__input form-info__input input-reset" placeholder="Индекс">
+        <input
+          name="index"
+          type="text"
+          class="form__input form-info__input input-reset"
+          placeholder="Индекс"
+          formControlName="postcode"
+          [ngClass]="{
+            error:
+              form.controls['postcode'].invalid &&
+              (form.controls['postcode'].touched ||
+                form.controls['postcode'].dirty)
+          }"
+        />
       </label>
     </div>
     <div class="form-info__row form__row">
       <label class="form__label form-info__label">
-        <input name="street" type="text" class="form__input form-info__input input-reset" placeholder="Улица">
+        <input
+          name="street"
+          type="text"
+          class="form__input form-info__input input-reset"
+          placeholder="Улица"
+          formControlName="street"
+          [ngClass]="{
+            error:
+              form.controls['street'].invalid &&
+              (form.controls['street'].touched || form.controls['street'].dirty)
+          }"
+        />
       </label>
       <label class="form__label form-info__label">
-        <input name="house-num" type="text" class="form__input form-info__input input-reset"
-               placeholder="Номер дома">
+        <input
+          name="house-num"
+          type="text"
+          class="form__input form-info__input input-reset"
+          placeholder="Номер дома"
+          formControlName="house"
+          [ngClass]="{
+            error:
+              form.controls['house'].invalid &&
+              (form.controls['house'].touched || form.controls['house'].dirty)
+          }"
+        />
       </label>
     </div>
     <div class="form-info__row form__row">
       <label class="form__label form-info__label">
-        <p-inputMask mask="+7(999) 999-99-99" class="form-reg__input form__input" placeholder="Телефон"></p-inputMask>
+        <p-inputMask
+          mask="+7(999) 999-99-99"
+          class="form-reg__input form__input"
+          placeholder="Телефон"
+          formControlName="phone"
+          [ngClass]="{
+            error:
+              form.controls['phone'].invalid &&
+              (form.controls['phone'].touched || form.controls['phone'].dirty)
+          }"
+        ></p-inputMask>
       </label>
     </div>
+    <button
+      type="button"
+      class="btn-reset form-info__btn form-info__btn--delete"
+      (click)="deleteAddress(id)"
+      *ngIf="id !== 0"
+    >
+      Удалить
+    </button>
   </div>
-  <button type="button" class="form-info__btn btn-reset form__btn btn-anim">
-    <span class="form__btn-text form-info__btn-text btn-anim__text" >добавить</span>
+  <button
+    class="form-info__btn btn-reset form__btn btn-anim"
+    [disabled]="form.invalid"
+  >
+    <span class="form__btn-text form-info__btn-text btn-anim__text">{{
+      id === 0 ? "добавить" : "сохранить"
+    }}</span>
   </button>
 </form>

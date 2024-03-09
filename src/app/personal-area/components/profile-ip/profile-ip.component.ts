@@ -18,19 +18,14 @@ export class ProfileIpComponent implements OnInit, OnDestroy {
     isAdvertisementNotifications: new FormControl('', Validators.required),
     phone: new FormControl('', Validators.required),
     surname: new FormControl('', Validators.required),
-    firstName: new FormControl('', Validators.required),
-    middleName: new FormControl('', Validators.required),
+    firstname: new FormControl('', Validators.required),
+    middlename: new FormControl('', Validators.required),
   });
 
   constructor(private userApi: ApiUserService) {}
 
   ngOnInit(): void {
-    this.userApi
-      .getUser()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((resp) => {
-        this.updateForm(resp);
-      });
+    this.userApi.userS.subscribe((resp) => this.updateForm(resp));
   }
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -61,8 +56,8 @@ export class ProfileIpComponent implements OnInit, OnDestroy {
       ),
       phone: new FormControl(data.phone, Validators.required),
       surname: new FormControl(data.surname, Validators.required),
-      firstName: new FormControl(data.firstname, Validators.required),
-      middleName: new FormControl(data.middlename, Validators.required),
+      firstname: new FormControl(data.firstname, Validators.required),
+      middlename: new FormControl(data.middlename, Validators.required),
     });
   }
 }

@@ -8,6 +8,7 @@
           class="input-reset form__input"
           placeholder="Электронная почта"
           formControlName="email"
+          name="email"
           [ngClass]="{
             error:
               formClient.controls['email'].invalid &&
@@ -22,6 +23,7 @@
           class="form__input"
           placeholder="Телефон"
           formControlName="phone"
+          name="phone"
           [ngClass]="{
             error:
               formClient.controls['phone'].invalid &&
@@ -37,6 +39,7 @@
         class="custom-checkbox__field"
         name="mailing"
         value="true"
+        name="mailing"
         formControlName="isAdvertisementNotifications"
         [ngClass]="{
           error:
@@ -58,6 +61,7 @@
           type="text"
           class="input-reset form__input"
           placeholder="Фамилия"
+          name="surname"
           formControlName="surname"
           [ngClass]="{
             error:
@@ -72,12 +76,13 @@
           type="text"
           class="input-reset form__input"
           placeholder="Имя"
-          formControlName="firstName"
+          name="firstName"
+          formControlName="firstname"
           [ngClass]="{
             error:
-              formClient.controls['firstName'].invalid &&
-              (formClient.controls['firstName'].touched ||
-                formClient.controls['firstName'].dirty)
+              formClient.controls['firstname'].invalid &&
+              (formClient.controls['firstname'].touched ||
+                formClient.controls['firstname'].dirty)
           }"
         />
       </label>
@@ -88,12 +93,13 @@
           type="text"
           class="input-reset form__input"
           placeholder="Отчество"
-          formControlName="middleName"
+          name="middlename"
+          formControlName="middlename"
           [ngClass]="{
             error:
-              formClient.controls['middleName'].invalid &&
-              (formClient.controls['middleName'].touched ||
-                formClient.controls['middleName'].dirty)
+              formClient.controls['middlename'].invalid &&
+              (formClient.controls['middlename'].touched ||
+                formClient.controls['middlename'].dirty)
           }"
         />
       </label>
