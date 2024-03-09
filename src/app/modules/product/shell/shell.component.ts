@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, forkJoin, mergeMap, takeUntil } from 'rxjs';
@@ -11,7 +11,7 @@ import { GeneralService } from '../../../core/services/general.service';
   styleUrls: ['./shell.component.css'],
   templateUrl: './shell.component.html',
 })
-export class ShellComponent implements OnDestroy, OnInit {
+export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
   private destroyed$: Subject<any> = new Subject<any>();
   public productId?: number;
   public product: any;
@@ -39,17 +39,6 @@ export class ShellComponent implements OnDestroy, OnInit {
           return;
         }
 
-        setTimeout(() => {
-          const scripts: Element | null = document.querySelector(
-            'script[src="assets/main.js"]'
-          );
-          if (scripts) {
-            document.body.removeChild(scripts);
-          }
-          const script = document.createElement('script');
-          script.src = 'assets/main.js';
-          document.body.appendChild(script);
-        }, 500);
         this.formArray.reset([]);
         this.productId = parseInt(id, 10);
         this.fetchProduct();
@@ -64,6 +53,19 @@ export class ShellComponent implements OnDestroy, OnInit {
       .subscribe((resp) => {
         this.favoriteList = resp;
       });
+  }
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const scriptOld = document.querySelector('[src="assets/main.js"]');
+      if (scriptOld) {
+        document.body.removeChild(scriptOld);
+      }
+    }, 1000);
+    setTimeout(() => {
+      const script = document.createElement('script');
+      script.src = 'assets/main.js';
+      document.body.appendChild(script);
+    }, 1200);
   }
 
   public openDescription() {

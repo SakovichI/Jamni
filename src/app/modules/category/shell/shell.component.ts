@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpParams } from '@angular/common/http';
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
@@ -27,7 +28,7 @@ import { ApiCategoryService, ApiItemService } from '../../../core';
     ]),
   ],
 })
-export class ShellComponent implements OnInit, OnDestroy {
+export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('filter') filterMenu?: ElementRef;
   @ViewChild('sort') sortMenu?: ElementRef;
   public specId: number = 0;
@@ -62,17 +63,6 @@ export class ShellComponent implements OnInit, OnDestroy {
         if (this.categoryId) {
           return;
         }
-        setTimeout(() => {
-          const scriptOld = document.querySelector('[src="assets/main.js"]');
-          if (scriptOld) {
-            document.body.removeChild(scriptOld);
-          }
-        }, 1000);
-        setTimeout(() => {
-          const script = document.createElement('script');
-          script.src = 'assets/main.js';
-          document.body.appendChild(script);
-        }, 1200);
       });
   }
 
@@ -93,6 +83,19 @@ export class ShellComponent implements OnInit, OnDestroy {
       .subscribe((resp) => {
         this.favoriteList = resp;
       });
+  }
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const scriptOld = document.querySelector('[src="assets/main.js"]');
+      if (scriptOld) {
+        document.body.removeChild(scriptOld);
+      }
+    }, 1000);
+    setTimeout(() => {
+      const script = document.createElement('script');
+      script.src = 'assets/main.js';
+      document.body.appendChild(script);
+    }, 1200);
   }
 
   private fetchCategory(): void {
