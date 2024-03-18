@@ -1,1 +1,1 @@
-export * from './designer-area.module'
+export * from '../designer-area/designer-area.module';

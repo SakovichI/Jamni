@@ -189,7 +189,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   login() {
     if (this.auth.getToken()) {
       this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe((resp) => {
-        switch (resp.userType) {
+        switch (resp.userRole) {
           case 'CLIENT':
             this.route.navigate(['../client-area']);
             break;

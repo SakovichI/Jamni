@@ -1,1 +1,1 @@
-export * from '../../load-project/shell/shell.component';
+export * from '../../designer-area/shell/shell.component';

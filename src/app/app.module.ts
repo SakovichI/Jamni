@@ -151,6 +151,12 @@ const routes: Route[] = [
     data: { animation: 'registration' },
   },
   {
+    path: 'admin',
+    loadChildren: () => import('@admin-area').then((m) => m.AdminAreaModule),
+    data: { animation: 'admin-area' },
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'client-area',
     loadChildren: () =>
       import('@client-area').then((m) => m.PersonalAreaClientModule),
@@ -160,7 +166,7 @@ const routes: Route[] = [
   {
     path: 'designer-area',
     loadChildren: () =>
-      import('@designer-area').then((m) => m.DesignerAreaModule),
+      import('src/app/modules/designer-area').then((m) => m.DesignerAreaModule),
     data: { animation: 'designer-area' },
     canActivate: [AuthGuard],
   },

@@ -28,8 +28,9 @@
       "@login": ["src/app/modules/log-in/index.ts"],
       "@recovery": ["src/app/modules/recovery/index.ts"],
       "@registration": ["src/app/modules/registration/index.ts"],
+      "@admin-area": ["src/app/modules/admin-area/index.ts"],
       "@client-area": ["src/app/modules/personal-area-client/index.ts"],
-      "@designer-area": ["src/app/modules/designer-area/index.ts"],
+      "@designer-area": ["src/app/modules/designer-area//index.ts"],
       "@wholesaler-area": ["src/app/modules/resaler-area/index.ts"]
     },
     "forceConsistentCasingInFileNames": true,

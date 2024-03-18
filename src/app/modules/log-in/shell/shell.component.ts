@@ -39,7 +39,9 @@ export class ShellComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (resp) => {
-          switch (resp.userType) {
+          console.log(resp.userRole);
+
+          switch (resp.userRole) {
             case 'CLIENT':
               this.route.navigate(['../client-area']);
               break;
