@@ -43,9 +43,6 @@
   }
 }
 
-.address-elem {
-}
-
 .address-elem__wrap {
   display: flex;
   gap: 20px;

@@ -13,9 +13,11 @@ import { IAddress } from 'src/app/interfaces/address-inteface';
 export class AddressFormComponent implements OnInit, OnDestroy {
   public id: number = 0;
   private destroy$ = new Subject<void>();
+
   public form: FormGroup = new FormGroup({
     firstname: new FormControl('', Validators.required),
     surname: new FormControl('', Validators.required),
+    country: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     postcode: new FormControl('', Validators.required),
     street: new FormControl('', Validators.required),
@@ -92,6 +94,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       firstname: new FormControl(data.firstname, Validators.required),
       surname: new FormControl(data.surname, Validators.required),
+      country: new FormControl(data.country, Validators.required),
       city: new FormControl(data.city, Validators.required),
       postcode: new FormControl(data.postcode, Validators.required),
       street: new FormControl(data.street, Validators.required),

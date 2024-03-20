@@ -1,37 +1,64 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from "@angular/core";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {GeneralService} from "../../../core/services/general.service";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import { ApiAddressService } from 'src/app/core/api/api-address.service';
+import { ApiUserService } from 'src/app/core/api/api-user.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { IAddress } from 'src/app/interfaces/address-inteface';
+import { GeneralService } from '../../../core/services/general.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./shell.component.css'],
-  templateUrl: './shell.component.html'
+  templateUrl: './shell.component.html',
 })
-export class ShellComponent implements OnInit,OnDestroy {
+export class ShellComponent implements OnInit, OnDestroy {
+  public destroy$ = new Subject<void>();
+  private email = '';
   public form: FormGroup = new FormGroup({
-    email: new FormControl(null, [Validators.required, Validators.email]),
-    name: new FormControl(null, [Validators.required]),
-    surname: new FormControl(null, [Validators.required]),
-    city: new FormControl(null, [Validators.required]),
-    index: new FormControl(null, [Validators.required]),
-    street: new FormControl(null, [Validators.required]),
-    house: new FormControl(null, [Validators.required]),
-    phone: new FormControl(null, [Validators.required, Validators.pattern(/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    name: new FormControl('', [Validators.required]),
+    surname: new FormControl('', [Validators.required]),
+    country: new FormControl('Россия', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    index: new FormControl('', [Validators.required]),
+    street: new FormControl('', [Validators.required]),
+    house: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^\+\d{1}\(\d{3}\) \d{3}-\d{2}-\d{2}$/),
+    ]),
   });
-  constructor(public generalService: GeneralService) {
-  }
+  public showModal = false;
+  public addressArray: IAddress[] = [];
+
+  constructor(
+    public generalService: GeneralService,
+    private addressApi: ApiAddressService,
+    public auth: AuthService,
+    private userApi: ApiUserService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   public ngOnInit(): void {
-    setTimeout(()=>{
-      const scripts:Element | null = document.querySelector('script[src="assets/main.js"]');
-      if (scripts){
-        document.body.removeChild(scripts)
+    setTimeout(() => {
+      const scripts: Element | null = document.querySelector(
+        'script[src="assets/main.js"]'
+      );
+      if (scripts) {
+        document.body.removeChild(scripts);
       }
       const script = document.createElement('script');
       script.src = 'assets/main.js';
-      document.body.appendChild(script)
-    }, 500)
-    if (localStorage.getItem('form')){
+      document.body.appendChild(script);
+    }, 500);
+    if (localStorage.getItem('form')) {
       const savedForm = JSON.parse(localStorage.getItem('form') as string);
       this.form.controls['email'].setValue(savedForm.email);
       this.form.controls['name'].setValue(savedForm.name);
@@ -42,17 +69,45 @@ export class ShellComponent implements OnInit,OnDestroy {
       this.form.controls['house'].setValue(savedForm.house);
       this.form.controls['phone'].setValue(savedForm.phone);
     }
-    // console.log(this.form)
-    // this.form.markAsDirty();
-    // this.form.markAsTouched();
-    // this.form.markAsDirty();
+    if (this.auth.getToken()) {
+      this.showModal = !this.showModal;
+      this.userApi.userS.subscribe((resp) => {
+        this.email = resp.email;
+        this.form.controls['email'].setValue(resp.email);
+      });
+      this.addressApi
+        .getAddress()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((resp) => {
+          this.addressArray = resp;
+          this.cdr.detectChanges();
+        });
+    }
   }
-
   public ngOnDestroy(): void {
-    localStorage.setItem('form', JSON.stringify(this.form.value))
+    this.destroy$.next();
+    this.destroy$.complete();
+    localStorage.setItem('form', JSON.stringify(this.form.value));
   }
 
   public onSaveFormToStorageClick(): void {
-    localStorage.setItem('form', JSON.stringify(this.form.value))
+    if (localStorage.getItem('form')) {
+      localStorage.removeItem('form');
+    } else {
+      localStorage.setItem('form', JSON.stringify(this.form.value));
+    }
+  }
+
+  updateForm(value: IAddress) {
+    this.form.controls['name'].setValue(value.firstname);
+    this.form.controls['surname'].setValue(value.surname);
+    this.form.controls['country'].setValue(value.country);
+    this.form.controls['city'].setValue(value.city);
+    this.form.controls['index'].setValue(value.postcode);
+    this.form.controls['street'].setValue(value.street);
+    this.form.controls['house'].setValue(value.house);
+    this.form.controls['phone'].setValue(value.phone);
+
+    this.showModal = !this.showModal;
   }
 }

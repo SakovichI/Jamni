@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
-import { IUserFavorites, IUsers } from 'src/app/interfaces/users-interface';
+import {
+  IUserBalance,
+  IUserFavorites,
+  IUsers,
+} from 'src/app/interfaces/users-interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -39,5 +43,8 @@ export class ApiUserService {
     return this.http
       .put(`${this.url}/users/favorite/edit`, data)
       .pipe(switchMap(() => this.getFavorites()));
+  }
+  getUserBalance(): Observable<IUserBalance> {
+    return this.http.get<IUserBalance>(`${this.url}/users/balance`);
   }
 }

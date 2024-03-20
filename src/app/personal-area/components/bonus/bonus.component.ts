@@ -1,5 +1,13 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, NgModel } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
+import { ApiUserService } from 'src/app/core/api/api-user.service';
 
 @Component({
   selector: 'app-bonus',
@@ -7,16 +15,22 @@ import { FormControl, FormGroup, NgModel } from '@angular/forms';
   styleUrls: ['./bonus.component.css'],
   providers: [NgModel],
 })
-export class BonusComponent implements OnInit, AfterViewInit {
-  balance: number = 800000;
+export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
+  balance: number = 0;
   percentBonus: number = 0;
+  public destroy$ = new Subject<void>();
   public form: FormGroup = new FormGroup({
     value: new FormControl(''),
   });
   @ViewChild('line') line?: any;
-  constructor() {}
+  constructor(private userApi: ApiUserService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userApi
+      .getUserBalance()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((resp) => (this.balance = resp.balance));
+  }
   ngAfterViewInit(): void {
     if (this.line) {
       const dotWrap: HTMLElement = this.line.sliderHandle.nativeElement;
@@ -29,6 +43,10 @@ export class BonusComponent implements OnInit, AfterViewInit {
       dotWrap.insertAdjacentHTML('afterbegin', tooltip);
       this.updateValue();
     }
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   showTooltip(event: any) {
