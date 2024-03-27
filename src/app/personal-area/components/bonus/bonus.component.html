@@ -3,9 +3,9 @@
     <div class="bonus__head">
       <div class="bonus__head-item">
         <span class="bonus__head-item__text">ваш баланс</span>
-        <span class="bonus__head-item__text bonus__head-item__text--lg"
-          >1 200 000 руб</span
-        >
+        <span class="bonus__head-item__text bonus__head-item__text--lg">{{
+          balance + "руб."
+        }}</span>
       </div>
       <div class="bonus__head-chart">
         <div class="chart__wrap" (mouseleave)="resetTooltip($event)">

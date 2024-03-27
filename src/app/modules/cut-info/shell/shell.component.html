@@ -334,7 +334,11 @@
     </div>
   </div>
 </section>
-<div class="popup" *ngIf="showModal" [ngClass]="{ open: showModal }">
+<div
+  class="popup"
+  *ngIf="showModal && addressArray.length > 0"
+  [ngClass]="{ open: showModal }"
+>
   <div class="popup__overlay" (click)="showModal = !showModal"></div>
   <div class="popup__content">
     <button class="btn-reset popup__btn-close" (click)="showModal = !showModal">

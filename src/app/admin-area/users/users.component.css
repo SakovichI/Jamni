@@ -1,0 +1,135 @@
+.users-content {
+}
+.users-content__table {
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.users-content__search {
+  margin-bottom: 20px;
+}
+.users-content__search input {
+  padding: 0px 44px;
+  font-family: "Proxima Nova", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 214%;
+  color: #000;
+  border-radius: 20px;
+  width: 296px;
+  height: 37px;
+  background: #f5f5f5;
+  border: 0.5px solid transparent;
+  transition: 0.2s ease-in;
+  &:focus {
+    outline: none;
+    border: 0.5px solid #000;
+    transition: 0.2s ease-in;
+  }
+}
+.p-input-icon-left > i {
+  left: 20px;
+}
+.users-content__th {
+  padding: 5px 5px 20px 5px;
+  font-size: 18px;
+  text-align: left;
+  color: #d3d3d3;
+  transition: 0.2s ease-in;
+}
+.users-content__th.p-highlight {
+  color: #000;
+  transition: 0.2s ease-in;
+}
+.users-content__tr {
+  background-color: #fff;
+  transition: 0.2s ease-in;
+  &:nth-child(even) {
+    background: #fcfcfc;
+  }
+  &:hover {
+    background-color: #f5f5f5;
+    transition: 0.2s ease-in;
+  }
+}
+.users-content__td {
+  padding: 10px 5px;
+  font-size: 16px;
+  overflow: visible;
+  cursor: pointer;
+}
+/* Status */
+.users-content__status {
+}
+.users-status {
+}
+.users-status__tooltip {
+  position: relative;
+  cursor: pointer;
+  &:hover .users-status__tooltip-text {
+    visibility: visible;
+    opacity: 1;
+    transition: 0.2s ease-in;
+  }
+}
+.users-status__tooltip-text {
+  position: absolute;
+  top: -40px;
+  left: -100px;
+  width: 220px;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 14px 0 rgba(0, 0, 0, 0.12);
+  text-align: center;
+  font-size: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.2s ease-in;
+}
+
+.user-status__icon.pi-check-circle {
+  font-size: 24px;
+  color: green;
+}
+.user-status__icon.pi-times-circle {
+  font-size: 24px;
+  color: #e17070;
+}
+@media all and (max-width: 960px) {
+  .users-content__tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "id id"
+      "surname firstname"
+      "email status";
+    flex-direction: row;
+    &:not(:last-child) {
+      border-bottom: 1px solid #d3d3d3;
+    }
+    &:nth-child(even) {
+      background: #fff;
+    }
+  }
+  .users-content__td {
+    &:nth-child(1) {
+      grid-area: id;
+    }
+    &:nth-child(2) {
+      grid-area: surname;
+      background-color: #f5f5f5;
+    }
+    &:nth-child(3) {
+      grid-area: firstname;
+      background-color: #f5f5f5;
+    }
+    &:nth-child(4) {
+      grid-area: email;
+    }
+    &:nth-child(5) {
+      grid-area: status;
+    }
+  }
+}

@@ -1,0 +1,82 @@
+<div class="users-content">
+  <p-table
+    class="users-content__table"
+    [value]="usersArr"
+    #dt1
+    [globalFilterFields]="['id', 'firstname', 'surname', 'email', 'userRole']"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    responsiveLayout="stack"
+    currentPageReportTemplate="Показано {first} из {last} всего {totalRecords}"
+  >
+    <ng-template pTemplate="caption" class="users-content__header">
+      <div class="users-content__search">
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt1.filterGlobal($any($event).target.value, 'contains')"
+            placeholder="Поиск"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="users-content__th" pSortableColumn="id">
+          ID <p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th class="users-content__th" pSortableColumn="surname">
+          Фамилия <p-sortIcon field="surname"></p-sortIcon>
+        </th>
+        <th class="users-content__th" pSortableColumn="firstname">
+          Имя <p-sortIcon field="firstname"></p-sortIcon>
+        </th>
+        <th class="users-content__th" pSortableColumn="userType">
+          Тип <p-sortIcon field="userType"></p-sortIcon>
+        </th>
+
+        <th class="users-content__th" pSortableColumn="email">
+          Почта <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th class="users-content__th" pSortableColumn="userRole">
+          Статус <p-sortIcon field="userRole"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" class="users-content__body" let-user>
+      <tr class="users-content__tr" [routerLink]="user.id">
+        <td class="users-content__td">{{ user.id }}</td>
+        <td class="users-content__td">{{ user.surname }}</td>
+        <td class="users-content__td">{{ user.firstname }}</td>
+        <td class="users-content__td">
+          <ng-container [ngSwitch]="user.userType">
+            <ng-template ngSwitchCase="CLIENT">Клиент</ng-template>
+            <ng-template ngSwitchCase="DESIGNER">Дизайнер</ng-template>
+            <ng-template ngSwitchCase="WHOSALER">Оптовик</ng-template>
+          </ng-container>
+        </td>
+        <td class="users-content__td">{{ user.email }}</td>
+        <td class="users-content__td users-content__status users-status">
+          <span class="users-status__tooltip">
+            <span class="users-status__tooltip-text">{{
+              user.userRole !== "NOT_VERIFIED"
+                ? "Пользователь прошел модерацию"
+                : "Пользователь не прошел модерацию"
+            }}</span>
+            <i
+              class="pi-check-circle pi user-status__icon"
+              *ngIf="user.userRole !== 'NOT_VERIFIED'"
+            ></i>
+            <i
+              class="pi-times-circle pi user-status__icon"
+              *ngIf="user.userRole === 'NOT_VERIFIED'"
+            ></i>
+          </span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -20,6 +20,7 @@ import { ApiCategoryService } from './core';
 import { ApiUserService } from './core/api/api-user.service';
 import { AuthService } from './core/services/auth.service';
 import { GeneralService } from './core/services/general.service';
+import { ModalsService } from './core/services/modals.service';
 
 @Component({
   selector: 'app-root',
@@ -81,7 +82,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     public contexts: ChildrenOutletContexts,
     public auth: AuthService,
     public userApi: ApiUserService,
-    public route: Router
+    public route: Router,
+    public modal: ModalsService
   ) {
     const script: Element | null = document.querySelector(
       'script[src="assets/main.js"]'
@@ -189,21 +191,25 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   login() {
     if (this.auth.getToken()) {
       this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe((resp) => {
-        switch (resp.userRole) {
-          case 'CLIENT':
-            this.route.navigate(['../client-area']);
-            break;
-          case 'DESIGNER':
-            this.route.navigate(['../designer-area']);
-            break;
-          case 'WHOLESALER':
-            this.route.navigate(['../wholesaler-area']);
-            break;
-          case 'ADMIN':
-            this.route.navigate(['../admin']);
-            break;
-          default:
-            this.route.navigate(['/']);
+        if (!resp.isLocked) {
+          switch (resp.userRole) {
+            case 'CLIENT':
+              this.route.navigate(['../client-area']);
+              break;
+            case 'DESIGNER':
+              this.route.navigate(['../designer-area']);
+              break;
+            case 'WHOLESALER':
+              this.route.navigate(['../wholesaler-area']);
+              break;
+            case 'ADMIN':
+              this.route.navigate(['../admin']);
+              break;
+            default:
+              this.route.navigate(['/']);
+          }
+        } else {
+          this.modal.showError('Ваш аккаунт временно заблокирован');
         }
       });
     } else {

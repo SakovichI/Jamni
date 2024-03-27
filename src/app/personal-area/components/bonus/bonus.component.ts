@@ -95,13 +95,13 @@ export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
         const target = e.target;
         if (wrap) {
           if (!wrap?.contains(target) && wrap !== target) {
-            this.balance = 800000;
+            this.balance = this.balance;
             this.updateValue();
           }
         }
       });
     } else {
-      this.balance = 800000;
+      this.balance = this.balance;
       this.updateValue();
     }
   }

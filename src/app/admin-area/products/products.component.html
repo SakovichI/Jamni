@@ -1,0 +1,87 @@
+<div class="products-content">
+  <div class="products-content__header">
+    <a routerLink="../" class="products-content__header-link">
+      <i class="products-content__header-icon pi pi-arrow-left"></i>
+      <h2 class="products-content__header-title">
+        {{ category.name }}
+      </h2>
+    </a>
+  </div>
+  <p-table
+    class="products-content__table"
+    [value]="category.items"
+    #dt2
+    [globalFilterFields]="['id', 'name', 'price']"
+    [paginator]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    responsiveLayout="stack"
+    currentPageReportTemplate="Показано {first} из {last} всего {totalRecords}"
+  >
+    <ng-template pTemplate="caption" class="products-content__header">
+      <div class="products-content__search">
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            (input)="dt2.filterGlobal($any($event).target.value, 'contains')"
+            placeholder="Поиск"
+          />
+        </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="products-content__th" pSortableColumn="id">
+          ID <p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th></th>
+        <th class="products-content__th" pSortableColumn="name">
+          Название <p-sortIcon field="name"></p-sortIcon>
+        </th>
+
+        <th class="products-content__th" pSortableColumn="price">
+          Цена <p-sortIcon field="price"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr class="products-content__tr">
+        <td class="products-content__td products-content__td--id">
+          {{ product.id }}
+        </td>
+        <td class="products-content__td products-content__td--img">
+          <img
+            loading="lazy"
+            [src]="product.coverImage || 'assets/img/no-img-placeholder.svg'"
+            alt="product image"
+            width="120"
+            height="120"
+            class="products-content__img"
+          />
+        </td>
+        <td class="products-content__td">{{ product.name }}</td>
+        <td class="products-content__td">{{ product.price + " руб." }}</td>
+        <td
+          class="products-content__td products-content__controls product-controls"
+        >
+          <button
+            class="btn-reset product-controls__btn-edit"
+            [routerLink]="'product/' + product.id"
+          >
+            <i class="pi product-controls__icon pi-pencil"></i>
+          </button>
+          <button
+            class="btn-reset product-controls__btn-delete"
+            [ngClass]="{ disabled: !product.enabled }"
+            (click)="deleteProduct(product)"
+          >
+            <i class="pi product-controls__icon pi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -12,7 +12,7 @@
 
 .form__wrap {
   margin-bottom: 35px;
-  &:last-of-type{
+  &:last-of-type {
     margin-bottom: 45px;
     padding-bottom: 45px;
     border-bottom: 1px solid #d3d3d3;
@@ -23,7 +23,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  &:not(:last-child){
+  &:not(:last-child) {
     margin-bottom: 20px;
   }
 }
@@ -42,13 +42,11 @@
   height: 48px;
 }
 
-
 .form-reg__checkbox {
   margin-top: 4px;
   display: block;
   height: max-content;
 }
-
 
 .form-reg__checkbox-content {
   font-family: "ProximaNova", sans-serif;
@@ -61,12 +59,12 @@
     position: absolute;
     left: 0;
     top: 0;
-    border: 1px solid #D3D3D3;
+    border: 1px solid #d3d3d3;
     width: 18px;
     height: 18px;
     border-radius: 50%;
     box-sizing: border-box;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
   }
 
   &:after {
@@ -78,13 +76,11 @@
     width: 18px;
     height: 12px;
   }
-
 }
 
 .custom-checkbox__field:checked + .form-reg__checkbox-content::before {
   outline: none;
 }
-
 
 @media all and (max-width: 650px) {
   .form__title {
@@ -93,7 +89,7 @@
   }
   .form__wrap {
     margin-bottom: 24px;
-    &:last-of-type{
+    &:last-of-type {
       margin-bottom: 28px;
       padding-bottom: 28px;
       border-bottom: 1px solid #d3d3d3;
@@ -101,10 +97,10 @@
   }
   .form__row {
     display: flex;
-    align-items:stretch;
+    align-items: stretch;
     flex-direction: column;
     gap: 10px;
-    &:not(:last-child){
+    &:not(:last-child) {
       margin-bottom: 10px;
     }
   }

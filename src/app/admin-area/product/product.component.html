@@ -1,0 +1,492 @@
+<div class="product">
+  <div class="product__wrap">
+    <div class="product__header">
+      <a routerLink="../../" class="product__header-link">
+        <i class="product__header-icon pi pi-arrow-left"></i>
+        <h1 class="product__header-title">
+          {{ product.name }}
+        </h1>
+      </a>
+    </div>
+
+    <div class="product__content content-product">
+      <form [formGroup]="mainForm" class="form-main">
+        <div class="content-product__images product-image">
+          <label class="product-image__main">
+            <span class="product-image__main-title">Главное фото</span>
+            <img
+              class="product-image__img"
+              [src]="product.coverImage"
+              alt="image"
+              width="350"
+              height="350"
+            />
+            <input
+              class="input-reset product-image__input-file"
+              type="file"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+            />
+          </label>
+          <div class="product-image__slider">
+            <span class="product-image__slider-title"
+              >Дополнительные изображения:</span
+            >
+            <div class="product-image__slider-wrap">
+              <div
+                class="product-image__slide"
+                *ngFor="let item of product.loadAdditionalImages; let i = index"
+              >
+                <img
+                  [src]="item"
+                  alt="prod-Image"
+                  width="250px"
+                  height="250px"
+                  class="product-image__slide-img"
+                  (click)="imageClick(i)"
+                />
+                <button
+                  type="button"
+                  class="btn-reset product-image__btn-remove"
+                  (click)="removeImage(i)"
+                >
+                  X
+                </button>
+              </div>
+            </div>
+            <div class="sliderMy__control slider-elseProduct__control">
+              <button
+                type="button"
+                class="btn-reset sliderMy__btn sliderMy__btn--prev"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="39"
+                  height="39"
+                  viewBox="0 0 39 39"
+                  fill="none"
+                >
+                  <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8" />
+                  <path
+                    d="M22 25L15.9999 18.9999L22 12.9998"
+                    stroke="black"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+              <div class="sliderMy__scrollbar"></div>
+              <button
+                type="button"
+                class="btn-reset sliderMy__btn sliderMy__btn--next"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="39"
+                  height="39"
+                  viewBox="0 0 39 39"
+                  fill="none"
+                >
+                  <circle cx="19.5" cy="19.5" r="19" stroke="#E8E8E8" />
+                  <path
+                    d="M22 25L15.9999 18.9999L22 12.9998"
+                    stroke="black"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+            </div>
+            <label class="form-main__label product-image__main">
+              <span type="button" class="btn-reset product-image__main-btn-add">
+                Загрузить изображения
+              </span>
+              <input
+                class="input-reset product-image__input-file"
+                type="file"
+                (change)="onFilesSelected($event)"
+                multiple
+                accept="image/*"
+              />
+            </label>
+          </div>
+        </div>
+        <div class="product-info">
+          <label class="product-info__label form-main__label">
+            <span class="product-info__label-text form-main__label-text"
+              >Название:</span
+            >
+            <input
+              type="text"
+              class="form-main__input input-reset"
+              formControlName="name"
+              placeholder="Название товара"
+              [ngClass]="{
+                error:
+                  mainForm.controls['name'].invalid &&
+                  (mainForm.controls['name'].touched ||
+                    mainForm.controls['name'].dirty)
+              }"
+            />
+          </label>
+          <label class="product-info__label form-main__label">
+            <span class="product-info__label-text form-main__label-text"
+              >Стартовая цена:</span
+            >
+            <input
+              type="number"
+              class="form-main__input input-reset"
+              formControlName="price"
+              placeholder="Цена"
+              [ngClass]="{
+                error:
+                  mainForm.controls['price'].invalid &&
+                  (mainForm.controls['price'].touched ||
+                    mainForm.controls['price'].dirty)
+              }"
+            />
+          </label>
+          <div class="section-product-form form-main__label">
+            <div class="section-product-form__inner">
+              <span class="section-product-form__title form-main__label-text"
+                >Категория:
+              </span>
+              <div class="section-product-form__row">
+                <div class="form-group section-product-form__select">
+                  <div class="dropdown section-product-form__dropdown">
+                    <button
+                      type="button"
+                      class="dropdown__button dropdown__button--prod"
+                    >
+                      {{ activeCategory }}
+                    </button>
+                    <svg class="dropdown__icon">
+                      <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
+                    </svg>
+                    <ul class="dropdown__list">
+                      <ng-container *ngFor="let categoryItem of category">
+                        <ng-container
+                          [ngSwitch]="categoryItem.childCategoryIds.length"
+                        >
+                        </ng-container>
+                        <li
+                          class="dropdown__list-group"
+                          *ngIf="categoryItem.childCategoryIds.length !== 0"
+                        >
+                          <span class="dropdown__list-group-name">
+                            {{ categoryItem.name + ":" }}
+                          </span>
+                          <ul>
+                            <li
+                              class="dropdown__list-item dropdown__list-item--prod"
+                              *ngFor="let item of categoryItem.childCategoryIds"
+                              (click)="selectCategory(item)"
+                            >
+                              {{ item.name }}
+                            </li>
+                          </ul>
+                        </li>
+                        <li
+                          class="dropdown__list-item dropdown__list-item--prod dropdown__list-group-name"
+                          *ngIf="categoryItem.childCategoryIds.length === 0"
+                          (click)="selectCategory(categoryItem)"
+                        >
+                          {{ categoryItem.name }}
+                        </li>
+                      </ng-container>
+                    </ul>
+                    <input
+                      type="text"
+                      name="select-category"
+                      value=""
+                      class="dropdown__input-hidden"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="custom-checkbox form-reg__checkbox">
+            <input
+              type="checkbox"
+              class="custom-checkbox__field"
+              name="enable"
+              formControlName="enabled"
+              [ngClass]="{
+                error:
+                  mainForm.controls['enabled'].invalid &&
+                  (mainForm.controls['enabled'].touched ||
+                    mainForm.controls['enabled'].dirty)
+              }"
+            />
+            <span class="custom-checkbox__content form-reg__checkbox-content"
+              >Товар в наличии
+            </span>
+          </label>
+        </div>
+      </form>
+    </div>
+    <h2 class="product__title2">Описание товара:</h2>
+    <div class="desc-product" *ngIf="product.descriptions">
+      <ul class="desc-product__wrap">
+        <li
+          aria-expanded="true"
+          class="desc-product__item item-desc"
+          *ngFor="let descForm of descFormArr.controls; let i = index"
+        >
+          <form [formGroup]="$any(descForm)">
+            <label class="item-desc__title form-main__label">
+              <span class="form-main__label-text">
+                Заголовок
+                <button
+                  type="button"
+                  class="btn-reset form-main__desc-remove"
+                  (click)="removeDescItem(i)"
+                  *ngIf="i > 0"
+                >
+                  Удалить поле
+                </button>
+              </span>
+
+              <input
+                type="text"
+                class="item-desc__title input-reset form-main__input"
+                formControlName="name"
+                [ngClass]="{
+                  error:
+                    $any(descForm).controls['name'].invalid &&
+                    ($any(descForm).controls['name'].touched ||
+                      $any(descForm).controls['name'].dirty)
+                }"
+              />
+            </label>
+            <div class="item-desc__content">
+              <angular-editor
+                [id]="'editor' + i"
+                placeholder="Заполните поле..."
+                formControlName="descriptionHtml"
+                [config]="editorConfig"
+                [ngClass]="{
+                  error:
+                    $any(descForm).controls['descriptionHtml'].invalid &&
+                    ($any(descForm).controls['descriptionHtml'].touched ||
+                      $any(descForm).controls['descriptionHtml'].dirty)
+                }"
+              ></angular-editor>
+            </div>
+          </form>
+        </li>
+        <button
+          type="button"
+          class="btn-reset desc-product__btn-add btn-anim"
+          (click)="addDescItem()"
+        >
+          <span class="btn-anim__text">Добавить поле</span>
+        </button>
+      </ul>
+    </div>
+
+    <div class="product__specifications specifications">
+      <div class="specifications__wrap">
+        <h2 class="product__title2">Спецификации:</h2>
+        <ng-container
+          [ngSwitch]="specFormGroup.value.specification.selectType"
+          *ngFor="let specFormGroup of formArray.controls; let i = index"
+        >
+          <ng-template [ngSwitchCase]="'SELECTING'">
+            <div class="form-product__section section-product-form">
+              <div class="section-product-form__inner">
+                <span class="section-product-form__title"
+                  >{{ specFormGroup.value.specification.name }} :
+                </span>
+                <div class="section-product-form__row">
+                  <label
+                    class="section-product-form__label"
+                    *ngFor="
+                      let option of specFormGroup.value.specification.values
+                    "
+                  >
+                    <input
+                      type="radio"
+                      class="section-product-form__input input-reset"
+                      [value]="option"
+                      [name]="'size' + i"
+                      [formControl]="$any(specFormGroup).controls.value"
+                    />
+                    <span class="section-product-form__text">{{
+                      option.value
+                    }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'DROPDOWN'">
+            <div
+              class="form-product__section section-product-form"
+              *ngIf="specFormGroup.value.specification.valueType !== 'COLOR'"
+            >
+              <div class="section-product-form__inner">
+                <span class="section-product-form__title"
+                  >{{ specFormGroup.value.specification.name }}:
+                </span>
+                <div class="section-product-form__row">
+                  <div class="form-group section-product-form__select">
+                    <div class="dropdown section-product-form__dropdown">
+                      <button type="button" class="dropdown__button">
+                        {{ $any(specFormGroup).value.value.value }}
+                      </button>
+                      <svg class="dropdown__icon">
+                        <use
+                          xlink:href="assets/img/sprite.svg#arrow-down"
+                        ></use>
+                      </svg>
+                      <ul class="dropdown__list">
+                        <li
+                          class="dropdown__list-item"
+                          *ngFor="
+                            let option of specFormGroup.value.specification
+                              .values
+                          "
+                          (click)="specFormGroup.get('value')?.setValue(option)"
+                        >
+                          {{ option.value }}
+                        </li>
+                      </ul>
+                      <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="form-product__section section-product-form"
+              *ngIf="specFormGroup.value.specification.valueType === 'COLOR'"
+            >
+              <div class="section-product-form__inner">
+                <span class="section-product-form__title"
+                  >{{ specFormGroup.value.specification.name }}:
+                </span>
+                <div class="section-product-form__row">
+                  <div class="form-group section-product-form__select">
+                    <div class="dropdown section-product-form__dropdown">
+                      <button type="button" class="dropdown__button">
+                        <span class="dropdown__value">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 19 19"
+                            fill="none"
+                          >
+                            <circle cx="9.5" cy="9.5" r="9.5" fill="#C7C4BF" />
+                          </svg>
+                          {{ $any(specFormGroup).value.value.value }}
+                        </span>
+                      </button>
+                      <svg class="dropdown__icon">
+                        <use
+                          xlink:href="assets/img/sprite.svg#arrow-down"
+                        ></use>
+                      </svg>
+                      <ul class="dropdown__list">
+                        <li
+                          class="dropdown__list-item"
+                          *ngFor="
+                            let option of specFormGroup.value.specification
+                              .values
+                          "
+                          (click)="specFormGroup.get('value')?.setValue(option)"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 19 19"
+                            fill="none"
+                          >
+                            <circle cx="9.5" cy="9.5" r="9.5" fill="#C7C4BF" />
+                          </svg>
+                          {{ option.value }}
+                        </li>
+                      </ul>
+                      <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template [ngSwitchCase]="'CHECKBOX'">
+            <div class="form-product__section section-product-form">
+              <div class="section-product-form__inner">
+                <span class="section-product-form__title"
+                  >{{ specFormGroup.value.specification.name }}:
+                </span>
+                <div class="section-product-form__row">
+                  <div class="form-group section-product-form__select">
+                    <div class="dropdown section-product-form__dropdown">
+                      <button type="button" class="dropdown__button">
+                        {{ specFormGroup.get("value")?.value ? "Да" : "Нет" }}
+                      </button>
+                      <svg class="dropdown__icon">
+                        <use
+                          xlink:href="assets/img/sprite.svg#arrow-down"
+                        ></use>
+                      </svg>
+                      <ul class="dropdown__list">
+                        <li
+                          class="dropdown__list-item"
+                          (click)="
+                            specFormGroup
+                              .get('value')
+                              ?.setValue(specFormGroup.value.specification)
+                          "
+                        >
+                          Да
+                        </li>
+                        <li
+                          class="dropdown__list-item"
+                          (click)="specFormGroup.get('value')?.setValue(null)"
+                        >
+                          Нет
+                        </li>
+                      </ul>
+                      <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ng-container>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn-reset product__btn-save btn-anim"
+      (click)="submitFillProduct()"
+    >
+      <span class="btn-anim__text">Сохранить изменения</span>
+    </button>
+  </div>
+</div>
+<p-galleria
+  [value]="product.loadAdditionalImages"
+  [(visible)]="displayCustom"
+  [(activeIndex)]="activeIndex"
+  [responsiveOptions]="responsiveOptions"
+  [containerStyle]="{ 'max-width': '850px' }"
+  [numVisible]="7"
+  [circular]="true"
+  [fullScreen]="true"
+  [showItemNavigators]="true"
+  [showThumbnails]="false"
+  [baseZIndex]="100000"
+>
+  <ng-template pTemplate="item" let-item>
+    <img
+      [src]="item"
+      style="width: 100%; display: block; height: 100%; object-fit: contain"
+    />
+  </ng-template>
+</p-galleria>

@@ -39,25 +39,27 @@ export class ShellComponent implements OnInit, OnDestroy {
       )
       .subscribe(
         (resp) => {
-          console.log(resp.userRole);
-
-          switch (resp.userRole) {
-            case 'CLIENT':
-              this.route.navigate(['../client-area']);
-              break;
-            case 'DESIGNER':
-              this.route.navigate(['../designer-area']);
-              break;
-            case 'WHOLESALER':
-              this.route.navigate(['../wholesaler-area']);
-              break;
-            case 'ADMIN':
-              this.route.navigate(['../admin']);
-              break;
-            default:
-              this.route.navigate(['/']);
+          if (!resp.isLocked) {
+            switch (resp.userRole) {
+              case 'CLIENT':
+                this.route.navigate(['../client-area']);
+                break;
+              case 'DESIGNER':
+                this.route.navigate(['../designer-area']);
+                break;
+              case 'WHOLESALER':
+                this.route.navigate(['../wholesaler-area']);
+                break;
+              case 'ADMIN':
+                this.route.navigate(['../admin']);
+                break;
+              default:
+                this.route.navigate(['/']);
+            }
+            this.form.reset();
+          } else {
+            this.modal.showError('Ваш аккаунт временно заблокирован');
           }
-          this.form.reset();
         },
         (error) => {
           if (error.error.description === 'Access Denied') {

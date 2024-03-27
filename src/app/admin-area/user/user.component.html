@@ -1,0 +1,362 @@
+<div class="users">
+  <div class="users__header">
+    <a routerLink="../" class="users__header-link">
+      <i class="users__header-icon pi pi-arrow-left"></i>
+      <div [ngSwitch]="user.userType">
+        <h2 class="users__header-title" *ngSwitchCase="'DESIGNER'">
+          {{ user.surname + " " + user.firstname + " (Дизайнер)" }}
+        </h2>
+        <h2 class="users__header-title" *ngSwitchCase="'CLIENT'">
+          {{ user.surname + " " + user.firstname + " (Клиент)" }}
+        </h2>
+        <h2 class="users__header-title" *ngSwitchCase="'WHOSALER'">
+          {{ user.surname + " " + user.firstname + " (Оптовик)" }}
+        </h2>
+        <h2 class="users__header-title" *ngSwitchCase="'ADMIN'">
+          {{ user.surname + " " + user.firstname + " (Администратор)" }}
+        </h2>
+      </div>
+    </a>
+  </div>
+  <div class="users__info">
+    <div class="users__balance" *ngIf="user.userType === 'DESIGNER'">
+      <h3 class="users__info-title">Баланс пользователя</h3>
+      <form
+        class="form form--balance"
+        [formGroup]="formBalance"
+        (ngSubmit)="submitBalance(formBalance)"
+      >
+        <label class="form__label">
+          <input
+            type="number"
+            class="input-reset form__input form__input--balance"
+            placeholder="Баланс"
+            formControlName="balance"
+            [ngClass]="{
+              error:
+                formBalance.controls['balance'].invalid &&
+                (formBalance.controls['balance'].dirty ||
+                  formBalance.controls['balance'].touched)
+            }"
+          />
+        </label>
+        <button
+          class="form__btn btn-reset form__btn--balance"
+          [disabled]="formBalance.invalid"
+        >
+          <span class="form__btn-text">Изменить</span>
+        </button>
+      </form>
+    </div>
+    <h3 class="users__info-title">Информация пользователя</h3>
+    <form
+      class="form"
+      [formGroup]="formClient"
+      (ngSubmit)="submit(formClient)"
+      *ngIf="user.userType === 'CLIENT'"
+    >
+      <div class="form__row">
+        <label class="custom-checkbox form-reg__checkbox">
+          <input
+            type="checkbox"
+            class="custom-checkbox__field"
+            name="mailing"
+            formControlName="isAdvertisementNotifications"
+            [ngClass]="{
+              error:
+                formClient.controls['isAdvertisementNotifications'].invalid &&
+                (formClient.controls['isAdvertisementNotifications'].touched ||
+                  formClient.controls['isAdvertisementNotifications'].dirty)
+            }"
+          />
+          <span class="custom-checkbox__content form-reg__checkbox-content"
+            >Включена рассылка
+          </span>
+        </label>
+        <label class="custom-checkbox form-reg__checkbox">
+          <input
+            type="checkbox"
+            class="custom-checkbox__field"
+            name="mailing"
+            formControlName="isLocked"
+            [ngClass]="{
+              error:
+                formClient.controls['isLocked'].invalid &&
+                (formClient.controls['isLocked'].touched ||
+                  formClient.controls['isLocked'].dirty)
+            }"
+          />
+          <span class="custom-checkbox__content form-reg__checkbox-content"
+            >Пользователь заблокирован
+          </span>
+        </label>
+      </div>
+      <div class="form__row">
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Электронная почта"
+            formControlName="email"
+            name="email"
+            [ngClass]="{
+              error:
+                formClient.controls['email'].invalid &&
+                (formClient.controls['email'].touched ||
+                  formClient.controls['email'].dirty)
+            }"
+          />
+        </label>
+        <label class="form__label">
+          <p-inputMask
+            mask="+7(999) 999-99-99"
+            class="form__input"
+            placeholder="Телефон"
+            formControlName="phone"
+            name="phone"
+            [ngClass]="{
+              error:
+                formClient.controls['phone'].invalid &&
+                (formClient.controls['phone'].touched ||
+                  formClient.controls['phone'].dirty)
+            }"
+          ></p-inputMask>
+        </label>
+      </div>
+
+      <div class="form__row">
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Фамилия"
+            name="surname"
+            formControlName="surname"
+            [ngClass]="{
+              error:
+                formClient.controls['surname'].invalid &&
+                (formClient.controls['surname'].touched ||
+                  formClient.controls['surname'].dirty)
+            }"
+          />
+        </label>
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Имя"
+            name="firstName"
+            formControlName="firstname"
+            [ngClass]="{
+              error:
+                formClient.controls['firstname'].invalid &&
+                (formClient.controls['firstname'].touched ||
+                  formClient.controls['firstname'].dirty)
+            }"
+          />
+        </label>
+      </div>
+      <div class="form__row">
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Отчество"
+            name="middlename"
+            formControlName="middlename"
+            [ngClass]="{
+              error:
+                formClient.controls['middlename'].invalid &&
+                (formClient.controls['middlename'].touched ||
+                  formClient.controls['middlename'].dirty)
+            }"
+          />
+        </label>
+      </div>
+      <button
+        class="form__btn btn-reset btn-anim"
+        [disabled]="formClient.invalid"
+      >
+        <span class="btn-anim__text">Сохранить</span>
+      </button>
+    </form>
+    <form
+      class="form"
+      [formGroup]="formOther"
+      (ngSubmit)="submit(formOther)"
+      *ngIf="user.userType !== 'CLIENT'"
+    >
+      <div class="form__row">
+        <label class="custom-checkbox form-reg__checkbox">
+          <input
+            type="checkbox"
+            class="custom-checkbox__field"
+            name="mailing"
+            formControlName="isAdvertisementNotifications"
+            [ngClass]="{
+              error:
+                formOther.controls['isAdvertisementNotifications'].invalid &&
+                (formOther.controls['isAdvertisementNotifications'].touched ||
+                  formOther.controls['isAdvertisementNotifications'].dirty)
+            }"
+          />
+          <span class="custom-checkbox__content form-reg__checkbox-content"
+            >Включена рассылка
+          </span>
+        </label>
+        <label class="custom-checkbox form-reg__checkbox">
+          <input
+            type="checkbox"
+            class="custom-checkbox__field"
+            name="mailing"
+            formControlName="isLocked"
+            [ngClass]="{
+              error:
+                formOther.controls['isLocked'].invalid &&
+                (formOther.controls['isLocked'].touched ||
+                  formOther.controls['isLocked'].dirty)
+            }"
+          />
+          <span class="custom-checkbox__content form-reg__checkbox-content"
+            >Пользователь заблокирован
+          </span>
+        </label>
+        <label class="custom-checkbox form-reg__checkbox">
+          <input
+            type="checkbox"
+            class="custom-checkbox__field"
+            name="mailing"
+            formControlName="isModerated"
+            [ngClass]="{
+              error:
+                formOther.controls['isModerated'].invalid &&
+                (formOther.controls['isModerated'].touched ||
+                  formOther.controls['isModerated'].dirty)
+            }"
+          />
+          <span class="custom-checkbox__content form-reg__checkbox-content"
+            >Пользователь прошел модерацию
+          </span>
+        </label>
+      </div>
+      <div class="form__row">
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Электронная почта"
+            formControlName="email"
+            name="email"
+            [ngClass]="{
+              error:
+                formOther.controls['email'].invalid &&
+                (formOther.controls['email'].touched ||
+                  formOther.controls['email'].dirty)
+            }"
+          />
+        </label>
+        <label class="form__label">
+          <p-inputMask
+            mask="+7(999) 999-99-99"
+            class="form__input"
+            placeholder="Телефон"
+            formControlName="phone"
+            name="phone"
+            [ngClass]="{
+              error:
+                formOther.controls['phone'].invalid &&
+                (formOther.controls['phone'].touched ||
+                  formOther.controls['phone'].dirty)
+            }"
+          ></p-inputMask>
+        </label>
+      </div>
+
+      <div class="form__row">
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Фамилия"
+            name="surname"
+            formControlName="surname"
+            [ngClass]="{
+              error:
+                formOther.controls['surname'].invalid &&
+                (formOther.controls['surname'].touched ||
+                  formOther.controls['surname'].dirty)
+            }"
+          />
+        </label>
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Имя"
+            name="firstName"
+            formControlName="firstname"
+            [ngClass]="{
+              error:
+                formOther.controls['firstname'].invalid &&
+                (formOther.controls['firstname'].touched ||
+                  formOther.controls['firstname'].dirty)
+            }"
+          />
+        </label>
+      </div>
+      <div class="form__row">
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Отчество"
+            name="middlename"
+            formControlName="middlename"
+            [ngClass]="{
+              error:
+                formOther.controls['middlename'].invalid &&
+                (formOther.controls['middlename'].touched ||
+                  formOther.controls['middlename'].dirty)
+            }"
+          />
+        </label>
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Сайт"
+            formControlName="site"
+            [ngClass]="{
+              error:
+                formOther.controls['site'].invalid &&
+                (formOther.controls['site'].dirty ||
+                  formOther.controls['site'].touched)
+            }"
+          />
+        </label>
+      </div>
+      <div class="form__row">
+        <label class="form__label">
+          <input
+            type="text"
+            class="input-reset form__input"
+            placeholder="Юр лицо"
+            formControlName="juridicalPerson"
+            [ngClass]="{
+              error:
+                formOther.controls['juridicalPerson'].invalid &&
+                (formOther.controls['juridicalPerson'].dirty ||
+                  formOther.controls['juridicalPerson'].touched)
+            }"
+          />
+        </label>
+      </div>
+      <button
+        class="form__btn btn-reset btn-anim"
+        [disabled]="formOther.invalid"
+      >
+        <span class="btn-anim__text">Сохранить</span>
+      </button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="products-category">
+  <div class="products-category__header">
+    <a routerLink="../../category" class="products-category__header-link">
+      <i class="products-category__header-icon pi pi-arrow-left"></i>
+      <h2 class="products-category__header-title">
+        {{ categories.name }}
+      </h2>
+    </a>
+  </div>
+  <ul class="catalog">
+    <li
+      class="catalog__item"
+      *ngFor="let category of categories.childCategories"
+    >
+      <a [routerLink]="'/admin/category/' + category.id.toString()">
+        <img
+          [src]="category.image || 'assets/img/no-img-placeholder.svg'"
+          alt="image"
+        />
+        <span class="catalog__title">{{ category.name }}</span></a
+      >
+    </li>
+  </ul>
+</div>

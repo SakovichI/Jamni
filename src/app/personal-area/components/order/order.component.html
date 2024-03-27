@@ -1,41 +1,65 @@
-<p-table [value]="customers" [paginator]="true" [rows]="10" [showCurrentPageReport]="true" responsiveLayout="stack"
-         currentPageReportTemplate="Показано {first} из {last} всего {totalRecords}" class="order-table" >
+<p-table
+  class="orders"
+  [value]="customers"
+  [paginator]="true"
+  [rows]="10"
+  [showCurrentPageReport]="true"
+  responsiveLayout="stack"
+  currentPageReportTemplate="Показано {first} из {last} всего {totalRecords}"
+>
   <ng-template pTemplate="header">
     <tr>
       <th>Изображение</th>
       <th>Описание</th>
-      <th pSortableColumn="date">Дата и время <p-sortIcon field="date"></p-sortIcon></th>
-      <th pSortableColumn="currency" >Стоимость за ед. <p-sortIcon field="currency"></p-sortIcon></th>
-      <th pSortableColumn="amount">Количество <p-sortIcon field="amount"></p-sortIcon></th>
-      <th pSortableColumn="status">Статус заказа <p-sortIcon field="status"></p-sortIcon></th>
-      <th pSortableColumn="price">Общая стоимость <p-sortIcon field="price"></p-sortIcon></th>
+      <th pSortableColumn="date">
+        Дата и время <p-sortIcon field="date"></p-sortIcon>
+      </th>
+      <th pSortableColumn="currency">
+        Стоимость за ед. <p-sortIcon field="currency"></p-sortIcon>
+      </th>
+      <th pSortableColumn="amount">
+        Количество <p-sortIcon field="amount"></p-sortIcon>
+      </th>
+      <th pSortableColumn="status">
+        Статус заказа <p-sortIcon field="status"></p-sortIcon>
+      </th>
+      <th pSortableColumn="price">
+        Общая стоимость <p-sortIcon field="price"></p-sortIcon>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-order>
     <tr class="order-item">
       <td class="order-item__img-wrap">
-        <img src="assets/img/categories-sofas/categories-slide1.jpg" alt="product-img" class="order-item__img">
+        <img
+          src="assets/img/categories-sofas/categories-slide1.jpg"
+          alt="product-img"
+          class="order-item__img"
+        />
       </td>
       <td class="order-item__desc">
         <div class="desc-order">
-          <h3 class="desc-order__title">{{order.title}}</h3>
+          <h3 class="desc-order__title">{{ order.title }}</h3>
           <div class="desc-order__colors">
             <span class="desc-order__colors-text">Цвет:</span>
             <div class="desc-order__colors-value">
-              <span class="desc-order__colors-color" [style.background-color]="order.color"></span>
-              <span class="desc-order__colors-name">{{order.color}}</span>
+              <span
+                class="desc-order__colors-color"
+                [style.background-color]="order.color"
+              ></span>
+              <span class="desc-order__colors-name">{{ order.color }}</span>
             </div>
           </div>
         </div>
       </td>
       <td>
-        <span class="order-date">{{order.date}}</span>
-        <span class="order-time">{{order.time}}</span>
+        <span class="order-date">{{ order.date }}</span>
+        <span class="order-time">{{ order.time }}</span>
       </td>
-      <td>{{order.currency + ' руб.'}}</td>
-      <td>{{order.amount + ' шт.'}}</td>
-      <td>{{order.state}}</td>
-      <td>{{order.price + ' руб.'}}</td>
+      <td>{{ order.currency + " руб." }}</td>
+      <td>{{ order.amount + " шт." }}</td>
+      <td>{{ order.state }}</td>
+      <td>{{ order.price + " руб." }}</td>
     </tr>
   </ng-template>
 </p-table>

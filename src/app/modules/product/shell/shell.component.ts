@@ -190,7 +190,9 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
 
   private initOtherProducts(): void {
     this.apiItemService.listItems().subscribe((items) => {
-      this.otherProducts = items.slice(0, 10);
+      this.otherProducts = items
+        .filter((el: any) => el.enabled === true)
+        .slice(0, 10);
     });
   }
   favorites(id: number) {

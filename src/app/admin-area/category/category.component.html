@@ -1,0 +1,26 @@
+<div class="products-category">
+  <ul class="catalog">
+    <li class="catalog__item" *ngFor="let category of categories">
+      <a
+        [routerLink]="category.id.toString()"
+        *ngIf="category.childCategoryIds.length === 0"
+      >
+        <img
+          [src]="category.image || 'assets/img/no-img-placeholder.svg'"
+          alt="image"
+        />
+        <span class="catalog__title">{{ category.name }}</span></a
+      >
+      <a
+        [routerLink]="'../childCategory/' + category.id.toString()"
+        *ngIf="category.childCategoryIds.length > 0"
+      >
+        <img
+          [src]="category.image || 'assets/img/no-img-placeholder.svg'"
+          alt="image"
+        />
+        <span class="catalog__title">{{ category.name }}</span></a
+      >
+    </li>
+  </ul>
+</div>

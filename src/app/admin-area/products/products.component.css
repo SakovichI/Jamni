@@ -1,0 +1,109 @@
+.products-content {
+}
+.products-content__header {
+  margin-bottom: 30px;
+}
+.products-content__header-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 24px;
+  color: #d3d3d3;
+  transition: 0.2s ease-in;
+  &:hover {
+    color: #000;
+    transition: 0.2s ease-in;
+  }
+}
+.products-content__header-icon {
+  font-size: 20px;
+}
+
+.products-content__header-title {
+  color: #000;
+  font-size: 24px;
+}
+
+.products-content__search {
+  margin-bottom: 20px;
+}
+.products-content__search input {
+  padding: 0px 44px;
+  font-family: "Proxima Nova", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 214%;
+  color: #000;
+  border-radius: 20px;
+  width: 296px;
+  height: 37px;
+  background: #f5f5f5;
+  border: 0.5px solid transparent;
+  transition: 0.2s ease-in;
+  &:focus {
+    outline: none;
+    border: 0.5px solid #000;
+    transition: 0.2s ease-in;
+  }
+}
+.p-input-icon-left > i {
+  left: 20px;
+}
+.products-content__th {
+  padding: 5px 5px 20px 5px;
+  font-size: 18px;
+  text-align: left;
+  color: #d3d3d3;
+  transition: 0.2s ease-in;
+}
+.products-content__th.p-highlight {
+  color: #000;
+  transition: 0.2s ease-in;
+}
+.products-content__tr {
+  background-color: #fff;
+  transition: 0.2s ease-in;
+  &:nth-child(even) {
+    background: #fcfcfc;
+  }
+}
+.products-content__td {
+  padding: 10px 5px;
+  font-size: 16px;
+  overflow: visible;
+}
+.products-content__td--id {
+  width: 70px;
+}
+.products-content__td--img {
+  width: 120px;
+}
+.products-content__img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.product-controls {
+  text-align: right;
+}
+.product-controls__btn-edit {
+  &:hover .product-controls__icon {
+    transform: scale(1.05);
+    transition: 0.4s ease-in;
+  }
+}
+.product-controls__btn-delete {
+  margin: 0 15px;
+  &:hover .product-controls__icon {
+    transform: scale(1.05);
+    transition: 0.4s ease-in;
+  }
+}
+.product-controls__btn-delete.disabled > .product-controls__icon {
+  color: #e17070;
+}
+.product-controls__icon {
+  font-size: 22px;
+  transition: 0.4s ease-in;
+}

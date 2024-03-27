@@ -55,23 +55,23 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
     private apiCategoryService: ApiCategoryService,
     private apiItemService: ApiItemService,
     public userApi: ApiUserService
-  ) {
-    this.activatedRoute.paramMap
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe((paramMap) => {
-        this.categoryId = Number(paramMap.get('id'));
-        if (this.categoryId) {
-          return;
-        }
-      });
-  }
+  ) {}
 
   ngOnDestroy() {
     this.destroyed$.next({});
     this.destroyed$.complete();
   }
   ngOnInit() {
-    this.fetchCategory();
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((paramMap) => {
+        this.categoryId = Number(paramMap.get('id'));
+        if (this.categoryId) {
+          this.fetchCategory();
+          return;
+        }
+      });
+
     if (this.filterMenu?.nativeElement.classList.contains('active')) {
       this.filterMenu?.nativeElement.classList.remove('active');
     }
