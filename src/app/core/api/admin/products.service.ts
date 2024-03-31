@@ -15,8 +15,8 @@ export class ProductsService {
   private url = environment.apiUrl;
   constructor(private http: HttpClient) {}
 
-  getAllSpecifications(): Observable<IProductSpec> {
-    return this.http.get<IProductSpec>(
+  getAllSpecifications(): Observable<IProductSpec[]> {
+    return this.http.get<IProductSpec[]>(
       `${this.url}/admin/items/specifications`
     );
   }
@@ -35,7 +35,7 @@ export class ProductsService {
     return this.http.put<void>(`${this.url}/admin/items/fill`, data);
   }
 
-  createProduct(data: IProduct): Observable<void> {
-    return this.http.post<void>(`${this.url}/admin/items/create`, data);
+  createProduct(data: FormData): Observable<IProduct> {
+    return this.http.post<IProduct>(`${this.url}/admin/items/create`, data);
   }
 }

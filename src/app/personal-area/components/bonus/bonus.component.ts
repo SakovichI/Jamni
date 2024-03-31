@@ -8,6 +8,7 @@ import {
 import { FormControl, FormGroup, NgModel } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-bonus',
@@ -23,13 +24,18 @@ export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
     value: new FormControl(''),
   });
   @ViewChild('line') line?: any;
-  constructor(private userApi: ApiUserService) {}
+  constructor(private userApi: ApiUserService, private loader: LoaderService) {}
 
   ngOnInit(): void {
+    this.loader.loaded = true;
     this.userApi
       .getUserBalance()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((resp) => (this.balance = resp.balance));
+      .subscribe((resp) => {
+        this.balance = resp.balance;
+        this.updateValue();
+        this.loader.loaded = false;
+      });
   }
   ngAfterViewInit(): void {
     if (this.line) {

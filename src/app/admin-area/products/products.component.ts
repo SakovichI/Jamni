@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ApiCategoryService } from 'src/app/core';
 import { ProductsService } from 'src/app/core/api/admin/products.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { ICategory, IProduct } from 'src/app/interfaces/product-interface';
 
 @Component({
@@ -17,10 +18,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor(
     private activeRoute: ActivatedRoute,
     private categoryApi: ApiCategoryService,
-    private adminProd: ProductsService
+    private adminProd: ProductsService,
+    public loader: LoaderService
   ) {}
 
   ngOnInit() {
+    this.loader.loaded = true;
     this.activeRoute.paramMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => (this.categoryId = Number(resp.get('id'))));
@@ -30,6 +33,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
         this.category = resp;
+        this.loader.loaded = false;
       });
   }
   ngOnDestroy(): void {

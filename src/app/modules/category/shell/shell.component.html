@@ -300,7 +300,7 @@
           <li
             class="product__item"
             *ngFor="
-              let product of category.items.slice(0, 18)
+              let product of products.slice(0, 18)
                 | sortProducts : term
                 | filterProducts : specsFormArray.controls
             "

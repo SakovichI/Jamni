@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, map, takeUntil, tap } from 'rxjs';
 import { ApiAddressService } from 'src/app/core/api/api-address.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { IAddress } from 'src/app/interfaces/address-inteface';
 
 @Component({
@@ -27,7 +28,8 @@ export class AddressFormComponent implements OnInit, OnDestroy {
   constructor(
     public addressApi: ApiAddressService,
     public activeRoute: ActivatedRoute,
-    public route: Router
+    public route: Router,
+    private loader: LoaderService
   ) {
     setTimeout(() => {
       const scripts: Element | null = document.querySelector(
@@ -43,6 +45,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loader.loaded = true;
     this.activeRoute.params
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => (this.id = Number(resp['id'])));
@@ -54,6 +57,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
             let address: IAddress[];
             address = resp.filter((el) => el.id === this.id);
             this.updateFom(address[0]);
+            this.loader.loaded = false;
           }),
           takeUntil(this.destroy$)
         )
@@ -67,9 +71,8 @@ export class AddressFormComponent implements OnInit, OnDestroy {
   }
 
   submit(form: FormGroup) {
+    this.loader.loaded = true;
     if (this.id === 0) {
-      console.log(form.value);
-
       this.addressApi
         .addAddress(form.value)
         .pipe(takeUntil(this.destroy$))
@@ -82,6 +85,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
         .pipe(
           tap((resp) => {
             this.updateFom(form.value);
+            this.loader.loaded = false;
             this.route.navigate(['../'], { relativeTo: this.activeRoute });
           }),
           takeUntil(this.destroy$)

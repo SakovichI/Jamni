@@ -2920,9 +2920,15 @@
               dropDownListItems.forEach(function (listItem) {
                 listItem.addEventListener("click", function (e) {
                   e.stopPropagation();
-                  dropDownBtn.innerHTML = this.innerHTML;
+                  if (!dropDownBtn.classList.contains("placeholder")) {
+                    dropDownBtn.innerHTML = this.innerHTML;
+                  }
+
                   dropDownBtn.focus();
-                  dropDownInput.value = this.dataset.value;
+                  if (dropDownInput) {
+                    dropDownInput.value = this.dataset.value;
+                  }
+
                   dropDownList.classList.remove("dropdown__list--visible");
                   dropDownList.style.maxHeight = null;
                   dropDownIcon.classList.remove("dropdown__icon--active");
@@ -10023,7 +10029,6 @@
               this.tabsBtns = this.tabList.querySelectorAll(".tabs__nav-btn");
               this.tabsPanels = this.tabs.querySelectorAll(".tabs__panel");
             } else {
-              console.error("Селектор data-tabs не существует!");
               return;
             }
 

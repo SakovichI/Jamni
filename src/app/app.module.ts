@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './guards/auth-guard';
 import { AuthInterceptor } from './interceptors/auth-interceptors';
 import { ErrorComponent } from './modals/error/error.component';
+import { LoaderComponent } from './modals/loader/loader.component';
 import { SuccessComponent } from './modals/success/success.component';
 import { AddressFormComponent } from './personal-area/components/address-form/address-form.component';
 import { BonusComponent } from './personal-area/components/bonus/bonus.component';
@@ -192,7 +193,6 @@ const routes: Route[] = [
     OrderComponent,
     DeliveryAdresComponent,
     AddressFormComponent,
-
     ProfileComponent,
     ProfileIpComponent,
     PriceComponent,
@@ -200,6 +200,7 @@ const routes: Route[] = [
     ModelsComponent,
     ErrorComponent,
     SuccessComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,

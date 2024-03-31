@@ -1,13 +1,16 @@
 export interface IProduct {
-  id: number;
+  id?: number;
   loadAdditionalImages?: string[];
+  additionalImages: string[];
   image?: string;
-  coverImage?: string | null;
+  coverImage: string;
   name: string;
   price?: number;
   categoryId?: number;
   availableColors?: [];
   enabled?: boolean;
+  descriptions: TDescProduct[];
+  specifications: IProductSpec[];
 }
 
 export interface ICategory {
@@ -26,21 +29,7 @@ export interface IProductSpec {
   valueType: string;
   selectType: string;
   filtered: boolean;
-  values: [
-    {
-      id: number;
-      specId: number;
-      value: string;
-      image: string;
-    }
-  ];
-}
-
-export interface IFillProduct {
-  itemId: number;
-  specValueId: number[];
-  detailed: TDetailProduct[];
-  description: TDescProduct[];
+  values: TSpecValue[];
 }
 
 export type TDescProduct = {
@@ -48,6 +37,23 @@ export type TDescProduct = {
   descriptionHtml: string;
 };
 export type TDetailProduct = {
+  specValue?: TSpecValue[];
   specValueIds: number[];
   price: number;
 };
+
+export type TSpecValue = {
+  id: number;
+  specId: number;
+  value: string;
+  image: string;
+  enabled?: boolean;
+};
+
+export interface IFillProduct {
+  specValue?: TSpecValue[];
+  itemId: number;
+  specValueId: number[];
+  detailed: TDetailProduct[];
+  description: TDescProduct[];
+}

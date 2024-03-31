@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiCategoryService } from 'src/app/core';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { ProdCategoryService } from 'src/app/core/services/prod-category.service';
 import { ICategory } from 'src/app/interfaces/product-interface';
 
@@ -18,10 +19,12 @@ export class ChildCategoryComponent implements OnInit, OnDestroy {
     private categoryApi: ApiCategoryService,
     private cdr: ChangeDetectorRef,
     public prodCategory: ProdCategoryService,
-    public activeRoute: ActivatedRoute
+    public activeRoute: ActivatedRoute,
+    public loader: LoaderService
   ) {}
 
   ngOnInit() {
+    this.loader.loaded = true;
     this.activeRoute.paramMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => (this.id = Number(resp.get('id'))));
@@ -29,6 +32,7 @@ export class ChildCategoryComponent implements OnInit, OnDestroy {
       .getCategory(this.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
+        this.loader.loaded = false;
         this.categories = resp;
       });
   }

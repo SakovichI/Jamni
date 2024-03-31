@@ -20,6 +20,7 @@ import { ApiCategoryService } from './core';
 import { ApiUserService } from './core/api/api-user.service';
 import { AuthService } from './core/services/auth.service';
 import { GeneralService } from './core/services/general.service';
+import { LoaderService } from './core/services/loader.service';
 import { ModalsService } from './core/services/modals.service';
 
 @Component({
@@ -83,19 +84,12 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
     public auth: AuthService,
     public userApi: ApiUserService,
     public route: Router,
-    public modal: ModalsService
+    public modal: ModalsService,
+    public loader: LoaderService
   ) {
     const script: Element | null = document.querySelector(
       'script[src="assets/main.js"]'
     );
-    // if (script){
-    //   document.body.removeChild(script)
-    // }
-    // setTimeout(()=>{
-    //   const script = document.createElement('script');
-    //   script.src = 'assets/main.js';
-    //   document.body.appendChild(script)
-    // }, 1000)
     this.apiCategoryService.listCategories().subscribe((categories) => {
       let arr: any[] = [];
       let i = 0;
@@ -229,6 +223,8 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
           case 'WHOLESALER':
             this.route.navigate(['../wholesaler-area/favorites']);
             break;
+          default:
+            this.route.navigate(['./']);
         }
       });
     } else {

@@ -1,22 +1,20 @@
-import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Subject, concatMap, forkJoin, map, takeUntil } from 'rxjs';
 import { ApiCategoryService, ApiItemService } from 'src/app/core';
 import { ProductsService } from 'src/app/core/api/admin/products.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { ModalsService } from 'src/app/core/services/modals.service';
 import { ProdCategoryService } from 'src/app/core/services/prod-category.service';
 import {
   ICategory,
   IFillProduct,
   IProduct,
+  IProductSpec,
+  TDetailProduct,
+  TSpecValue,
 } from 'src/app/interfaces/product-interface';
 
 @Component({
@@ -32,7 +30,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   public activeCategory: string = '';
   public category: ICategory[] = [];
   public childCategory: any[] = [];
-  public product: any = {};
+  public product: IProduct = {} as IProduct;
+  public allSpecifications: IProductSpec[] = [];
   private enabled: boolean = true;
   //Gallery
   responsiveOptions: any[] = [
@@ -49,10 +48,9 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
       numVisible: 1,
     },
   ];
-  displayCustom!: boolean;
+  displayCustom: boolean = false;
 
   activeIndex: number = 0;
-
   public mainForm: FormGroup = new FormGroup({
     id: new FormControl('', Validators.required),
     name: new FormControl('', Validators.required),
@@ -62,8 +60,11 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     enabled: new FormControl(''),
     price: new FormControl('', [Validators.required, Validators.min(100)]),
   });
+
   public formArray: FormArray = new FormArray([]);
   public descFormArr: FormArray = new FormArray([]);
+  public detailFormArr: FormArray = new FormArray([]);
+
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -90,18 +91,24 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
       ['fontSize', 'toggleEditorMode', 'customClasses'],
     ],
   };
+  public attributeModal = false;
+  public newAttributeFormArr: FormArray = new FormArray([]);
+  public allCombination: TSpecValue[][] = [];
+  public allCombinationDetail: TDetailProduct[] = [];
+
   constructor(
     private prodCategory: ProdCategoryService,
     private categoryApi: ApiCategoryService,
-    private cdr: ChangeDetectorRef,
     private activeRoute: ActivatedRoute,
     private adminProd: ProductsService,
     private productApi: ApiItemService,
     private router: Router,
-    private modal: ModalsService
+    private modal: ModalsService,
+    public loader: LoaderService
   ) {}
 
   ngOnInit() {
+    this.loader.loaded = true;
     this.activeRoute.paramMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
@@ -129,56 +136,50 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
               Validators.required
             ),
           });
-
           this.descFormArr.push(formGroup);
         });
-        this.product.specifications.forEach((spec: any) => {
-          if (spec.selectType === 'STATIC') {
-            return;
-          }
+        this.allCombination = this.getCrossCombinations(
+          this.product.specifications
+        );
 
-          let formGroup: any;
-          if (spec.selectType === 'SELECTING') {
-            formGroup = new FormGroup({
-              specification: new FormControl(spec),
-              value: new FormControl(spec.values[0]),
-            });
-          } else if (spec.selectType === 'DROPDOWN') {
-            formGroup = new FormGroup({
-              specification: new FormControl(spec),
-              value: new FormControl(spec.values[0]),
-            });
-          } else if (spec.selectType == 'CHECKBOX') {
-            formGroup = new FormGroup({
-              specification: new FormControl(spec),
-              value: new FormControl(spec.values[0]),
-            });
-          }
+        this.allCombination.map((el: TSpecValue[]) => {
+          el.reverse();
+        });
+        this.allCombinationDetail = this.getAllDetail(this.allCombination);
+
+        this.product.specifications.forEach((spec: any) => {
+          let formGroup: FormGroup;
+
+          formGroup = new FormGroup({
+            specification: new FormControl(spec),
+            value: new FormControl(spec.values[0]),
+          });
 
           this.formArray.push(formGroup);
         });
+        this.loader.loaded = false;
       });
     this.adminProd
       .getAllSpecifications()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((resp) => {});
+      .subscribe((resp) => {
+        this.allSpecifications = resp.filter(
+          (spec) => spec.valueType !== 'COLOR'
+        );
+      });
   }
   ngAfterViewInit(): void {
+    this.updateScript();
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     setTimeout(() => {
       const scriptOld = document.querySelector('[src="assets/main.js"]');
       if (scriptOld) {
         document.body.removeChild(scriptOld);
       }
-    }, 50);
-    setTimeout(() => {
-      const script = document.createElement('script');
-      script.src = 'assets/main.js';
-      document.body.appendChild(script);
-    }, 100);
-  }
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+    }, 20);
   }
 
   updateMainForm(product: IProduct) {
@@ -224,7 +225,13 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
     data.append('enabled', form.value.enabled);
 
-    this.adminProd.editProduct(data).pipe(takeUntil(this.destroy$)).subscribe();
+    this.adminProd
+      .editProduct(data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loader.loaded = false;
+        this.router.navigate(['../../'], { relativeTo: this.activeRoute });
+      });
   }
 
   getCategoryList() {
@@ -272,7 +279,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
-        this.product.coverImage = reader.result;
+        this.product.coverImage = reader.result as string;
       };
       reader.readAsDataURL(file);
       this.mainForm.controls['image'].setValue(file);
@@ -289,25 +296,27 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         };
         reader.readAsDataURL(files[i]);
       }
-      this.product.loadAdditionalImages = fileArr;
+      this.product.additionalImages = fileArr;
       this.mainForm.controls['loadAdditionalImages'].setValue(files);
     }
+    this.updateScript();
   }
   removeImage(index: number) {
     let fileArr = [...this.mainForm.controls['loadAdditionalImages'].value];
-    if (this.product.loadAdditionalImages.length === 1) {
-      this.product.loadAdditionalImages = [];
+    if (this.product.additionalImages.length === 1) {
+      this.product.additionalImages = [];
       fileArr = [];
       this.mainForm.controls['loadAdditionalImages'].setValue(fileArr);
     } else {
-      this.product.loadAdditionalImages.splice(index, 1);
+      this.product.additionalImages.splice(index, 1);
       fileArr.splice(index, 1);
       this.mainForm.controls['loadAdditionalImages'].setValue(fileArr);
     }
+    this.updateScript();
   }
   imageClick(index: number) {
     this.activeIndex = index;
-    this.displayCustom = true;
+    this.displayCustom = !this.displayCustom;
   }
 
   selectCategory(category: ICategory) {
@@ -335,6 +344,16 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         booleanArr.push(false);
       }
     });
+
+    this.detailFormArr.controls.forEach((form) => {
+      console.log(form.valid);
+
+      if (form.valid) {
+        booleanArr.push(true);
+      } else {
+        booleanArr.push(false);
+      }
+    });
     if (this.mainForm.valid) {
       booleanArr.push(true);
     } else {
@@ -348,16 +367,12 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   submitFillProduct() {
+    this.loader.loaded = true;
     if (this.validForm()) {
       let data: IFillProduct = {
         itemId: 0,
         specValueId: [],
-        detailed: [
-          {
-            specValueIds: [],
-            price: this.mainForm.value.price,
-          },
-        ],
+        detailed: [],
         description: [],
       };
       data.itemId = this.id;
@@ -366,13 +381,246 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
           data.description.push(desc.value);
         });
       }
-      this.submitMain(this.mainForm);
+      if (this.product.specifications.length > 0) {
+        this.product.specifications.forEach((spec: IProductSpec) => {
+          data.specValueId.push(spec.id);
+        });
+        this.detailFormArr.controls.forEach((form) => {
+          let detail: TDetailProduct = {
+            specValueIds: (form as FormGroup).controls['specValueIds'].value,
+            price: (form as FormGroup).controls['price'].value,
+          };
+          data.detailed.push(detail);
+        });
+      } else {
+        data.detailed.push({
+          specValueIds: [],
+          price: this.mainForm.value.price,
+        });
+      }
+
       this.adminProd
         .editFillProduct(data)
         .pipe(takeUntil(this.destroy$))
-        .subscribe();
+        .subscribe(() => {
+          this.submitMain(this.mainForm);
+        });
     } else {
       this.modal.showError('Заполните все поля');
     }
+  }
+
+  updateScript() {
+    setTimeout(() => {
+      const scriptOld = document.querySelector('[src="assets/main.js"]');
+      if (scriptOld) {
+        document.body.removeChild(scriptOld);
+      }
+    }, 20);
+    setTimeout(() => {
+      const script = document.createElement('script');
+      script.src = 'assets/main.js';
+      document.body.appendChild(script);
+    }, 50);
+  }
+  getCrossCombinations(objects: IProductSpec[]): TSpecValue[][] {
+    // Базовый случай: если массив пуст, возвращаем массив с пустым массивом
+    if (objects.length === 0) {
+      return [[]];
+    }
+
+    // Получаем первый объект из массива
+    const [currentObject, ...restObjects] = objects;
+
+    // Рекурсивно получаем перекрестные комбинации для оставшихся объектов
+    const restCombinations: any = this.getCrossCombinations(restObjects);
+
+    // Создаем массив для хранения всех комбинаций
+    const combinations = [];
+
+    // Для каждой комбинации из оставшихся объектов
+    for (const combination of restCombinations) {
+      // Для каждого значения текущего объекта
+      for (const value of currentObject.values) {
+        // Проверяем, что значение не повторяется в текущей комбинации
+        if (!combination.map((obj: any) => obj.id).includes(value.id)) {
+          // Добавляем комбинацию с добавленным значением
+          combinations.push([...combination, value]);
+        }
+      }
+    }
+
+    return combinations;
+  }
+
+  getAllDetail(allCombination: TSpecValue[][]) {
+    const detailArr: TDetailProduct[] = [];
+    let form: FormGroup;
+    this.detailFormArr.controls = [];
+
+    if (allCombination.length > 1) {
+      allCombination.forEach((comb: TSpecValue[]) => {
+        const detail: TDetailProduct = {
+          specValue: [],
+          specValueIds: [],
+          price: 0,
+        };
+
+        comb.forEach((el) => {
+          detail.specValueIds.push(el.id);
+          detail.specValue?.push(el);
+        });
+
+        this.productApi
+          .getItemDetails(this.id, detail.specValueIds)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            (resp) => {
+              detail.price = resp.price;
+              detailArr.push(detail);
+              form = new FormGroup({
+                specValue: new FormControl(detail.specValue),
+                specValueIds: new FormControl(detail.specValueIds),
+                price: new FormControl(detail.price, [
+                  Validators.required,
+                  Validators.min(100),
+                ]),
+              });
+              this.detailFormArr.push(form);
+            },
+            (error) => {
+              if (error.status === 500) {
+                detail.price = 0;
+                detailArr.push(detail);
+                form = new FormGroup({
+                  specValue: new FormControl(detail.specValue),
+                  specValueIds: new FormControl(detail.specValueIds),
+                  price: new FormControl(detail.price, [
+                    Validators.required,
+                    Validators.min(100),
+                  ]),
+                });
+                this.detailFormArr.push(form);
+              }
+            }
+          );
+      });
+    }
+    return detailArr;
+  }
+
+  showAttributeModal() {
+    this.attributeModal = !this.attributeModal;
+
+    this.newAttributeFormArr.controls = [];
+    if (this.product.specifications.length > 0) {
+      this.allSpecifications.forEach((spec: IProductSpec) => {
+        let specValue: TSpecValue[] = [];
+        this.product.specifications.forEach((allSpec: IProductSpec) => {
+          if (allSpec.id === spec.id) {
+            spec.values.forEach((mainSpecValue) => {
+              allSpec.values.forEach((value) => {
+                if (mainSpecValue.id === value.id) {
+                  mainSpecValue.enabled = true;
+                }
+              });
+              specValue.push(mainSpecValue);
+            });
+            let form = new FormGroup({
+              specification: new FormControl(spec),
+              values: new FormControl(specValue),
+            });
+            this.newAttributeFormArr.controls.push(form);
+          }
+        });
+      });
+    }
+    this.updateScript();
+  }
+  addAttribute(spec: IProductSpec) {
+    let controlArr: number[] = [];
+    this.newAttributeFormArr.controls.forEach((form) => {
+      controlArr.push((form as FormGroup).controls['specification'].value.id);
+    });
+    if (controlArr.indexOf(spec.id) == -1) {
+      spec.values.forEach((value) => {
+        value.enabled = false;
+      });
+      let form = new FormGroup({
+        specification: new FormControl(spec),
+        values: new FormControl(spec.values),
+      });
+      this.newAttributeFormArr.controls.push(form);
+    }
+  }
+  removeNewAttribute(id: number) {
+    this.newAttributeFormArr.controls =
+      this.newAttributeFormArr.controls.filter(
+        (form) => id !== (form as FormGroup).controls['specification'].value.id
+      );
+    this.removeAttribute(id);
+  }
+
+  saveAttribute() {
+    let formGroup: FormGroup;
+    this.product.specifications = [];
+    this.formArray.controls = [];
+    this.newAttributeFormArr.controls.forEach((form) => {
+      let newSpec = (form as FormGroup).controls['specification'].value;
+      let specValue: TSpecValue[] = [];
+      (form as FormGroup).controls['values'].value.forEach(
+        (value: TSpecValue) => {
+          if (value.enabled) {
+            specValue.push(value);
+          }
+        }
+      );
+      newSpec.values = specValue;
+      this.product.specifications.push(newSpec);
+    });
+    this.product.specifications.forEach((spec: any) => {
+      let formGroup: FormGroup;
+
+      formGroup = new FormGroup({
+        specification: new FormControl(spec),
+        value: new FormControl(spec.values),
+      });
+
+      this.formArray.controls.push(formGroup);
+    });
+    this.allCombination = this.getCrossCombinations(
+      this.product.specifications
+    );
+    this.allCombination.map((el: TSpecValue[]) => {
+      el.reverse();
+    });
+    this.allCombinationDetail = this.getAllDetail(this.allCombination);
+    this.adminProd
+      .getAllSpecifications()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((resp) => {
+        this.allSpecifications = resp.filter(
+          (spec) => spec.valueType !== 'COLOR'
+        );
+      });
+    this.showAttributeModal();
+  }
+
+  removeAttribute(id: number) {
+    this.formArray.controls = this.formArray.controls.filter(
+      (form) => (form as FormGroup).controls['specification'].value.id !== id
+    );
+    this.product.specifications = this.product.specifications.filter(
+      (spec: IProductSpec) => spec.id !== id
+    );
+    this.allCombination = this.getCrossCombinations(
+      this.product.specifications
+    );
+    this.allCombination.map((el: TSpecValue[]) => {
+      el.reverse();
+    });
+    this.allCombinationDetail = this.getAllDetail(this.allCombination);
+
+    this.updateScript();
   }
 }

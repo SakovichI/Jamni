@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { AdminUsersService } from 'src/app/core/api/admin/admin-users.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { IUserBalance, IUsers } from 'src/app/interfaces/users-interface';
 
 @Component({
@@ -47,10 +48,12 @@ export class UserComponent implements OnInit, OnDestroy {
     private usersApi: AdminUsersService,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private loader: LoaderService
   ) {}
 
   ngOnInit() {
+    this.loader.loaded = true;
     this.route.paramMap
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => (this.userId = Number(resp.get('id'))));
@@ -65,8 +68,11 @@ export class UserComponent implements OnInit, OnDestroy {
           this.usersApi
             .getUserBalance(this.userId)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((resp) => this.updateBalance(resp));
+            .subscribe((resp) => {
+              this.updateBalance(resp);
+            });
         }
+        this.loader.loaded = false;
       });
   }
 
@@ -76,12 +82,14 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   submit(form: FormGroup) {
+    this.loader.loaded = true;
     this.usersApi
       .editUser(form.value)
       .pipe(
         switchMap(() => this.usersApi.getUser(this.userId)),
         tap((resp) => {
           this.updateForm(resp);
+          this.loader.loaded = false;
           this.router.navigate(['./admin/users']);
         }),
         takeUntil(this.destroy$)

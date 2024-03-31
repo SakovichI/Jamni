@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { IUsers } from 'src/app/interfaces/users-interface';
 
 @Component({
@@ -22,20 +23,26 @@ export class ProfileIpComponent implements OnInit, OnDestroy {
     middlename: new FormControl('', Validators.required),
   });
 
-  constructor(private userApi: ApiUserService) {}
+  constructor(private userApi: ApiUserService, private loader: LoaderService) {}
 
   ngOnInit(): void {
-    this.userApi.userS.subscribe((resp) => this.updateForm(resp));
+    this.loader.loaded = true;
+    this.userApi.userS.subscribe((resp) => {
+      this.updateForm(resp);
+      this.loader.loaded = false;
+    });
   }
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
   submit(form: FormGroup) {
+    this.loader.loaded = true;
     this.userApi
       .editUser(form.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
+        this.loader.loaded = false;
         this.updateForm(resp);
       });
   }

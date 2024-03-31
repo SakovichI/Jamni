@@ -12,22 +12,28 @@
     <div class="product__content content-product">
       <form [formGroup]="mainForm" class="form-main">
         <div class="content-product__images product-image">
-          <label class="product-image__main">
-            <span class="product-image__main-title">Главное фото</span>
+          <span class="product-image__main-title">Главное фото</span>
+          <div class="product-image__main">
             <img
               class="product-image__img"
-              [src]="product.coverImage"
+              [src]="product.coverImage || 'assets/img/no-img-placeholder.svg'"
               alt="image"
               width="350"
               height="350"
             />
-            <input
-              class="input-reset product-image__input-file"
-              type="file"
-              (change)="onFileSelected($event)"
-              accept="image/*"
-            />
-          </label>
+            <label class="product-image__label">
+              <span class="product-image__btn-edit">
+                <i class="pi pi-pencil"></i>
+              </span>
+              <input
+                class="input-reset product-image__input-file"
+                type="file"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+              />
+            </label>
+          </div>
+
           <div class="product-image__slider">
             <span class="product-image__slider-title"
               >Дополнительные изображения:</span
@@ -35,7 +41,7 @@
             <div class="product-image__slider-wrap">
               <div
                 class="product-image__slide"
-                *ngFor="let item of product.loadAdditionalImages; let i = index"
+                *ngFor="let item of product.additionalImages; let i = index"
               >
                 <img
                   [src]="item"
@@ -95,10 +101,22 @@
                 </svg>
               </button>
             </div>
-            <label class="form-main__label product-image__main">
-              <span type="button" class="btn-reset product-image__main-btn-add">
-                Загрузить изображения
+            <label class="form-main__label product-image__slider-label">
+              <img
+                *ngIf="product.additionalImages?.length === 0"
+                [src]="'assets/img/no-img-placeholder.svg'"
+                alt="img"
+                width="120px"
+                height="120px"
+                class="form-main__label-img"
+              />
+              <span
+                type="button"
+                class="btn-reset product-image__main-btn-add btn-anim"
+              >
+                <span class="btn-anim__text">Загрузить изображения</span>
               </span>
+
               <input
                 class="input-reset product-image__input-file"
                 type="file"
@@ -137,10 +155,7 @@
               formControlName="price"
               placeholder="Цена"
               [ngClass]="{
-                error:
-                  mainForm.controls['price'].invalid &&
-                  (mainForm.controls['price'].touched ||
-                    mainForm.controls['price'].dirty)
+                error: mainForm.controls['price'].invalid
               }"
             />
           </label>
@@ -224,8 +239,9 @@
         </div>
       </form>
     </div>
-    <h2 class="product__title2">Описание товара:</h2>
+
     <div class="desc-product" *ngIf="product.descriptions">
+      <h2 class="product__title2">Описание товара:</h2>
       <ul class="desc-product__wrap">
         <li
           aria-expanded="true"
@@ -286,179 +302,133 @@
 
     <div class="product__specifications specifications">
       <div class="specifications__wrap">
-        <h2 class="product__title2">Спецификации:</h2>
-        <ng-container
-          [ngSwitch]="specFormGroup.value.specification.selectType"
-          *ngFor="let specFormGroup of formArray.controls; let i = index"
-        >
-          <ng-template [ngSwitchCase]="'SELECTING'">
-            <div class="form-product__section section-product-form">
-              <div class="section-product-form__inner">
-                <span class="section-product-form__title"
-                  >{{ specFormGroup.value.specification.name }} :
-                </span>
-                <div class="section-product-form__row">
-                  <label
-                    class="section-product-form__label"
-                    *ngFor="
-                      let option of specFormGroup.value.specification.values
-                    "
-                  >
-                    <input
-                      type="radio"
-                      class="section-product-form__input input-reset"
-                      [value]="option"
-                      [name]="'size' + i"
-                      [formControl]="$any(specFormGroup).controls.value"
-                    />
-                    <span class="section-product-form__text">{{
-                      option.value
-                    }}</span>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-          <ng-template [ngSwitchCase]="'DROPDOWN'">
-            <div
-              class="form-product__section section-product-form"
-              *ngIf="specFormGroup.value.specification.valueType !== 'COLOR'"
-            >
-              <div class="section-product-form__inner">
-                <span class="section-product-form__title"
-                  >{{ specFormGroup.value.specification.name }}:
-                </span>
-                <div class="section-product-form__row">
-                  <div class="form-group section-product-form__select">
-                    <div class="dropdown section-product-form__dropdown">
-                      <button type="button" class="dropdown__button">
-                        {{ $any(specFormGroup).value.value.value }}
-                      </button>
-                      <svg class="dropdown__icon">
-                        <use
-                          xlink:href="assets/img/sprite.svg#arrow-down"
-                        ></use>
-                      </svg>
-                      <ul class="dropdown__list">
-                        <li
-                          class="dropdown__list-item"
-                          *ngFor="
-                            let option of specFormGroup.value.specification
-                              .values
-                          "
-                          (click)="specFormGroup.get('value')?.setValue(option)"
-                        >
-                          {{ option.value }}
-                        </li>
-                      </ul>
-                      <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="specifications__header">
+          <h2 class="product__title2">Атрибуты:</h2>
+          <button
+            type="button"
+            class="btn-reset specifications__btn btn-anim"
+            (click)="showAttributeModal()"
+          >
+            <span class="btn-anim__text">Ваши атрибуты</span>
+          </button>
+        </div>
 
-            <div
-              class="form-product__section section-product-form"
-              *ngIf="specFormGroup.value.specification.valueType === 'COLOR'"
+        <ul class="attributes__list">
+          <li
+            class="attributes__item"
+            *ngFor="let attributes of formArray.controls"
+          >
+            <button
+              type="button"
+              class="btn-reset attributes__item-btn attributes-btn"
+              (click)="
+                removeAttribute(
+                  $any(attributes).controls['specification'].value.id
+                )
+              "
             >
-              <div class="section-product-form__inner">
-                <span class="section-product-form__title"
-                  >{{ specFormGroup.value.specification.name }}:
-                </span>
-                <div class="section-product-form__row">
-                  <div class="form-group section-product-form__select">
-                    <div class="dropdown section-product-form__dropdown">
-                      <button type="button" class="dropdown__button">
-                        <span class="dropdown__value">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="19"
-                            height="19"
-                            viewBox="0 0 19 19"
-                            fill="none"
+              <span class="attributes-btn__text">{{
+                $any(attributes).controls["specification"].value.name
+              }}</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 30 30"
+                fill="none"
+                class="attributes-btn__icon"
+              >
+                <line
+                  x1="1.98995"
+                  y1="1"
+                  x2="29.2843"
+                  y2="28.2943"
+                  stroke="black"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                ></line>
+                <line
+                  x1="0.7"
+                  y1="-0.7"
+                  x2="39.3"
+                  y2="-0.7"
+                  transform="matrix(-0.707107 0.707107 0.707107 0.707107 29.2852 1)"
+                  stroke="black"
+                  stroke-width="1.4"
+                  stroke-linecap="round"
+                ></line>
+              </svg>
+            </button>
+          </li>
+        </ul>
+        <div
+          class="specifications__inner"
+          *ngIf="this.detailFormArr.controls.length > 0"
+        >
+          <h2 class="product__title3">Вариации:</h2>
+          <form
+            [formGroup]="$any(detailForm)"
+            class="specifications__row"
+            *ngFor="let detailForm of detailFormArr.controls; let k = index"
+          >
+            <ng-container
+              *ngFor="let specFormGroup of formArray.controls; let i = index"
+            >
+              <div class="section-product-form">
+                <div class="section-product-form__inner">
+                  <span class="form-main__label-text"
+                    >{{ specFormGroup.value.specification.name }}:
+                  </span>
+                  <div class="section-product-form__row">
+                    <div class="form-group section-product-form__select">
+                      <div class="dropdown section-product-form__dropdown">
+                        <button type="button" class="dropdown__button">
+                          {{
+                            $any(detailForm).controls["specValue"].value[i]
+                              .value
+                          }}
+                        </button>
+                        <svg class="dropdown__icon">
+                          <use
+                            xlink:href="assets/img/sprite.svg#arrow-down"
+                          ></use>
+                        </svg>
+                        <ul class="dropdown__list">
+                          <li
+                            class="dropdown__list-item"
+                            *ngFor="
+                              let option of specFormGroup.value.specification
+                                .values
+                            "
                           >
-                            <circle cx="9.5" cy="9.5" r="9.5" fill="#C7C4BF" />
-                          </svg>
-                          {{ $any(specFormGroup).value.value.value }}
-                        </span>
-                      </button>
-                      <svg class="dropdown__icon">
-                        <use
-                          xlink:href="assets/img/sprite.svg#arrow-down"
-                        ></use>
-                      </svg>
-                      <ul class="dropdown__list">
-                        <li
-                          class="dropdown__list-item"
-                          *ngFor="
-                            let option of specFormGroup.value.specification
-                              .values
-                          "
-                          (click)="specFormGroup.get('value')?.setValue(option)"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="19"
-                            height="19"
-                            viewBox="0 0 19 19"
-                            fill="none"
-                          >
-                            <circle cx="9.5" cy="9.5" r="9.5" fill="#C7C4BF" />
-                          </svg>
-                          {{ option.value }}
-                        </li>
-                      </ul>
-                      <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
+                            {{ option.value }}
+                          </li>
+                        </ul>
+                        <input
+                          type="text"
+                          name="select-category"
+                          value=""
+                          class="dropdown__input-hidden"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </ng-template>
-          <ng-template [ngSwitchCase]="'CHECKBOX'">
-            <div class="form-product__section section-product-form">
-              <div class="section-product-form__inner">
-                <span class="section-product-form__title"
-                  >{{ specFormGroup.value.specification.name }}:
-                </span>
-                <div class="section-product-form__row">
-                  <div class="form-group section-product-form__select">
-                    <div class="dropdown section-product-form__dropdown">
-                      <button type="button" class="dropdown__button">
-                        {{ specFormGroup.get("value")?.value ? "Да" : "Нет" }}
-                      </button>
-                      <svg class="dropdown__icon">
-                        <use
-                          xlink:href="assets/img/sprite.svg#arrow-down"
-                        ></use>
-                      </svg>
-                      <ul class="dropdown__list">
-                        <li
-                          class="dropdown__list-item"
-                          (click)="
-                            specFormGroup
-                              .get('value')
-                              ?.setValue(specFormGroup.value.specification)
-                          "
-                        >
-                          Да
-                        </li>
-                        <li
-                          class="dropdown__list-item"
-                          (click)="specFormGroup.get('value')?.setValue(null)"
-                        >
-                          Нет
-                        </li>
-                      </ul>
-                      <!--                        <input type="text" name="select-category" value="" class="dropdown__input-hidden">-->
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-        </ng-container>
+            </ng-container>
+            <label class="form-main__label form-main__label--spec">
+              <span class="form-main__label-text">Цена: </span>
+              <input
+                type="number"
+                class="input-reset form-main__input"
+                [formControl]="$any(detailForm).controls['price']"
+                [ngClass]="{
+                  error: $any(detailForm).controls['price'].invalid
+                }"
+              />
+            </label>
+          </form>
+        </div>
       </div>
     </div>
     <button
@@ -471,7 +441,7 @@
   </div>
 </div>
 <p-galleria
-  [value]="product.loadAdditionalImages"
+  [value]="product.additionalImages"
   [(visible)]="displayCustom"
   [(activeIndex)]="activeIndex"
   [responsiveOptions]="responsiveOptions"
@@ -490,3 +460,113 @@
     />
   </ng-template>
 </p-galleria>
+
+<div class="popup" *ngIf="attributeModal" [ngClass]="{ open: attributeModal }">
+  <div class="popup__overlay" (click)="showAttributeModal()"></div>
+  <div class="popup__content">
+    <button class="btn-reset popup__btn-close" (click)="showAttributeModal()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 30 30"
+        fill="none"
+      >
+        <line
+          x1="1.98995"
+          y1="1"
+          x2="29.2843"
+          y2="28.2943"
+          stroke="black"
+          stroke-width="1.4"
+          stroke-linecap="round"
+        ></line>
+        <line
+          x1="0.7"
+          y1="-0.7"
+          x2="39.3"
+          y2="-0.7"
+          transform="matrix(-0.707107 0.707107 0.707107 0.707107 29.2852 1)"
+          stroke="black"
+          stroke-width="1.4"
+          stroke-linecap="round"
+        ></line>
+      </svg>
+    </button>
+    <span class="popup__title">Ваши атрибуты товара</span>
+    <div class="add-attribute">
+      <div class="add-attribute__item-select">
+        <div class="dropdown section-product-form__dropdown">
+          <button type="button" class="dropdown__button placeholder">
+            Выберите атрибут
+          </button>
+          <svg class="dropdown__icon">
+            <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
+          </svg>
+          <ul class="dropdown__list">
+            <li
+              class="dropdown__list-item"
+              *ngFor="let spec of allSpecifications"
+              (click)="addAttribute(spec)"
+            >
+              {{ spec.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <form
+        class="add-attribute__form"
+        *ngFor="let specForm of newAttributeFormArr.controls"
+      >
+        <div class="add-attribute__form-header">
+          <h2 class="add-attribute__form-title">
+            {{ $any(specForm).controls["specification"].value.name }}
+          </h2>
+          <button
+            type="button"
+            class="btn-reset add-attribute__btn-remove"
+            (click)="
+              removeNewAttribute(
+                $any(specForm).controls['specification'].value.id
+              )
+            "
+          >
+            Удалить
+          </button>
+        </div>
+
+        <div class="add-attribute__form-content">
+          <ng-container
+            *ngFor="let specValue of $any(specForm).controls['values'].value"
+          >
+            <label class="custom-checkbox form-reg__checkbox">
+              <input
+                type="checkbox"
+                class="custom-checkbox__field"
+                name="enable"
+                [checked]="specValue.enabled"
+                (change)="specValue.enabled = !specValue.enabled"
+              />
+              <span class="custom-checkbox__content form-reg__checkbox-content"
+                >{{ specValue.value }}
+              </span>
+            </label>
+          </ng-container>
+          <!-- <button
+            type="button"
+            class="btn-reset add-attribute__btn-add btn-anim"
+          >
+            <span class="btn-anim__text">+</span>
+          </button> -->
+        </div>
+      </form>
+      <button
+        type="button"
+        class="btn-reset add-attribute__btn-save btn-anim"
+        (click)="saveAttribute()"
+      >
+        <span class="btn-anim__text">Сохранить</span>
+      </button>
+    </div>
+  </div>
+</div>

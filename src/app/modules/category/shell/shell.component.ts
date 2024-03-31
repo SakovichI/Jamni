@@ -105,12 +105,17 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.apiCategoryService.getCategory(this.categoryId).subscribe((elem) => {
       this.category = elem;
+      this.products = this.category.items.filter(
+        (el: any) => el.enabled === true
+      );
     });
     this.apiCategoryService
       .getCategory(this.categoryId)
       .subscribe((category) => {
         this.category = category;
-
+        this.products = this.category.items.filter(
+          (el: any) => el.enabled === true
+        );
         this.specsFormArray = new FormArray([
           new FormGroup({
             specification: new FormControl({
@@ -209,6 +214,9 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
     );
     this.apiCategoryService.getFilter(categoryId, filters).subscribe((el) => {
       this.category = el;
+      this.products = this.category.items.filter(
+        (el: any) => el.enabled === true
+      );
     });
   }
   public deleteFilter(specId: number, values: any[], categoryId: number) {
@@ -222,6 +230,9 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.apiCategoryService.getFilter(categoryId, filters).subscribe((el) => {
       this.category = el;
+      this.products = this.category.items.filter(
+        (el: any) => el.enabled === true
+      );
     });
   }
 
@@ -249,6 +260,9 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
       });
       this.apiCategoryService.getFilter(categoryId, params).subscribe((el) => {
         this.category = el;
+        this.products = this.category.items.filter(
+          (el: any) => el.enabled === true
+        );
       });
     } else {
       specFormGroup
@@ -269,7 +283,9 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private initOtherProducts(): void {
     this.apiItemService.listItems().subscribe((items) => {
-      this.otherProducts = items.slice(0, 10);
+      this.otherProducts = items
+        .filter((el: any) => el.enabled === true)
+        .slice(0, 10);
     });
   }
 

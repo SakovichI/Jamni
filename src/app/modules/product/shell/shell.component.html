@@ -10,17 +10,10 @@
               *ngFor="let img of productImages"
             >
               <picture>
-                <source
-                  [srcset]="
-                    product.coverImage || 'assets/img/no-img-placeholder.svg'
-                  "
-                  type="image/webp"
-                />
+                <source [srcset]="img" type="image/webp" />
                 <img
                   loading="lazy"
-                  [src]="
-                    product.coverImage || 'assets/img/no-img-placeholder.svg'
-                  "
+                  [src]="img"
                   class="image product-slide__image"
                   width="736"
                   height="670"
@@ -33,6 +26,7 @@
         </div>
         <div
           class="product__slider-thumbs slider product-slider-thumbs sliderMy-thumbs"
+          [ngClass]="{ hidden: productImages.length < 2 }"
         >
           <div
             class="product-slider-thumbs__wrapper slider__wrapper sliderMy-thumbs__wrapper"
@@ -42,13 +36,10 @@
               *ngFor="let img of productImages"
             >
               <picture>
-                <source
-                  [srcset]="img || 'assets/img/no-img-placeholder.svg'"
-                  type="image/webp"
-                />
+                <source [srcset]="img" type="image/webp" />
                 <img
                   loading="lazy"
-                  [src]="img || 'assets/img/no-img-placeholder.svg'"
+                  [src]="img"
                   class="image product-slide__image"
                   width="140"
                   height="140"

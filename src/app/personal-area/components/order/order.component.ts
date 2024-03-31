@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.css']
+  styleUrls: ['./order.component.css'],
 })
 export class OrderComponent implements OnInit {
   public customers: any = [
@@ -182,49 +183,6 @@ export class OrderComponent implements OnInit {
       amount: 3,
       state: 'Оплачен',
       price: 30000,
-    },    {
-      img: '',
-      title: 'Диван Foster',
-      color: 'black',
-      date: '12.05.24',
-      time: '10:00',
-      currency: 10000,
-      amount: 1,
-      state: 'Доставлен',
-      price: 10000,
-    },
-    {
-      img: '',
-      title: 'Диван Foster',
-      color: 'black',
-      date: '12.05.24',
-      time: '10:00',
-      currency: 5000,
-      amount: 4,
-      state: 'Новый',
-      price: 20000,
-    },
-    {
-      img: '',
-      title: 'Диван Foster',
-      color: 'black',
-      date: '12.05.24',
-      time: '10:00',
-      currency: 10000,
-      amount: 3,
-      state: 'Оплачен',
-      price: 30000,
-    },
-    {
-      img: '',
-      title: 'Диван Foster',
-      color: 'black',
-      date: '15.01.24',
-      time: '18:00',
-      currency: 10000,
-      amount: 3,
-      state: 'Оплачен',
-      price: 30000,
     },
     {
       img: '',
@@ -446,11 +404,54 @@ export class OrderComponent implements OnInit {
       state: 'Оплачен',
       price: 30000,
     },
-
-  ]
-  constructor() { }
+    {
+      img: '',
+      title: 'Диван Foster',
+      color: 'black',
+      date: '12.05.24',
+      time: '10:00',
+      currency: 10000,
+      amount: 1,
+      state: 'Доставлен',
+      price: 10000,
+    },
+    {
+      img: '',
+      title: 'Диван Foster',
+      color: 'black',
+      date: '12.05.24',
+      time: '10:00',
+      currency: 5000,
+      amount: 4,
+      state: 'Новый',
+      price: 20000,
+    },
+    {
+      img: '',
+      title: 'Диван Foster',
+      color: 'black',
+      date: '12.05.24',
+      time: '10:00',
+      currency: 10000,
+      amount: 3,
+      state: 'Оплачен',
+      price: 30000,
+    },
+    {
+      img: '',
+      title: 'Диван Foster',
+      color: 'black',
+      date: '15.01.24',
+      time: '18:00',
+      currency: 10000,
+      amount: 3,
+      state: 'Оплачен',
+      price: 30000,
+    },
+  ];
+  constructor(private loader: LoaderService) {}
 
   ngOnInit(): void {
+    this.loader.loaded = true;
   }
-
 }

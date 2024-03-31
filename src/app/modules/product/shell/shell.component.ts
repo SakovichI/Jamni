@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, forkJoin, mergeMap, takeUntil } from 'rxjs';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
+import { ModalsService } from 'src/app/core/services/modals.service';
+import { IProduct } from 'src/app/interfaces/product-interface';
 import { IUserFavorites } from 'src/app/interfaces/users-interface';
 import { ApiCategoryService, ApiItemService } from '../../../core';
 import { GeneralService } from '../../../core/services/general.service';
@@ -14,7 +16,7 @@ import { GeneralService } from '../../../core/services/general.service';
 export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
   private destroyed$: Subject<any> = new Subject<any>();
   public productId?: number;
-  public product: any;
+  public product: IProduct = {} as IProduct;
   public formArray: FormArray = new FormArray([]);
   public ownSetCategories: any[] = [];
   public selectedOwnSetCategory: any;
@@ -22,14 +24,16 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
   public accordionViews: boolean = false;
   private lastScript: any;
   public favoriteList: IUserFavorites[] = [];
-
   public productImages: string[] = [];
+
   constructor(
     private activatedRoute: ActivatedRoute,
     public generalService: GeneralService,
     private apiItemService: ApiItemService,
     private apiCategoryService: ApiCategoryService,
-    public userApi: ApiUserService
+    public userApi: ApiUserService,
+    private modal: ModalsService,
+    private router: Router
   ) {
     this.activatedRoute.paramMap
       .pipe(takeUntil(this.destroyed$))
@@ -81,64 +85,65 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
       return;
     }
 
-    this.apiItemService.getItem(this.productId).subscribe((product: any) => {
-      console.log(product);
-      this.product = product;
+    this.apiItemService.getItem(this.productId).subscribe(
+      (product: any) => {
+        this.product = product;
+        this.product.additionalImages.push(this.product.coverImage);
+        this.productImages = this.product.additionalImages;
 
-      product.specifications.forEach((spec: any) => {
-        if (spec.selectType === 'STATIC') {
-          return;
-        }
+        product.specifications.forEach((spec: any) => {
+          if (spec.selectType === 'STATIC') {
+            return;
+          }
 
-        let formGroup: any;
-        if (spec.selectType === 'SELECTING') {
-          formGroup = new FormGroup({
-            specification: new FormControl(spec),
-            value: new FormControl(spec.values[0]),
+          let formGroup: any;
+          if (spec.selectType === 'SELECTING') {
+            formGroup = new FormGroup({
+              specification: new FormControl(spec),
+              value: new FormControl(spec.values[0]),
+            });
+          } else if (spec.selectType === 'DROPDOWN') {
+            formGroup = new FormGroup({
+              specification: new FormControl(spec),
+              value: new FormControl(spec.values[0]),
+            });
+          } else if (spec.selectType == 'CHECKBOX') {
+            formGroup = new FormGroup({
+              specification: new FormControl(spec),
+              value: new FormControl(spec.values[0]),
+            });
+          }
+
+          this.formArray.push(formGroup);
+
+          formGroup.valueChanges.subscribe((v: any) => {
+            setTimeout(() => {
+              this.apiItemService
+                .getItemDetails(
+                  this.productId as number,
+                  this.formArray.value.map((spec: any) => spec.value.id)
+                )
+                .subscribe((v) => {
+                  this.product = { ...this.product, price: v.price };
+                });
+            }, 10);
           });
-        } else if (spec.selectType === 'DROPDOWN') {
-          formGroup = new FormGroup({
-            specification: new FormControl(spec),
-            value: new FormControl(spec.values[0]),
-          });
-        } else if (spec.selectType == 'CHECKBOX') {
-          formGroup = new FormGroup({
-            specification: new FormControl(spec),
-            value: new FormControl(spec.values[0]),
-          });
-        }
-
-        this.formArray.push(formGroup);
-
-        formGroup.valueChanges.subscribe((v: any) => {
-          setTimeout(() => {
-            this.apiItemService
-              .getItemDetails(
-                this.productId as number,
-                this.formArray.value.map((spec: any) => spec.value.id)
-              )
-              .subscribe((v) => {
-                this.product = { ...this.product, price: v.price };
-                this.productImages = v.images.length
-                  ? v.images
-                  : ['assets/img/no-img-placeholder.svg'];
-              });
-          }, 10);
         });
-      });
 
-      this.apiItemService
-        .getItemDetails(
-          this.productId as number,
-          this.formArray.value.map((spec: any) => spec.value.id)
-        )
-        .subscribe((v) => {
-          this.product.price = v.price;
-          this.productImages = v.images.length
-            ? v.images
-            : ['assets/img/no-img-placeholder.svg'];
-        });
-    });
+        this.apiItemService
+          .getItemDetails(
+            this.productId as number,
+            this.formArray.value.map((spec: any) => spec.value.id)
+          )
+          .subscribe((v) => {
+            this.product.price = v.price;
+          });
+      },
+      (error) => {
+        this.router.navigate(['/catalog/']);
+        this.modal.showError('Данного товара нет в наличии');
+      }
+    );
   }
 
   public onAddToCartClick(): void {

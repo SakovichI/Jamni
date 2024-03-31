@@ -124,7 +124,8 @@ a {
 }
 
 .site-container {
-  height: 100%;
+  position: relative;
+  min-height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -589,6 +590,7 @@ main {
 }
 
 .product-slider-thumbs__slide {
+  height: 100%;
   background-color: #f5f5f5;
   opacity: 0.6;
   -webkit-transition: 0.1s ease-in;
@@ -1516,7 +1518,7 @@ main {
 }
 
 .dropdown__button {
-  padding: 12px 0px 12px 24px;
+  padding: 12px 34px 12px 24px;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1602,7 +1604,7 @@ main {
 .dropdown__icon {
   position: absolute;
   top: 17px;
-  right: 20px;
+  right: 15px;
   -webkit-transition: 0.2s ease-in;
   transition: 0.2s ease-in;
   width: 11px;
@@ -5632,7 +5634,9 @@ main {
   -ms-grid-column-span: 1;
   grid-column: 2/3;
 }
-
+.product__slider-thumbs.hidden{
+  display: none;
+}
 .description-prod__breadcrumbs {
   margin-bottom: 60px;
 }
@@ -11716,7 +11720,7 @@ p-slider {
 /* Editor */
 angular-editor.error .angular-editor-textarea {
   border: 1px solid #e17070 !important;
-  border-top: none!important;
+  border-top: none !important;
   transition: 0.2s ease;
 }
 angular-editor.error .angular-editor-toolbar {
@@ -11737,7 +11741,7 @@ angular-editor.error .angular-editor-toolbar {
   margin-bottom: 17px;
   padding: 10px 24px !important;
   border: 1px solid #d3d3d3 !important;
-  border-top: none!important;
+  border-top: none !important;
   border-bottom-left-radius: 20px !important;
   border-bottom-right-radius: 20px !important;
   transition: 0.2s ease;

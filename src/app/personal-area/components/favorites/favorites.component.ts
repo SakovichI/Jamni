@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { IUserFavorites } from 'src/app/interfaces/users-interface';
 
 @Component({
@@ -15,15 +16,17 @@ export class FavoritesComponent implements OnInit, OnDestroy {
     IUserFavorites[]
   >([]);
 
-  constructor(private userApi: ApiUserService) {}
+  constructor(private userApi: ApiUserService, private loader: LoaderService) {}
 
   ngOnInit(): void {
+    this.loader.loaded = true;
     this.userApi
       .getFavorites()
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
         this.category$.next(resp);
         this.category$.subscribe((resp) => (this.category = resp));
+        this.loader.loaded = false;
       });
   }
 

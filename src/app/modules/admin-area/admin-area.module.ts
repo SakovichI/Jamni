@@ -96,6 +96,9 @@ const routes: Routes = [
     ProductComponent,
     CategoryComponent,
     ChildCategoryComponent,
+    CreateProductsComponent,
+    OrderDetailComponent,
+    OrdersComponent,
   ],
 })
 export class AdminAreaModule {}
