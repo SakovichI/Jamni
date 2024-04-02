@@ -17,6 +17,7 @@
           pInputText
           type="text"
           (input)="dt1.filterGlobal($any($event).target.value, 'contains')"
+          (change)="updateScript()"
           placeholder="Поиск"
         />
       </span>
