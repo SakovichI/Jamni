@@ -58,19 +58,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
         this.favoriteList = resp;
       });
   }
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      const scriptOld = document.querySelector('[src="assets/main.js"]');
-      if (scriptOld) {
-        document.body.removeChild(scriptOld);
-      }
-    }, 1000);
-    setTimeout(() => {
-      const script = document.createElement('script');
-      script.src = 'assets/main.js';
-      document.body.appendChild(script);
-    }, 1200);
-  }
+  ngAfterViewInit(): void {}
 
   public openDescription() {
     this.accordionViews = !this.accordionViews;
@@ -88,8 +76,10 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     this.apiItemService.getItem(this.productId).subscribe(
       (product: any) => {
         this.product = product;
-        this.product.additionalImages.push(this.product.coverImage);
-        this.productImages = this.product.additionalImages;
+        this.product.additionalImages.coverImage = this.product.coverImage;
+        for (let k in this.product.additionalImages) {
+          this.productImages.push(this.product.additionalImages[k]);
+        }
 
         product.specifications.forEach((spec: any) => {
           if (spec.selectType === 'STATIC') {
@@ -128,6 +118,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
                 });
             }, 10);
           });
+          this.updateScript();
         });
 
         this.apiItemService
@@ -149,7 +140,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
   public onAddToCartClick(): void {
     this.generalService.addProduct({
       product: this.product,
-      appliedSpecs: this.formArray.value.map((v: any) => v.value.id),
+      appliedSpecs: this.formArray.controls.map((v: any) => v.value.value),
     });
   }
 
@@ -198,6 +189,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
       this.otherProducts = items
         .filter((el: any) => el.enabled === true)
         .slice(0, 10);
+      this.updateScript();
     });
   }
   favorites(id: number) {
@@ -218,5 +210,18 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     } else {
       return false;
     }
+  }
+  updateScript() {
+    setTimeout(() => {
+      const scriptOld = document.querySelector('[src="assets/main.js"]');
+      if (scriptOld) {
+        document.body.removeChild(scriptOld);
+      }
+    }, 20);
+    setTimeout(() => {
+      const script = document.createElement('script');
+      script.src = 'assets/main.js';
+      document.body.appendChild(script);
+    }, 50);
   }
 }

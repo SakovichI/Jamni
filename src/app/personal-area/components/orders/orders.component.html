@@ -1,156 +1,60 @@
 <div class="orders">
-  <ul class="orders__list">
-    <li class="orders__item order">
+  <ul class="orders__list" *ngIf="orders.length > 0">
+    <li class="orders__item order" *ngFor="let order of orders">
       <div class="order__wrap">
         <div class="order__images">
-          <div class="order__img-wrap">
+          <div
+            class="order__img-wrap"
+            *ngFor="let item of order.items.slice(0, 3)"
+          >
             <img
-              src="assets/img/categories/furniture1.jpg"
+              [src]="
+                $any(item).coverImage
+                  ? $any(item).coverImage
+                  : 'assets/img/no-img-placeholder.svg'
+              "
               alt="product-img"
               class="order__img"
               width="75"
               height="75"
             />
           </div>
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-          <div class="order__else">
-            <p class="order__else-text">+ 8 <br />товаров</p>
+          <div class="order__else" *ngIf="order.items.length > 3">
+            <p class="order__else-text">
+              + {{ order.items.length - 3 }} <br />товаров
+            </p>
           </div>
         </div>
         <div class="order__info">
-          <h3 class="order__id">№ 359245260</h3>
+          <h3 class="order__id">{{ order.id }}</h3>
           <div class="order__info-wrap">
-            <span class="order__info-text">Новый</span>
-            <span class="order__info-text">12.05.24</span>
-            <span class="order__info-text">1 200 000 руб.</span>
+            <ng-container [ngSwitch]="order.status">
+              <span class="order__info-text" *ngSwitchCase="'NEW'">Новый</span>
+              <span class="order__info-text" *ngSwitchCase="'CANCELED'"
+                >Доставлен</span
+              >
+              <span class="order__info-text" *ngSwitchCase="'PAID'"
+                >Оплачен</span
+              >
+            </ng-container>
+
+            <span class="order__info-text">{{
+              order.createdAt | date : "dd.MM.YY"
+            }}</span>
+            <span class="order__info-text">{{ order.totalCost }} руб.</span>
           </div>
         </div>
-        <button class="btn-reset btn-anim order__btn" [routerLink]="'1'">
-          <span class="btn-anim__text">посмотрть заказ</span>
-        </button>
-      </div>
-    </li>
-    <li class="orders__item order">
-      <div class="order__wrap">
-        <div class="order__images">
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-        </div>
-        <div class="order__info">
-          <h3 class="order__id">№ 359245260</h3>
-          <div class="order__info-wrap">
-            <span class="order__info-text">Новый</span>
-            <span class="order__info-text">12.05.24</span>
-            <span class="order__info-text">1 200 000 руб.</span>
-          </div>
-        </div>
-        <button class="btn-reset btn-anim order__btn">
-          <span class="btn-anim__text">посмотрть заказ</span>
-        </button>
-      </div>
-    </li>
-    <li class="orders__item order">
-      <div class="order__wrap">
-        <div class="order__images">
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-        </div>
-        <div class="order__info">
-          <h3 class="order__id">№ 359245260</h3>
-          <div class="order__info-wrap">
-            <span class="order__info-text">Новый</span>
-            <span class="order__info-text">12.05.24</span>
-            <span class="order__info-text">1 200 000 руб.</span>
-          </div>
-        </div>
-        <button class="btn-reset btn-anim order__btn">
-          <span class="btn-anim__text">посмотрть заказ</span>
-        </button>
-      </div>
-    </li>
-    <li class="orders__item order">
-      <div class="order__wrap">
-        <div class="order__images">
-          <div class="order__img-wrap">
-            <img
-              src="assets/img/categories/furniture1.jpg"
-              alt="product-img"
-              class="order__img"
-              width="75"
-              height="75"
-            />
-          </div>
-        </div>
-        <div class="order__info">
-          <h3 class="order__id">№ 359245260</h3>
-          <div class="order__info-wrap">
-            <span class="order__info-text">Новый</span>
-            <span class="order__info-text">12.05.24</span>
-            <span class="order__info-text">1 200 000 руб.</span>
-          </div>
-        </div>
-        <button class="btn-reset btn-anim order__btn">
+        <button
+          class="btn-reset btn-anim order__btn"
+          [routerLink]="'../orders/' + order.id"
+        >
           <span class="btn-anim__text">посмотрть заказ</span>
         </button>
       </div>
     </li>
   </ul>
+  <p class="orders__empty" *ngIf="orders.length === 0">
+    Вы еще ничего не заказывали, перейдите в
+    <a routerLink="/catalog" class="orders__empty-link">каталог</a>
+  </p>
 </div>

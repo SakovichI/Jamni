@@ -1,17 +1,42 @@
-import {Injectable} from "@angular/core";
-import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IOrder, IPayment } from 'src/app/interfaces/orders-payments';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root',
 })
-export class ApiOrderService{
-  private apiUrl: string = environment.apiUrl + '/order/';
-  constructor(private httpClient: HttpClient) {
+export class ApiOrderService {
+  private apiUrl: string = environment.apiUrl;
+  constructor(private httpClient: HttpClient) {}
+  public orderPay(data: IPayment): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/order/payment`, data);
   }
 
   public makeOrder(data: any): Observable<any> {
-    return this.httpClient.post<any>(`${this.apiUrl}`, data);
+    return this.httpClient.post<any>(`${this.apiUrl}/users/order`, data);
+  }
+
+  public makeOrderNoName(data: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.apiUrl}/order/without-user`, data);
+  }
+
+  public getOrders(): Observable<IOrder[]> {
+    return this.httpClient.get<IOrder[]>(`${this.apiUrl}/users/order`);
+  }
+
+  public adminGetOrder(): Observable<IOrder[]> {
+    return this.httpClient.get<IOrder[]>(`${this.apiUrl}/admin/order`);
+  }
+
+  public adminEditOrder(
+    id: number,
+    data: { status: 'NEW' | 'CANCELED' | 'PAID' }
+  ): Observable<void> {
+    return this.httpClient.put<void>(`${this.apiUrl}/admin/order/${id}`, data);
+  }
+  public adminDeleteOrder(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.apiUrl}/admin/order/${id}`);
   }
 }

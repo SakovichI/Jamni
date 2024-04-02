@@ -3,7 +3,7 @@
     <div class="cut-info__wrap">
       <div class="breadcrumbs cut-info__breadcrumbs">
         <span class="breadcrumbs__link">Корзина</span>
-        <span class="breadcrumbs__link ">информация</span>
+        <span class="breadcrumbs__link">информация</span>
         <span class="breadcrumbs__link">доставка</span>
         <span class="breadcrumbs__link breadcrumbs__link--active">оплата</span>
       </div>
@@ -11,138 +11,363 @@
         <div class="form-delivery__inner form-delivery__inner--border">
           <label class="form__label form-delivery__label">
             <span class="form-delivery__title">Контакт</span>
-            <textarea class="form__textarea form-delivery__textarea input-reset" disabled name="contacts" type="text">{{email}}</textarea>
-            <button class="form-delivery__btn btn-reset">изменить</button>
+            <textarea
+              class="form__textarea form-delivery__textarea input-reset"
+              disabled
+              name="contacts"
+              type="text"
+              >{{ email }}</textarea
+            >
+            <button type="button" class="form-delivery__btn btn-reset">
+              изменить
+            </button>
           </label>
           <label class="form__label form-delivery__label">
             <span class="form-delivery__title">адрес</span>
-            <textarea class="form__textarea form-delivery__textarea input-reset" disabled name="adres" type="text">{{address}}</textarea>
-            <button class="form-delivery__btn btn-reset">изменить</button>
+            <textarea
+              class="form__textarea form-delivery__textarea input-reset"
+              disabled
+              name="adres"
+              type="text"
+              >{{ address }}</textarea
+            >
+            <button type="button" class="form-delivery__btn btn-reset">
+              изменить
+            </button>
           </label>
           <label class="form__label form-delivery__label">
             <span class="form-delivery__title">доставка</span>
-            <textarea class="form__textarea form-delivery__textarea input-reset" disabled name="adres" type="text">{{deliveryMethod == 'courier' ? 'Курьером' : 'Самовывоз'}}</textarea>
-            <button class="form-delivery__btn btn-reset">изменить</button>
+            <textarea
+              class="form__textarea form-delivery__textarea input-reset"
+              disabled
+              name="adres"
+              type="text"
+              >{{
+                deliveryMethod == "courier" ? "Курьером" : "Самовывоз"
+              }}</textarea
+            >
+            <button type="button" class="form-delivery__btn btn-reset">
+              изменить
+            </button>
           </label>
         </div>
         <div class="form-delivery__inner">
           <span class="form-delivery__title">оплата </span>
-          <span class="form-delivery__title form-delivery__title--light">Все транзакции зашифрованы и безопасны</span>
-          <label class="custom-checkbox form-delivery__checkbox form-delivery__pay">
-            <input class="custom-checkbox__field" name="pay" type="radio" value="card">
+          <span class="form-delivery__title form-delivery__title--light"
+            >Все транзакции зашифрованы и безопасны</span
+          >
+          <label
+            class="custom-checkbox form-delivery__checkbox form-delivery__pay"
+          >
+            <input
+              class="custom-checkbox__field"
+              name="pay"
+              type="radio"
+              value="card"
+              [checked]="payment === 'CARD'"
+              (change)="setPaymentType('CARD')"
+            />
             <span
-              class="custom-checkbox__content form-delivery__checkbox-content form-delivery__pay-content pay-card">
-              <span class="pay-card__title">Оплата банковской картой
-                  <span class="pay-card__icons">
-                     <svg class="pay-card__icon" fill="none" height="24" viewBox="0 0 38 24" width="38"
-                          xmlns="http://www.w3.org/2000/svg">
+              class="custom-checkbox__content form-delivery__checkbox-content form-delivery__pay-content pay-card"
+            >
+              <span class="pay-card__title"
+                >Оплата банковской картой
+                <span class="pay-card__icons">
+                  <svg
+                    class="pay-card__icon"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 38 24"
+                    width="38"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       d="M35 0H3C1.3 0 0 1.3 0 3V21C0 22.7 1.4 24 3 24H35C36.7 24 38 22.7 38 21V3C38 1.3 36.6 0 35 0Z"
                       fill="black"
-                      opacity="0.07"/>
-<path d="M35 1C36.1 1 37 1.9 37 3V21C37 22.1 36.1 23 35 23H3C1.9 23 1 22.1 1 21V3C1 1.9 1.9 1 3 1H35Z" fill="white"/>
-<path
-  d="M28.3 10.1H28C27.6 11.1 27.3 11.6 27 13.1H28.9C28.6 11.6 28.6 10.9 28.3 10.1ZM31.2 16H29.5C29.4 16 29.4 16 29.3 15.9L29.1 15L29 14.8H26.6C26.5 14.8 26.4 14.8 26.4 15L26.1 15.9C26.1 16 26 16 26 16H23.9L24.1 15.5L27 8.7C27 8.2 27.3 8 27.8 8H29.3C29.4 8 29.5 8 29.5 8.2L30.9 14.7C31 15.1 31.1 15.4 31.1 15.8C31.2 15.9 31.2 15.9 31.2 16ZM17.8 15.7L18.2 13.9C18.3 13.9 18.4 14 18.4 14C19.1 14.3 19.8 14.5 20.5 14.4C20.7 14.4 21 14.3 21.2 14.2C21.7 14 21.7 13.5 21.3 13.1C21.1 12.9 20.8 12.8 20.5 12.6C20.1 12.4 19.7 12.2 19.4 11.9C18.2 10.9 18.6 9.5 19.3 8.8C19.9 8.4 20.2 8 21 8C22.2 8 23.5 8 24.1 8.2H24.2C24.1 8.8 24 9.3 23.8 9.9C23.3 9.7 22.8 9.5 22.3 9.5C22 9.5 21.7 9.5 21.4 9.6C21.2 9.6 21.1 9.7 21 9.8C20.8 10 20.8 10.3 21 10.5L21.5 10.9C21.9 11.1 22.3 11.3 22.6 11.5C23.1 11.8 23.6 12.3 23.7 12.9C23.9 13.8 23.6 14.6 22.8 15.2C22.3 15.6 22.1 15.8 21.4 15.8C20 15.8 18.9 15.9 18 15.6C17.9 15.8 17.9 15.8 17.8 15.7ZM14.3 16C14.4 15.3 14.4 15.3 14.5 15C15 12.8 15.5 10.5 15.9 8.3C16 8.1 16 8 16.2 8H18C17.8 9.2 17.6 10.1 17.3 11.2C17 12.7 16.7 14.2 16.3 15.7C16.3 15.9 16.2 15.9 16 15.9M5 8.2C5 8.1 5.2 8 5.3 8H8.7C9.2 8 9.6 8.3 9.7 8.8L10.6 13.2C10.6 13.3 10.6 13.3 10.7 13.4C10.7 13.3 10.8 13.3 10.8 13.3L12.9 8.2C12.8 8.1 12.9 8 13 8H15.1C15.1 8.1 15.1 8.1 15 8.2L11.9 15.5C11.8 15.7 11.8 15.8 11.7 15.9C11.6 16 11.4 15.9 11.2 15.9H9.7C9.6 15.9 9.5 15.9 9.5 15.7L7.9 9.5C7.7 9.3 7.4 9 7 8.9C6.4 8.6 5.3 8.4 5.1 8.4L5 8.2Z"
-  fill="#142688"/>
-</svg>
-                    <svg class="pay-card__icon" fill="none" height="24" viewBox="0 0 38 24" width="38"
-                         xmlns="http://www.w3.org/2000/svg">
-<path d="M35 0H3C1.3 0 0 1.3 0 3V21C0 22.7 1.4 24 3 24H35C36.7 24 38 22.7 38 21V3C38 1.3 36.6 0 35 0Z" fill="black"
-      opacity="0.07"/>
-<path d="M35 1C36.1 1 37 1.9 37 3V21C37 22.1 36.1 23 35 23H3C1.9 23 1 22.1 1 21V3C1 1.9 1.9 1 3 1H35Z" fill="white"/>
-<path d="M15 19C18.866 19 22 15.866 22 12C22 8.13401 18.866 5 15 5C11.134 5 8 8.13401 8 12C8 15.866 11.134 19 15 19Z"
-      fill="#EB001B"/>
-<path d="M23 19C26.866 19 30 15.866 30 12C30 8.13401 26.866 5 23 5C19.134 5 16 8.13401 16 12C16 15.866 19.134 19 23 19Z"
-      fill="#F79E1B"/>
-<path
-  d="M22 12.0008C22 9.60078 20.8 7.50078 19 6.30078C17.2 7.60078 16 9.70078 16 12.0008C16 14.3008 17.2 16.5008 19 17.7008C20.8 16.5008 22 14.4008 22 12.0008Z"
-  fill="#FF5F00"/>
-</svg>
-                  </span>
+                      opacity="0.07"
+                    />
+                    <path
+                      d="M35 1C36.1 1 37 1.9 37 3V21C37 22.1 36.1 23 35 23H3C1.9 23 1 22.1 1 21V3C1 1.9 1.9 1 3 1H35Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M28.3 10.1H28C27.6 11.1 27.3 11.6 27 13.1H28.9C28.6 11.6 28.6 10.9 28.3 10.1ZM31.2 16H29.5C29.4 16 29.4 16 29.3 15.9L29.1 15L29 14.8H26.6C26.5 14.8 26.4 14.8 26.4 15L26.1 15.9C26.1 16 26 16 26 16H23.9L24.1 15.5L27 8.7C27 8.2 27.3 8 27.8 8H29.3C29.4 8 29.5 8 29.5 8.2L30.9 14.7C31 15.1 31.1 15.4 31.1 15.8C31.2 15.9 31.2 15.9 31.2 16ZM17.8 15.7L18.2 13.9C18.3 13.9 18.4 14 18.4 14C19.1 14.3 19.8 14.5 20.5 14.4C20.7 14.4 21 14.3 21.2 14.2C21.7 14 21.7 13.5 21.3 13.1C21.1 12.9 20.8 12.8 20.5 12.6C20.1 12.4 19.7 12.2 19.4 11.9C18.2 10.9 18.6 9.5 19.3 8.8C19.9 8.4 20.2 8 21 8C22.2 8 23.5 8 24.1 8.2H24.2C24.1 8.8 24 9.3 23.8 9.9C23.3 9.7 22.8 9.5 22.3 9.5C22 9.5 21.7 9.5 21.4 9.6C21.2 9.6 21.1 9.7 21 9.8C20.8 10 20.8 10.3 21 10.5L21.5 10.9C21.9 11.1 22.3 11.3 22.6 11.5C23.1 11.8 23.6 12.3 23.7 12.9C23.9 13.8 23.6 14.6 22.8 15.2C22.3 15.6 22.1 15.8 21.4 15.8C20 15.8 18.9 15.9 18 15.6C17.9 15.8 17.9 15.8 17.8 15.7ZM14.3 16C14.4 15.3 14.4 15.3 14.5 15C15 12.8 15.5 10.5 15.9 8.3C16 8.1 16 8 16.2 8H18C17.8 9.2 17.6 10.1 17.3 11.2C17 12.7 16.7 14.2 16.3 15.7C16.3 15.9 16.2 15.9 16 15.9M5 8.2C5 8.1 5.2 8 5.3 8H8.7C9.2 8 9.6 8.3 9.7 8.8L10.6 13.2C10.6 13.3 10.6 13.3 10.7 13.4C10.7 13.3 10.8 13.3 10.8 13.3L12.9 8.2C12.8 8.1 12.9 8 13 8H15.1C15.1 8.1 15.1 8.1 15 8.2L11.9 15.5C11.8 15.7 11.8 15.8 11.7 15.9C11.6 16 11.4 15.9 11.2 15.9H9.7C9.6 15.9 9.5 15.9 9.5 15.7L7.9 9.5C7.7 9.3 7.4 9 7 8.9C6.4 8.6 5.3 8.4 5.1 8.4L5 8.2Z"
+                      fill="#142688"
+                    />
+                  </svg>
+                  <svg
+                    class="pay-card__icon"
+                    fill="none"
+                    height="24"
+                    viewBox="0 0 38 24"
+                    width="38"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M35 0H3C1.3 0 0 1.3 0 3V21C0 22.7 1.4 24 3 24H35C36.7 24 38 22.7 38 21V3C38 1.3 36.6 0 35 0Z"
+                      fill="black"
+                      opacity="0.07"
+                    />
+                    <path
+                      d="M35 1C36.1 1 37 1.9 37 3V21C37 22.1 36.1 23 35 23H3C1.9 23 1 22.1 1 21V3C1 1.9 1.9 1 3 1H35Z"
+                      fill="white"
+                    />
+                    <path
+                      d="M15 19C18.866 19 22 15.866 22 12C22 8.13401 18.866 5 15 5C11.134 5 8 8.13401 8 12C8 15.866 11.134 19 15 19Z"
+                      fill="#EB001B"
+                    />
+                    <path
+                      d="M23 19C26.866 19 30 15.866 30 12C30 8.13401 26.866 5 23 5C19.134 5 16 8.13401 16 12C16 15.866 19.134 19 23 19Z"
+                      fill="#F79E1B"
+                    />
+                    <path
+                      d="M22 12.0008C22 9.60078 20.8 7.50078 19 6.30078C17.2 7.60078 16 9.70078 16 12.0008C16 14.3008 17.2 16.5008 19 17.7008C20.8 16.5008 22 14.4008 22 12.0008Z"
+                      fill="#FF5F00"
+                    />
+                  </svg>
                 </span>
-              <div id="pay-card" class="pay-card__info form-pay">
+              </span>
+              <form
+                id="pay-card"
+                class="pay-card__info form-pay"
+                [formGroup]="cardForm"
+              >
                 <label class="form-pay__label">
                   <span class="form-pay__text">Номер карты</span>
                   <span class="form-pay__number-row">
-                    <input class="input-reset form-pay__input form-pay__card-num" name="card-num" placeholder="Х Х Х Х" type="number" disabled>
-                  <input class="input-reset form-pay__input form-pay__card-num" name="card-num" placeholder="Х Х Х Х"
-                         type="number" disabled>
-                  <input class="input-reset form-pay__input form-pay__card-num" name="card-num" placeholder="Х Х Х Х"
-                         type="number" disabled>
-                  <input class="input-reset form-pay__input form-pay__card-num" name="card-num" placeholder="Х Х Х Х"
-                         type="number" disabled>
+                    <input
+                      class="input-reset form-pay__input form-pay__card-num"
+                      name="card-num"
+                      placeholder="Х Х Х Х"
+                      type="number"
+                      formControlName="cardNumber1"
+                      [ngClass]="{
+                        error:
+                          cardForm.controls['cardNumber1'].invalid &&
+                          (cardForm.controls['cardNumber1'].touched ||
+                            cardForm.controls['cardNumber1'].dirty)
+                      }"
+                    />
+                    <input
+                      class="input-reset form-pay__input form-pay__card-num"
+                      name="card-num"
+                      placeholder="Х Х Х Х"
+                      type="number"
+                      formControlName="cardNumber2"
+                      [ngClass]="{
+                        error:
+                          cardForm.controls['cardNumber2'].invalid &&
+                          (cardForm.controls['cardNumber2'].touched ||
+                            cardForm.controls['cardNumber2'].dirty)
+                      }"
+                    />
+                    <input
+                      class="input-reset form-pay__input form-pay__card-num"
+                      name="card-num"
+                      placeholder="Х Х Х Х"
+                      type="number"
+                      formControlName="cardNumber3"
+                      [ngClass]="{
+                        error:
+                          cardForm.controls['cardNumber3'].invalid &&
+                          (cardForm.controls['cardNumber3'].touched ||
+                            cardForm.controls['cardNumber3'].dirty)
+                      }"
+                    />
+                    <input
+                      class="input-reset form-pay__input form-pay__card-num"
+                      name="card-num"
+                      placeholder="Х Х Х Х"
+                      type="number"
+                      formControlName="cardNumber4"
+                      [ngClass]="{
+                        error:
+                          cardForm.controls['cardNumber4'].invalid &&
+                          (cardForm.controls['cardNumber4'].touched ||
+                            cardForm.controls['cardNumber4'].dirty)
+                      }"
+                    />
                   </span>
-
                 </label>
                 <label class="form-pay__label">
                   <span class="form-pay__text">Имя владельца карты</span>
-                  <input class="input-reset form-pay__input form-pay__card-name" name="name" placeholder="Иван Иванов"
-                         type="text" disabled>
+                  <input
+                    class="input-reset form-pay__input form-pay__card-name"
+                    name="name"
+                    placeholder="Иван Иванов"
+                    type="text"
+                    formControlName="name"
+                    [ngClass]="{
+                      error:
+                        cardForm.controls['name'].invalid &&
+                        (cardForm.controls['name'].touched ||
+                          cardForm.controls['name'].dirty)
+                    }"
+                  />
                 </label>
                 <div class="form-pay__row">
                   <label class="form-pay__label">
-                  <span class="form-pay__text">Действует до</span>
+                    <span class="form-pay__text">Действует до</span>
                     <span class="form-pay__row-date">
-                      <input class="input-reset form-pay__input form-pay__card-date" name="card-month" placeholder="ХХ"
-                             type="number" disabled> /
-                      <input class="input-reset form-pay__input form-pay__card-date" name="card-year"
-                             placeholder="ХХ"
-                             type="number" disabled>
+                      <input
+                        class="input-reset form-pay__input form-pay__card-date"
+                        name="card-month"
+                        placeholder="ХХ"
+                        type="number"
+                        formControlName="expDateMonth"
+                        [ngClass]="{
+                          error:
+                            cardForm.controls['expDateMonth'].invalid &&
+                            (cardForm.controls['expDateMonth'].touched ||
+                              cardForm.controls['expDateMonth'].dirty)
+                        }"
+                      />
+                      /
+                      <input
+                        class="input-reset form-pay__input form-pay__card-date"
+                        name="card-year"
+                        placeholder="ХХ"
+                        type="number"
+                        formControlName="expDateYear"
+                        [ngClass]="{
+                          error:
+                            cardForm.controls['expDateYear'].invalid &&
+                            (cardForm.controls['expDateYear'].touched ||
+                              cardForm.controls['expDateYear'].dirty)
+                        }"
+                      />
                     </span>
-
-                    </label>
+                  </label>
                   <label class="form-pay__label">
-                  <span class="form-pay__text">CVV</span>
-                  <input class="input-reset form-pay__input form-pay__card-CVV" name="CVV" placeholder="ХХX"
-                         type="number" disabled>
-                </label>
+                    <span class="form-pay__text">CVV</span>
+                    <input
+                      class="input-reset form-pay__input form-pay__card-CVV"
+                      name="CVV"
+                      placeholder="ХХX"
+                      type="number"
+                      formControlName="cvv"
+                      [ngClass]="{
+                        error:
+                          cardForm.controls['cvv'].invalid &&
+                          (cardForm.controls['cvv'].touched ||
+                            cardForm.controls['cvv'].dirty)
+                      }"
+                    />
+                  </label>
                 </div>
-              </div>
+              </form>
             </span>
           </label>
           <label class="custom-checkbox form-delivery__checkbox">
-            <input checked class="custom-checkbox__field" name="pay" type="radio" value="cash">
+            <input
+              checked
+              class="custom-checkbox__field"
+              name="pay"
+              type="radio"
+              value="cash"
+              [checked]="payment === 'CASH'"
+              (change)="setPaymentType('CASH')"
+            />
             <span
-              class="custom-checkbox__content form-delivery__checkbox-content form-info__text--light">Оплата при получении</span>
+              class="custom-checkbox__content form-delivery__checkbox-content form-info__text--light"
+              >Оплата при получении</span
+            >
           </label>
         </div>
-        <button class="form-delivery__button btn-reset form__btn btn-anim" type="button" (click)="pay()">
-          <span  class="form__btn-text form-delivery__btn-text btn-anim__text">завершить покупки</span>
+        <button
+          class="form-delivery__button btn-reset form__btn btn-anim"
+          type="button"
+          (click)="pay()"
+        >
+          <span class="form__btn-text form-delivery__btn-text btn-anim__text"
+            >завершить покупки</span
+          >
         </button>
-        <a class="form-delivery__link-back" [routerLink]="'/cut-delivery'" href="cut-delivery">Вернуться к доставке</a>
+        <a
+          class="form-delivery__link-back"
+          [routerLink]="'/cut-delivery'"
+          href="cut-delivery"
+          >Вернуться к доставке</a
+        >
       </form>
       <div class="cut-info__result result-cut accordion">
         <div class="result-cut__accordion-title accordion__title">
           показать заказ
           <div class="accordion__icon">
-            <span class="accordion__icon-line accordion__icon-line--horizontal"></span>
-            <span class="accordion__icon-line accordion__icon-line--vertical"></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--horizontal"
+            ></span>
+            <span
+              class="accordion__icon-line accordion__icon-line--vertical"
+            ></span>
           </div>
         </div>
         <div class="accordion__content">
-          <h1 class="result-cut__title">
-            итоговая сумма
-          </h1>
+          <h1 class="result-cut__title">итоговая сумма</h1>
           <div class="result-cut__items" data-simplebar>
-            <div class="result-cut__item item-cut" *ngFor="let product of generalService.selectedItems">
+            <div
+              class="result-cut__item item-cut"
+              *ngFor="let product of generalService.selectedItems"
+            >
               <div class="item-cut__wrap">
                 <picture>
-                  <source [srcset]="product.product.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">
-                  <img loading="lazy" [src]="product.product.coverImage || 'assets/img/no-img-placeholder.svg'" class="image" width="130" height="130"
-                       alt="prod-image">
+                  <source
+                    [srcset]="
+                      product.product.coverImage ||
+                      'assets/img/no-img-placeholder.svg'
+                    "
+                    type="image/webp"
+                  />
+                  <img
+                    loading="lazy"
+                    [src]="
+                      product.product.coverImage ||
+                      'assets/img/no-img-placeholder.svg'
+                    "
+                    class="image"
+                    width="130"
+                    height="130"
+                    alt="prod-image"
+                  />
                 </picture>
                 <div class="item-cut__content" data-prod="result-cut">
-                  <h3 class="item-cut__title">{{product.product.name}}</h3>
-                  <span class="item-cut__price">{{generalService.getProductAmount(product) * product.product.price}} руб</span>
+                  <h3 class="item-cut__title">{{ product.product.name }}</h3>
+                  <span class="item-cut__price"
+                    >{{
+                      generalService.getProductAmount(product) *
+                        product.product.price
+                    }}
+                    руб</span
+                  >
                   <div class="item-cut__count count-prod">
-                    <button class="btn-reset count-prod__minus" (click)="generalService.deleteProduct(product)">-</button>
-                    <span class="count-prod__count">{{generalService.getProductAmount(product)}}</span>
-                    <button class="btn-reset count-prod__plus" (click)="generalService.addProduct(product)">+</button>
+                    <button
+                      class="btn-reset count-prod__minus"
+                      (click)="generalService.deleteProduct(product)"
+                    >
+                      -
+                    </button>
+                    <span class="count-prod__count">{{
+                      generalService.getProductAmount(product)
+                    }}</span>
+                    <button
+                      class="btn-reset count-prod__plus"
+                      (click)="generalService.addProduct(product)"
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
-                <button class="btn-reset item-cut__delete" (click)="generalService.deleteProduct(product)">
-                  <img src="assets/img/cut-img/delete-prod.png" width="20" height="20" alt="delete-icon"
-                       class="item-cut__icon-delete">
+                <button
+                  class="btn-reset item-cut__delete"
+                  (click)="generalService.deleteProduct(product)"
+                >
+                  <img
+                    src="assets/img/cut-img/delete-prod.png"
+                    width="20"
+                    height="20"
+                    alt="delete-icon"
+                    class="item-cut__icon-delete"
+                  />
                 </button>
               </div>
             </div>
@@ -163,13 +388,15 @@
                 <!--                  <span class="sum-cut__title">промежуточный</span>-->
                 <!--                  <span class="sum-cut__txt" data-full-price="result-cut">0</span>-->
                 <!--                </div>-->
-<!--                <div class="sum-cut__row">-->
-<!--                  <span class="sum-cut__title">доставка</span>-->
-<!--                  <span class="sum-cut__txt sum-cut__txt&#45;&#45;light">Расситывается на следующем шаге</span>-->
-<!--                </div>-->
+                <!--                <div class="sum-cut__row">-->
+                <!--                  <span class="sum-cut__title">доставка</span>-->
+                <!--                  <span class="sum-cut__txt sum-cut__txt&#45;&#45;light">Расситывается на следующем шаге</span>-->
+                <!--                </div>-->
                 <div class="sum-cut__row">
                   <span class="sum-cut__title sum-cut__title--lg">итог</span>
-                  <span class="sum-cut__txt sum-cut__txt--lg">{{generalService.getTotalCartPrice()}} руб</span>
+                  <span class="sum-cut__txt sum-cut__txt--lg"
+                    >{{ generalService.getTotalCartPrice() }} руб</span
+                  >
                 </div>
               </div>
             </div>

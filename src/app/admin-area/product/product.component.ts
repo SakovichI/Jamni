@@ -163,9 +163,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
       .getAllSpecifications()
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
-        this.allSpecifications = resp.filter(
-          (spec) => spec.valueType !== 'COLOR'
-        );
+        this.allSpecifications = resp;
       });
   }
   ngAfterViewInit(): void {
@@ -383,7 +381,9 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (this.product.specifications.length > 0) {
         this.product.specifications.forEach((spec: IProductSpec) => {
-          data.specValueId.push(spec.id);
+          spec.values.forEach((value) => {
+            data.specValueId.push(value.id);
+          });
         });
         this.detailFormArr.controls.forEach((form) => {
           let detail: TDetailProduct = {
@@ -599,9 +599,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
       .getAllSpecifications()
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
-        this.allSpecifications = resp.filter(
-          (spec) => spec.valueType !== 'COLOR'
-        );
+        this.allSpecifications = resp;
       });
     this.showAttributeModal();
   }

@@ -1310,8 +1310,8 @@ main {
   position: absolute;
   left: 25.6px;
   top: 27px;
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -2430,7 +2430,7 @@ main {
 
 .modal__container {
   width: 100%;
-  max-height: 85%;
+  max-height: 90vh;
   overflow-x: auto;
   position: absolute;
   bottom: 0;
@@ -5634,7 +5634,7 @@ main {
   -ms-grid-column-span: 1;
   grid-column: 2/3;
 }
-.product__slider-thumbs.hidden{
+.product__slider-thumbs.hidden {
   display: none;
 }
 .description-prod__breadcrumbs {
@@ -9422,8 +9422,8 @@ main {
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  width: 15px;
-  height: 15px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -9442,6 +9442,7 @@ main {
   font-style: normal;
   font-weight: 300;
   line-height: normal; /* 437.5% */
+  cursor: pointer;
 }
 
 .form-delivery__link-back:before {
@@ -9548,7 +9549,6 @@ main {
 }
 
 .form-delivery__pay {
-  pointer-events: none;
   max-width: 490px;
   background-color: #f5f5f5;
 }
@@ -9629,6 +9629,15 @@ main {
   border-radius: 20px;
   border: 1px solid #d3d3d3;
   background-color: transparent;
+  transition: 0.2s ease-in;
+}
+.form-pay__input.error {
+  border: 1px solid #e17070;
+  transition: 0.2s ease-in;
+}
+.form-pay__input::-webkit-outer-spin-button,
+.form-pay__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 .form-pay__input::-webkit-input-placeholder {
@@ -9691,7 +9700,7 @@ main {
 }
 
 .form-pay__card-num {
-  width: 20%;
+  width: 23%;
   max-width: 95px;
 }
 
@@ -10196,7 +10205,6 @@ main {
 }
 
 .form-load3d__input.error {
-  border: 1px solid #e17070;
 }
 
 .form-load3d__btn {
@@ -11348,6 +11356,35 @@ main {
   line-height: normal;
   color: #a7a7a7;
 }
+.ordersAll .p-datatable table {
+  border-spacing: 0 10px;
+  border-collapse: unset !important;
+  padding-bottom: 60px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #d3d3d3;
+}
+.ordersAll .p-datatable td {
+  font-family: "ProximaNova", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
+  color: #000;
+  &:nth-child(2) {
+    padding-left: 20px;
+  }
+}
+.ordersAll .p-datatable tbody tr {
+  background: #fcfcfc;
+}
+.ordersAll .p-datatable-thead th {
+  padding-bottom: 30px;
+  text-align: left;
+  font-family: ProximaNova, sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: normal;
+  color: #a7a7a7;
+}
 
 /*ПАГИНАЦИЯ*/
 
@@ -11427,6 +11464,110 @@ main {
       background: #fcfcfc;
       &:before {
         content: "Статус:";
+        font-family: ProximaNova, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #a7a7a7;
+      }
+    }
+    &:nth-child(7) {
+      align-items: stretch;
+      flex-direction: column;
+      padding: 12px;
+
+      &:before {
+        content: "Стоимсоть за ед.:";
+        font-family: ProximaNova, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #a7a7a7;
+      }
+    }
+  }
+  .ordersAll .p-datatable tbody {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 30px;
+  }
+  .ordersAll .p-datatable tbody tr {
+    flex: 1 1 45%;
+    background: transparent;
+  }
+  .ordersAll .p-datatable td {
+    min-width: 100%;
+  }
+  .ordersAll #pr_id_1 .p-datatable-tbody > tr > td {
+    &:nth-child(1) {
+      padding: 12px;
+      gap: 10px;
+      align-items: center;
+      justify-content: start;
+      flex-direction: row;
+      &:before {
+        content: "№ заказа:";
+        font-family: ProximaNova, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #a7a7a7;
+      }
+    }
+    &:nth-child(2) {
+      padding: 12px;
+      align-items: stretch;
+      flex-direction: column;
+      &:before {
+        content: "Пользователь:";
+        font-family: ProximaNova, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #a7a7a7;
+      }
+    }
+    &:nth-child(3) {
+      padding: 12px;
+      align-items: stretch;
+      flex-direction: column;
+      &:before {
+        content: "Дата:";
+        font-family: ProximaNova, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #a7a7a7;
+      }
+    }
+    &:nth-child(4) {
+      align-items: stretch;
+      flex-direction: column;
+      padding: 12px;
+      background: #fcfcfc;
+      &:before {
+        content: "Стоимсоть:";
+        font-family: ProximaNova, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #a7a7a7;
+      }
+    }
+    &:nth-child(5) {
+      justify-content: start;
+      gap: 5px;
+      padding: 12px;
+      &:before {
+        content: "Статус:";
+        font-family: ProximaNova, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        color: #a7a7a7;
+      }
+    }
+    &:nth-child(6) {
+      justify-content: start;
+      gap: 5px;
+      padding: 12px;
+      background: #fcfcfc;
+      &:before {
+        content: "";
         font-family: ProximaNova, sans-serif;
         font-weight: 400;
         font-size: 14px;

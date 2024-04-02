@@ -63,6 +63,7 @@
 }
 
 .address__item {
+  cursor: pointer;
   &:not(:first-child) {
     padding-top: 16px;
     margin-top: 16px;

@@ -25,6 +25,9 @@ export class ApiAddressService {
       .post<IAddress[]>(`${this.url}/users/addresses`, data)
       .pipe(switchMap(() => this.getAddress()));
   }
+  addAddressNoName(data: IAddress): Observable<IAddress[]> {
+    return this.http.post<IAddress[]>(`${this.url}/addresses`, data);
+  }
 
   editAddress(data: IAddress, id: number): Observable<IAddress[]> {
     return this.http.put<IAddress[]>(`${this.url}/users/addresses/${id}`, data);

@@ -9,16 +9,18 @@
         <span class="breadcrumbs__link">доставка</span>
         <span class="breadcrumbs__link">оплата</span>
       </div>
-      <form action="#" class="cut-info__form form form-info">
+      <form action="#" class="cut-info__form form form-info" [formGroup]="form">
         <div class="form-info__wrap form__wrap">
           <div class="form-info__row form__row">
             <label class="form__label form-info__label">
               <span class="form-info__text-wrap">
                 <span class="form-info__title">Контакт</span>
-                <!--            <span class="form-info__text form-info__text&#45;&#45;light">-->
-                <!--             У Вас уже есть аккаунт?-->
-                <!--              <a href="#" class="form-info__link">Авторизоваться</a>-->
-                <!--            </span>-->
+                <span class="form-info__text form-info__text&#45;&#45;light">
+                  У Вас уже есть аккаунт?
+                  <a routerLink="../login" class="form-info__link"
+                    >Авторизоваться</a
+                  >
+                </span>
               </span>
               <input
                 type="text"
@@ -27,7 +29,8 @@
                 [formControl]="$any(form.controls['email'])"
                 [class.error]="
                   $any(form.controls['email']).invalid &&
-                  form.controls['email'].touched
+                  (form.controls['email'].touched ||
+                    form.controls['email'].dirty)
                 "
               />
             </label>
@@ -45,7 +48,11 @@
             <div class="form__row">
               <div class="form-group form-info__select form__select">
                 <div class="dropdown form-info__dropdown form__dropdown">
-                  <button type="button" class="dropdown__button">
+                  <button
+                    type="button"
+                    class="dropdown__button"
+                    style="pointer-events: none"
+                  >
                     {{ this.form.controls["country"].value }}
                   </button>
                   <svg class="dropdown__icon">
@@ -95,10 +102,11 @@
                 type="text"
                 class="form__input form-info__input input-reset"
                 placeholder="Имя"
-                [formControl]="$any(form.controls['name'])"
+                [formControl]="$any(form.controls['firstname'])"
                 [class.error]="
-                  $any(form.controls['name']).invalid &&
-                  form.controls['name'].touched
+                  $any(form.controls['firstname']).invalid &&
+                  (form.controls['firstname'].touched ||
+                    form.controls['firstname'].dirty)
                 "
               />
             </label>
@@ -111,7 +119,8 @@
                 [formControl]="$any(form.controls['surname'])"
                 [class.error]="
                   $any(form.controls['surname']).invalid &&
-                  form.controls['surname'].touched
+                  (form.controls['surname'].touched ||
+                    form.controls['surname'].dirty)
                 "
               />
             </label>
@@ -126,7 +135,7 @@
                 [formControl]="$any(form.controls['city'])"
                 [class.error]="
                   $any(form.controls['city']).invalid &&
-                  form.controls['city'].touched
+                  (form.controls['city'].touched || form.controls['city'].dirty)
                 "
               />
             </label>
@@ -136,10 +145,11 @@
                 type="text"
                 class="form__input form-info__input input-reset"
                 placeholder="Индекс"
-                [formControl]="$any(form.controls['index'])"
+                [formControl]="$any(form.controls['postcode'])"
                 [class.error]="
-                  $any(form.controls['index']).invalid &&
-                  form.controls['index'].touched
+                  $any(form.controls['postcode']).invalid &&
+                  (form.controls['postcode'].touched ||
+                    form.controls['postcode'].dirty)
                 "
               />
             </label>
@@ -154,7 +164,8 @@
                 [formControl]="$any(form.controls['street'])"
                 [class.error]="
                   $any(form.controls['street']).invalid &&
-                  form.controls['street'].touched
+                  (form.controls['street'].touched ||
+                    form.controls['street'].dirty)
                 "
               />
             </label>
@@ -167,24 +178,26 @@
                 [formControl]="$any(form.controls['house'])"
                 [class.error]="
                   $any(form.controls['house']).invalid &&
-                  form.controls['house'].touched
+                  (form.controls['house'].touched ||
+                    form.controls['house'].dirty)
                 "
               />
             </label>
           </div>
           <div class="form-info__row form__row">
             <label class="form__label form-info__label">
-              <input
-                name="phone"
-                type="text"
-                class="form__input form-info__input input-reset"
+              <p-inputMask
+                mask="+9(999) 999-99-99"
+                class="form-reg__input form__input"
                 placeholder="Телефон"
-                [formControl]="$any(form.controls['phone'])"
-                [class.error]="
-                  $any(form.controls['phone']).invalid &&
-                  form.controls['phone'].touched
-                "
-              />
+                [formControl]="$any(form.controls)['phone']"
+                [ngClass]="{
+                  error:
+                    $any(form.controls)['phone'].invalid &&
+                    ($any(form.controls)['phone'].touched ||
+                      $any(form.controls)['phone'].dirty)
+                }"
+              ></p-inputMask>
             </label>
           </div>
           <div class="form-info__row form__row">
@@ -209,7 +222,7 @@
           type="button"
           class="form-info__btn btn-reset form__btn btn-anim"
           [class.disabled]="form.invalid"
-          [routerLink]="'/cut-delivery'"
+          (click)="submitAddress(form)"
         >
           <span class="form__btn-text form-info__btn-text btn-anim__text"
             >продолжить</span
@@ -314,12 +327,12 @@
                 <!--                  <span class="sum-cut__title">промежуточный</span>-->
                 <!--                  <span class="sum-cut__txt" data-full-price="result-cut">0</span>-->
                 <!--                </div>-->
-                <div class="sum-cut__row">
+                <!-- <div class="sum-cut__row">
                   <span class="sum-cut__title">доставка</span>
                   <span class="sum-cut__txt sum-cut__txt--light"
                     >Рассчитывается на следующем шаге</span
                   >
-                </div>
+                </div> -->
                 <div class="sum-cut__row">
                   <span class="sum-cut__title sum-cut__title--lg">итог</span>
                   <span class="sum-cut__txt sum-cut__txt--lg"

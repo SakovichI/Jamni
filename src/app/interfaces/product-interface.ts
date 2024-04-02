@@ -1,7 +1,7 @@
 export interface IProduct {
   id?: number;
   loadAdditionalImages?: string[];
-  additionalImages: string[];
+  additionalImages: any;
   image?: string;
   coverImage: string;
   name: string;

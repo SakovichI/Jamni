@@ -28,6 +28,7 @@
   margin-bottom: 20px;
 }
 .products-content__search input {
+  width: 100%;
   padding: 0px 44px;
   font-family: "Proxima Nova", sans-serif;
   font-weight: 300;
@@ -35,7 +36,7 @@
   line-height: 214%;
   color: #000;
   border-radius: 20px;
-  width: 296px;
+  max-width: 400px;
   height: 37px;
   background: #f5f5f5;
   border: 0.5px solid transparent;
@@ -45,6 +46,10 @@
     border: 0.5px solid #000;
     transition: 0.2s ease-in;
   }
+}
+.p-input-icon-left {
+  width: 50%;
+  min-width: 260px;
 }
 .p-input-icon-left > i {
   left: 20px;

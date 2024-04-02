@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiAddressService } from 'src/app/core/api/api-address.service';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
@@ -22,12 +23,13 @@ export class ShellComponent implements OnInit, OnDestroy {
   public destroy$ = new Subject<void>();
   private email = '';
   public form: FormGroup = new FormGroup({
+    id: new FormControl('0', Validators.required),
     email: new FormControl('', [Validators.required, Validators.email]),
-    name: new FormControl('', [Validators.required]),
+    firstname: new FormControl('', [Validators.required]),
     surname: new FormControl('', [Validators.required]),
     country: new FormControl('Россия', [Validators.required]),
     city: new FormControl('', [Validators.required]),
-    index: new FormControl('', [Validators.required]),
+    postcode: new FormControl('', [Validators.required]),
     street: new FormControl('', [Validators.required]),
     house: new FormControl('', [Validators.required]),
     phone: new FormControl('', [
@@ -43,7 +45,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     private addressApi: ApiAddressService,
     public auth: AuthService,
     private userApi: ApiUserService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -60,11 +63,12 @@ export class ShellComponent implements OnInit, OnDestroy {
     }, 500);
     if (localStorage.getItem('form')) {
       const savedForm = JSON.parse(localStorage.getItem('form') as string);
+      this.form.controls['id'].setValue(savedForm.id);
       this.form.controls['email'].setValue(savedForm.email);
-      this.form.controls['name'].setValue(savedForm.name);
+      this.form.controls['firstname'].setValue(savedForm.firstname);
       this.form.controls['surname'].setValue(savedForm.surname);
       this.form.controls['city'].setValue(savedForm.city);
-      this.form.controls['index'].setValue(savedForm.index);
+      this.form.controls['postcode'].setValue(savedForm.postcode);
       this.form.controls['street'].setValue(savedForm.street);
       this.form.controls['house'].setValue(savedForm.house);
       this.form.controls['phone'].setValue(savedForm.phone);
@@ -99,15 +103,37 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   updateForm(value: IAddress) {
-    this.form.controls['name'].setValue(value.firstname);
+    this.form.controls['id'].setValue(value.id);
+    this.form.controls['firstname'].setValue(value.firstname);
     this.form.controls['surname'].setValue(value.surname);
     this.form.controls['country'].setValue(value.country);
     this.form.controls['city'].setValue(value.city);
-    this.form.controls['index'].setValue(value.postcode);
+    this.form.controls['postcode'].setValue(value.postcode);
     this.form.controls['street'].setValue(value.street);
     this.form.controls['house'].setValue(value.house);
     this.form.controls['phone'].setValue(value.phone);
 
     this.showModal = !this.showModal;
+    this.form.updateValueAndValidity();
+  }
+
+  public submitAddress(form: FormGroup) {
+    if (this.auth.getToken()) {
+      this.addressApi
+        .editAddress(form.value, form.value.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((resp) => {
+          localStorage.setItem('form', JSON.stringify(resp));
+          this.router.navigate(['./cut-delivery']);
+        });
+    } else {
+      this.addressApi
+        .addAddressNoName(form.value)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((resp) => {
+          localStorage.setItem('form', JSON.stringify(resp));
+          this.router.navigate(['./cut-delivery']);
+        });
+    }
   }
 }

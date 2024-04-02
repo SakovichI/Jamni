@@ -84,19 +84,7 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
         this.favoriteList = resp;
       });
   }
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      const scriptOld = document.querySelector('[src="assets/main.js"]');
-      if (scriptOld) {
-        document.body.removeChild(scriptOld);
-      }
-    }, 1000);
-    setTimeout(() => {
-      const script = document.createElement('script');
-      script.src = 'assets/main.js';
-      document.body.appendChild(script);
-    }, 1200);
-  }
+  ngAfterViewInit(): void {}
 
   private fetchCategory(): void {
     if (!this.categoryId) {
@@ -171,8 +159,22 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(() => {
           this.initSliders();
         }, 0);
+
         this.initOtherProducts();
       });
+  }
+  updateScript() {
+    setTimeout(() => {
+      const scriptOld = document.querySelector('[src="assets/main.js"]');
+      if (scriptOld) {
+        document.body.removeChild(scriptOld);
+      }
+    }, 20);
+    setTimeout(() => {
+      const script = document.createElement('script');
+      script.src = 'assets/main.js';
+      document.body.appendChild(script);
+    }, 50);
   }
 
   private initSliders(): void {
@@ -286,6 +288,7 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
       this.otherProducts = items
         .filter((el: any) => el.enabled === true)
         .slice(0, 10);
+      this.updateScript();
     });
   }
 
