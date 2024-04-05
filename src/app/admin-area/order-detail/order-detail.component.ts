@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, map, switchMap, takeUntil, tap } from 'rxjs';
 import { ApiOrderService } from 'src/app/core';
+import { ApiAddressService } from 'src/app/core/api/api-address.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { IAddress } from 'src/app/interfaces/address-inteface';
 import { IOrder } from 'src/app/interfaces/orders-payments';
@@ -19,7 +20,8 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
   constructor(
     private loader: LoaderService,
     private orderApi: ApiOrderService,
-    private activeRout: ActivatedRoute
+    private activeRout: ActivatedRoute,
+    private addressApi: ApiAddressService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +36,13 @@ export class OrderDetailComponent implements OnInit, OnDestroy {
         map((resp) => {
           this.order = resp.filter((item) => item.id === this.orderId)[0];
         }),
+        switchMap(() =>
+          this.addressApi.getAddressId(this.order.address).pipe(
+            tap((resp) => {
+              this.address = resp;
+            })
+          )
+        ),
         takeUntil(this.destroy$)
       )
       .subscribe(() => this.updateScript());

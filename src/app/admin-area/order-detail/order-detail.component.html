@@ -10,11 +10,32 @@
   </div>
   <div class="order-item__detail item-detail">
     <div class="item-detail__row">
+      <span class="item-detail__desc">Получатель: </span>
+      <span class="item-detail__value">{{
+        this.address.surname + " " + this.address.firstname
+      }}</span>
+    </div>
+    <div class="item-detail__row">
+      <span class="item-detail__desc">Телефон: </span>
+      <span class="item-detail__value">{{ this.address.phone }}</span>
+    </div>
+    <div class="item-detail__row">
       <span class="item-detail__desc">Способ получения: </span>
       <ng-container [ngSwitch]="order.deliveryType">
         <span class="item-detail__value" *ngSwitchCase="'SELF'">Самовывоз</span>
         <span class="item-detail__value" *ngSwitchCase="'COURIER'"
-          >Курьером</span
+          >Курьером по адресу:
+          {{
+            address.street +
+              ", " +
+              address.house +
+              ", " +
+              address.postcode +
+              ", " +
+              address.city +
+              ", " +
+              address.country
+          }}</span
         >
       </ng-container>
     </div>

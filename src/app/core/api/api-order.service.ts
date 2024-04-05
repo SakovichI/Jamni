@@ -43,4 +43,12 @@ export class ApiOrderService {
   public adminDeleteOrder(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.apiUrl}/admin/order/${id}`);
   }
+
+  getOrderItem(
+    id: number
+  ): Observable<'NEW' | 'CANCELED' | 'PAID' | 'WAITING' | 'ERROR'> {
+    return this.httpClient.get<
+      'NEW' | 'CANCELED' | 'PAID' | 'WAITING' | 'ERROR'
+    >(`${this.apiUrl}/order/order/${id}`);
+  }
 }

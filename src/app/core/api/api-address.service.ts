@@ -35,4 +35,8 @@ export class ApiAddressService {
   deleteAddress(id: number): Observable<IAddress[]> {
     return this.http.delete<IAddress[]>(`${this.url}/users/addresses/${id}`);
   }
+
+  getAddressId(id: number): Observable<IAddress> {
+    return this.http.get<IAddress>(`${this.url}/admin/addresses/${id}`);
+  }
 }

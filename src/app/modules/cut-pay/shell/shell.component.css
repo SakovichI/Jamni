@@ -1,0 +1,27 @@
+.iframe-wrap {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: 20px;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  max-width: 700px;
+  max-height: 700px;
+  display: none;
+  transform: translate(-50%, -50%);
+  z-index: 500;
+  border: 1px solid #d3d3d3;
+  border-radius: 20px;
+  box-shadow: 10.18359px 5.55468px 21.6125px 0px rgba(0, 0, 0, 0.04),
+    50.91794px 27.77342px 133px 0px rgba(0, 0, 0, 0.07);
+  background-color: white;
+}
+.iframe-wrap.active {
+  display: block;
+}
+.iframe__btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}

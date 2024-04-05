@@ -4,7 +4,7 @@ export interface IOrder {
   status?: string;
   items: [];
   email: string;
-  address: any[];
+  address: number;
   discountCode: string;
   deliveryType: string;
   payType: 'CASH' | 'CARD';

@@ -1,12 +1,13 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subject, map, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
+import { Subject, map, repeat, takeUntil, takeWhile, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
 import { ModalsService } from 'src/app/core/services/modals.service';
@@ -57,7 +58,7 @@ export class ShellComponent implements OnInit, OnDestroy {
       Validators.pattern(/[0-9]{2}/),
     ]),
   });
-  private userIp: string = '';
+  public iframeVisible: boolean = false;
 
   constructor(
     private router: Router,
@@ -66,7 +67,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private modal: ModalsService,
     private loader: LoaderService,
-    private activateRouter: ActivatedRoute
+    private cdr: ChangeDetectorRef
   ) {}
 
   public ngOnInit() {
@@ -216,6 +217,43 @@ export class ShellComponent implements OnInit, OnDestroy {
                           this.modal.showError(resp.model.CardHolderMessage);
                         } else if (!resp.model.ReasonCode) {
                           this.go3dSecure(resp, id);
+                          this.apiOrderService
+                            .getOrderItem(id)
+                            .pipe(
+                              repeat({ delay: 3000 }),
+                              tap((resp) => {
+                                const iframe = document.querySelector('iframe');
+                                if (resp === 'ERROR' && iframe) {
+                                  iframe.remove();
+                                  this.iframeVisible = false;
+                                  this.cdr.detectChanges();
+                                  this.modal.showError(
+                                    'Платеж не удалось обработать, попробуйте снова'
+                                  );
+                                } else if (resp === 'PAID' && iframe) {
+                                  iframe.remove();
+                                  this.iframeVisible = false;
+                                  this.cdr.detectChanges();
+                                  localStorage.removeItem('form');
+                                  localStorage.removeItem('delivery');
+                                  localStorage.removeItem('payment');
+                                  localStorage.removeItem('cart');
+                                  this.router.navigateByUrl('/cut-res');
+                                  setTimeout(() => {
+                                    this.generalService.selectedItems = [];
+                                  }, 50000);
+                                }
+                              }),
+                              takeWhile((resp) => {
+                                const iframe = document.querySelector('iframe');
+                                if (resp === 'WAITING' && iframe) {
+                                  return true;
+                                } else {
+                                  return false;
+                                }
+                              })
+                            )
+                            .subscribe();
                         }
                         this.loader.loaded = false;
                       });
@@ -286,6 +324,43 @@ export class ShellComponent implements OnInit, OnDestroy {
                           this.modal.showError(resp.model.CardHolderMessage);
                         } else if (!resp.model.ReasonCode) {
                           this.go3dSecure(resp, id);
+                          this.apiOrderService
+                            .getOrderItem(id)
+                            .pipe(
+                              repeat({ delay: 3000 }),
+                              tap((resp) => {
+                                const iframe = document.querySelector('iframe');
+                                if (resp === 'ERROR' && iframe) {
+                                  iframe.remove();
+                                  this.iframeVisible = false;
+                                  this.cdr.detectChanges();
+                                  this.modal.showError(
+                                    'Платеж не удалось обработать, попробуйте снова'
+                                  );
+                                } else if (resp === 'PAID' && iframe) {
+                                  iframe.remove();
+                                  this.iframeVisible = false;
+                                  this.cdr.detectChanges();
+                                  localStorage.removeItem('form');
+                                  localStorage.removeItem('delivery');
+                                  localStorage.removeItem('payment');
+                                  localStorage.removeItem('cart');
+                                  this.router.navigateByUrl('/cut-res');
+                                  setTimeout(() => {
+                                    this.generalService.selectedItems = [];
+                                  }, 50000);
+                                }
+                              }),
+                              takeWhile((resp) => {
+                                const iframe = document.querySelector('iframe');
+                                if (resp === 'WAITING' && iframe) {
+                                  return true;
+                                } else {
+                                  return false;
+                                }
+                              })
+                            )
+                            .subscribe();
                         }
 
                         this.loader.loaded = false;
@@ -316,7 +391,7 @@ export class ShellComponent implements OnInit, OnDestroy {
   createCryptogram(form: FormGroup) {
     //@ts-ignore
     this.checkout = new cp.Checkout({
-      publicId: 'pk_78fc46e5dfd9efdc9470c9d81b6d7',
+      publicId: 'pk_a76b079e3263d760707949101c3b2',
     });
     const fieldValues = {
       cvv: `${form.value.cvv}`,
@@ -337,11 +412,15 @@ export class ShellComponent implements OnInit, OnDestroy {
 
   go3dSecure(data: any, id: number) {
     const externalUrl = data.model.AcsUrl;
+    this.iframeVisible = true;
+    this.cdr.detectChanges();
+    const iframeWrap = document.querySelector('.iframe-wrap');
     const iframe = document.createElement('iframe');
     iframe.setAttribute('src', 'externalUrl');
     iframe.setAttribute('name', 'iframe_3d');
     iframe.classList.add('iframe-3d');
-    document.body.appendChild(iframe);
+    iframeWrap?.appendChild(iframe);
+
     const form = document.createElement('form');
     form.setAttribute('role', 'form');
     form.setAttribute('target', 'iframe_3d');
@@ -362,6 +441,16 @@ export class ShellComponent implements OnInit, OnDestroy {
     form.appendChild(inputTermUrl);
     document.body.appendChild(form);
     form.submit();
+    return iframe;
+  }
+
+  iframeClose() {
+    const iframe = document.querySelector('iframe');
+    if (iframe) {
+      iframe.remove();
+    }
+    this.iframeVisible = false;
+    this.cdr.detectChanges();
   }
   updateScript() {
     setTimeout(() => {
