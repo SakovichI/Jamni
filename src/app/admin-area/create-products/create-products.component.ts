@@ -54,7 +54,6 @@ export class CreateProductsComponent
     category: new FormControl('', Validators.required),
     image: new FormControl(''),
     loadAdditionalImages: new FormControl(''),
-    enabled: new FormControl(false),
   });
 
   editorConfig: AngularEditorConfig = {
@@ -139,7 +138,6 @@ export class CreateProductsComponent
       });
     }
 
-    data.append('enabled', form.value.enabled);
     this.adminProd
       .createProduct(data)
       .pipe(takeUntil(this.destroy$))

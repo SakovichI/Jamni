@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { ApiCategoryService } from 'src/app/core';
 import { ProductsService } from 'src/app/core/api/admin/products.service';
@@ -17,6 +17,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   public category: ICategory = {} as ICategory;
   constructor(
     private activeRoute: ActivatedRoute,
+    private router: Router,
     private categoryApi: ApiCategoryService,
     private adminProd: ProductsService,
     public loader: LoaderService
@@ -53,5 +54,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe();
+  }
+  bacNav() {
+    if (this.category.parentCategoryId) {
+      this.router.navigate([
+        `/admin/childCategory/${this.category.parentCategoryId}`,
+      ]);
+    } else {
+      this.router.navigate(['../'], { relativeTo: this.activeRoute });
+    }
   }
 }

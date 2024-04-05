@@ -179,10 +179,6 @@ const routes: Route[] = [
     data: { animation: 'wholesaler' },
     canActivate: [AuthGuard],
   },
-  {
-    path: '**',
-    loadChildren: () => import('@landing').then((m) => m.LandingModule),
-  },
 ];
 
 @NgModule({

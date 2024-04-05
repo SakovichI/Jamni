@@ -75,6 +75,55 @@
   line-height: normal;
   color: #a7a7a7;
 }
+
+.order-item {
+}
+.order-item__header {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+.order-item__header-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  color: #d3d3d3;
+  transition: 0.2s ease-in;
+  &:hover {
+    color: #000;
+    transition: 0.2s ease-in;
+  }
+}
+.order-item__header-icon {
+  color: #000;
+  font-size: 20px;
+}
+.order-item__header-title {
+  color: #000;
+  font-size: 22px;
+}
+.order-item__header-subtitle {
+  color: #a7a7a7;
+  font-size: 20px;
+}
+.order-item__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+.item-detail__row {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+}
+.item-detail__desc {
+  color: #a7a7a7;
+}
+
 @media all and (max-width: 960px) {
   .desc-order__title {
     padding: 0 12px;
@@ -96,4 +145,19 @@
     padding: 0 12px;
     margin-bottom: 12px;
   }
+}
+::ng-deep .item-detail .dropdown {
+  max-width: 210px;
+}
+::ng-deep .item-detail .dropdown__button {
+  min-width: 120px;
+  padding: 6px 24px 6px 12px;
+}
+
+::ng-deep .item-detail .dropdown__list-item {
+  padding: 6px 4px;
+}
+::ng-deep .item-detail .dropdown__icon {
+  top: 12px;
+  right: 10px;
 }

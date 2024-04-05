@@ -1,3 +1,88 @@
+<div class="order-item">
+  <div class="order-item__header">
+    <a routerLink="../" class="order-item__header-link">
+      <i class="order-item__header-icon pi pi-arrow-left"></i>
+      <h2 class="order-item__header-title">Заказ №{{ order.id }}</h2>
+    </a>
+    <span class="order-item__header-subtitle"
+      >от {{ order.createdAt | date : "dd.MM.YYYY" }}</span
+    >
+  </div>
+  <div class="order-item__detail item-detail">
+    <div class="item-detail__row">
+      <span class="item-detail__desc">Способ получения: </span>
+      <ng-container [ngSwitch]="order.deliveryType">
+        <span class="item-detail__value" *ngSwitchCase="'SELF'">Самовывоз</span>
+        <span class="item-detail__value" *ngSwitchCase="'COURIER'"
+          >Курьером</span
+        >
+      </ng-container>
+    </div>
+    <div class="item-detail__row">
+      <span class="item-detail__desc">Оплата: </span>
+      <ng-container [ngSwitch]="order.payType">
+        <span class="item-detail__value" *ngSwitchCase="'CARD'">Картой</span>
+        <span class="item-detail__value" *ngSwitchCase="'CASH'"
+          >Наличными при получении</span
+        >
+      </ng-container>
+    </div>
+    <div class="item-detail__row">
+      <span class="item-detail__desc">Статус: </span>
+      <div class="form-group section-product-form__select">
+        <div class="dropdown section-product-form__dropdown">
+          <button type="button" class="dropdown__button dropdown__button--prod">
+            <ng-container [ngSwitch]="order.status">
+              <span class="order__info-text" *ngSwitchCase="'NEW'">Новый</span>
+              <span class="order__info-text" *ngSwitchCase="'CANCELED'"
+                >Доставлен</span
+              >
+              <span class="order__info-text" *ngSwitchCase="'PAID'"
+                >Оплачен</span
+              >
+              <span class="order__info-text" *ngSwitchCase="'WAITING'"
+                >Ожидает оплаты</span
+              >
+              <span class="order__info-text" *ngSwitchCase="'ERROR'"
+                >Ошибка при оплате</span
+              >
+            </ng-container>
+          </button>
+          <svg class="dropdown__icon">
+            <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
+          </svg>
+          <ul class="dropdown__list">
+            <li
+              class="dropdown__list-item dropdown__list-item--prod dropdown__list-group-name"
+              (click)="selectStatus(orderId, 'NEW')"
+            >
+              Новый
+            </li>
+            <li
+              class="dropdown__list-item dropdown__list-item--prod dropdown__list-group-name"
+              (click)="selectStatus(orderId, 'CANCELED')"
+            >
+              Доставлен
+            </li>
+            <li
+              class="dropdown__list-item dropdown__list-item--prod dropdown__list-group-name"
+              (click)="selectStatus(orderId, 'PAID')"
+            >
+              Оплачен
+            </li>
+          </ul>
+          <input
+            type="text"
+            name="select-category"
+            value=""
+            class="dropdown__input-hidden"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p-table
   class="orders"
   [value]="order.items"

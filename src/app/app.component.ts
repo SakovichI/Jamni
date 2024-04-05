@@ -22,6 +22,7 @@ import { AuthService } from './core/services/auth.service';
 import { GeneralService } from './core/services/general.service';
 import { LoaderService } from './core/services/loader.service';
 import { ModalsService } from './core/services/modals.service';
+import { IUsers } from './interfaces/users-interface';
 
 @Component({
   selector: 'app-root',
@@ -70,6 +71,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   state: string = 'initial';
   routerOutlet: any;
   countFavorite: number = 0;
+  public user: IUsers = {} as IUsers;
   public destroy$ = new Subject<void>();
 
   expand() {
@@ -138,12 +140,18 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe((resp) => {
           this.userApi.userS.next(resp);
-        });
-      this.userApi.getFavorites().pipe(takeUntil(this.destroy$)).subscribe();
-      this.userApi.userFavoriteS
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((resp) => {
-          this.countFavorite = resp.length;
+          this.user = resp;
+          if (this.user.userType !== 'ADMIN') {
+            this.userApi
+              .getFavorites()
+              .pipe(takeUntil(this.destroy$))
+              .subscribe();
+            this.userApi.userFavoriteS
+              .pipe(takeUntil(this.destroy$))
+              .subscribe((resp) => {
+                this.countFavorite = resp.length;
+              });
+          }
         });
     }
   }

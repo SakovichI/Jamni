@@ -11,6 +11,7 @@ export interface IProduct {
   enabled?: boolean;
   descriptions: TDescProduct[];
   specifications: IProductSpec[];
+  deleteImageNames?: string[];
 }
 
 export interface ICategory {

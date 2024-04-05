@@ -41,7 +41,7 @@
             <div class="product-image__slider-wrap">
               <div
                 class="product-image__slide"
-                *ngFor="let item of product.additionalImages; let i = index"
+                *ngFor="let item of productImages; let i = index"
               >
                 <img
                   [src]="item"
@@ -441,7 +441,7 @@
   </div>
 </div>
 <p-galleria
-  [value]="product.additionalImages"
+  [value]="productImages"
   [(visible)]="displayCustom"
   [(activeIndex)]="activeIndex"
   [responsiveOptions]="responsiveOptions"

@@ -33,6 +33,8 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   public product: IProduct = {} as IProduct;
   public allSpecifications: IProductSpec[] = [];
   private enabled: boolean = true;
+  public productImages: string[] = [];
+  public deleteImageNames: string[] = [];
   //Gallery
   responsiveOptions: any[] = [
     {
@@ -120,12 +122,17 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((resp) => {
         this.enabled = resp.filter((el) => el.id === this.id)[0]
           .enabled as boolean;
+        this.loader.loaded = false;
       });
     this.adminProd
       .getProduct(this.id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
         this.product = resp;
+        for (let k in this.product.additionalImages) {
+          this.productImages.push(this.product.additionalImages[k]);
+        }
+
         this.getCategoryList();
         let formGroup!: FormGroup;
         this.product.descriptions.forEach((desItem: any) => {
@@ -157,7 +164,6 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
           this.formArray.push(formGroup);
         });
-        this.loader.loaded = false;
       });
     this.adminProd
       .getAllSpecifications()
@@ -205,6 +211,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
         Validators.required,
         Validators.min(100),
       ]),
+      deleteImageNames: new FormControl(''),
     });
   }
   submitMain(form: FormGroup) {
@@ -212,6 +219,7 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     data.append('id', this.id.toString());
     data.append('name', form.value.name);
     data.append('categoryId', form.value.category);
+    data.append('deleteImageNames', form.value.deleteImageNames);
     if (form.value.image) {
       data.append('image', form.value.image);
     }
@@ -285,31 +293,44 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   onFilesSelected(event: any): void {
     const files = event.target.files;
-    const fileArr: string[] = [];
     if (files) {
       for (let i = 0; i < files.length; i++) {
         const reader = new FileReader();
         reader.onload = () => {
-          fileArr.push(reader.result as string);
+          this.productImages.unshift(reader.result as string);
         };
         reader.readAsDataURL(files[i]);
       }
-      this.product.additionalImages = fileArr;
+
       this.mainForm.controls['loadAdditionalImages'].setValue(files);
     }
     this.updateScript();
   }
   removeImage(index: number) {
-    let fileArr = [...this.mainForm.controls['loadAdditionalImages'].value];
-    if (this.product.additionalImages.length === 1) {
-      this.product.additionalImages = [];
+    let fileArr: File[] = [];
+    if (this.mainForm.controls['loadAdditionalImages'].value) {
+      this.mainForm.controls['loadAdditionalImages'].value.forEach(
+        (file: File) => {
+          fileArr.push(file);
+        }
+      );
+    }
+    for (let k in this.product.additionalImages) {
+      if (this.product.additionalImages[k] === this.productImages[index]) {
+        this.deleteImageNames.push(k);
+      }
+    }
+    if (this.productImages.length === 1) {
+      this.productImages = [];
       fileArr = [];
       this.mainForm.controls['loadAdditionalImages'].setValue(fileArr);
     } else {
-      this.product.additionalImages.splice(index, 1);
+      this.productImages.splice(index, 1);
       fileArr.splice(index, 1);
       this.mainForm.controls['loadAdditionalImages'].setValue(fileArr);
     }
+    this.mainForm.controls['deleteImageNames'].setValue(this.deleteImageNames);
+
     this.updateScript();
   }
   imageClick(index: number) {
@@ -622,3 +643,5 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
     this.updateScript();
   }
 }
+// 1149_e7afaefb-b476-4ee5-a182-1d1693d71015
+// "http://45.89.66.8:9000/items/1149_e7afaefb-b476-4ee5-a182-1d1693d71015?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=jamni%2F20240404%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240404T100606Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=28fbc8c1f0b9a07eb9bc19701e9bc2636982d2829699ff1ae963d73a6ba2d3e5"

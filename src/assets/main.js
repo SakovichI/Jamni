@@ -1884,7 +1884,6 @@
                 `[data-full-price=${path}]`
               );
               const container = minus.closest("[data-prod]");
-              console.log(container);
               if (container) {
                 const count = container.querySelector(`[data-count=${path}]`);
                 const amount = container.querySelector(`[data-amount=${path}]`);
@@ -2200,9 +2199,18 @@
       /***/ () => {
         const payCheckbox = document.querySelectorAll('[name="pay"]');
         const inputs = document.querySelectorAll(".form-pay__input");
+        const labels = document.querySelectorAll(".form-pay__label");
         if (payCheckbox) {
           payCheckbox.forEach((radio) => {
             radio.addEventListener("change", () => {
+              labels.forEach((el) => {
+                el.classList.toggle("form-pay__label--active");
+                if (el.classList.contains("form-pay__label--active")) {
+                  el.disabled = false;
+                } else {
+                  el.disabled = true;
+                }
+              });
               inputs.forEach((el) => {
                 el.classList.toggle("form-pay__input--active");
                 if (el.classList.contains("form-pay__input--active")) {
@@ -2218,16 +2226,19 @@
               if (input.getAttribute("name") === "card-num") {
                 if (input.value.length >= 4) {
                   input.blur();
+                  inputs[i + 1].focus();
                 }
               }
               if (input.getAttribute("name") === "card-month") {
                 if (input.value.length >= 2) {
                   input.blur();
+                  inputs[i + 1].focus();
                 }
               }
               if (input.getAttribute("name") === "card-year") {
                 if (input.value.length >= 2) {
                   input.blur();
+                  inputs[i + 1].focus();
                 }
               }
               if (input.getAttribute("name") === "CVV") {
@@ -2503,8 +2514,7 @@
           wrapperClass: "product-slider-thumbs__wrapper",
           slideClass: "product-slider-thumbs__slide",
           slidesPerView: "5",
-          loop: true,
-          effect: "fade",
+          loop: false,
           spaceBetween: 13,
           speed: 800,
         });
@@ -2516,19 +2526,32 @@
           slidesPerView: "1",
           spaceBetween: 10,
           speed: 800,
-          loop: true,
-          effect: "fade",
+          loop: false,
           pagination: {
             el: ".product-slider__pagination",
+            clickable: true,
           },
           thumbs: {
-            thumbsContainerClass: "slider-thumbs",
+            thumbsContainerClass: ".product-slider-thumbs",
             swiper: productSwiperThumbs,
           },
           scrollbar: {
             el: ".sliderMy__scrollbar",
             draggable: true,
             dragSize: 74,
+          },
+          on: {
+            slideChange: function () {
+              const bullets = document.querySelectorAll(
+                ".swiper-pagination-bullet"
+              );
+              bullets.forEach((bullet, i) => {
+                bullet.classList.remove("swiper-pagination-bullet-active");
+                if (i === productSwiper.activeIndex) {
+                  bullet.classList.add("swiper-pagination-bullet-active");
+                }
+              });
+            },
           },
         });
 

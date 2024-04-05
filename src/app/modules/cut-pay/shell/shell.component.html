@@ -18,7 +18,11 @@
               type="text"
               >{{ email }}</textarea
             >
-            <button type="button" class="form-delivery__btn btn-reset">
+            <button
+              type="button"
+              class="form-delivery__btn btn-reset"
+              routerLink="/cut-info"
+            >
               изменить
             </button>
           </label>
@@ -31,7 +35,11 @@
               type="text"
               >{{ address }}</textarea
             >
-            <button type="button" class="form-delivery__btn btn-reset">
+            <button
+              type="button"
+              class="form-delivery__btn btn-reset"
+              routerLink="/cut-info"
+            >
               изменить
             </button>
           </label>
@@ -46,7 +54,11 @@
                 deliveryMethod == "courier" ? "Курьером" : "Самовывоз"
               }}</textarea
             >
-            <button type="button" class="form-delivery__btn btn-reset">
+            <button
+              type="button"
+              class="form-delivery__btn btn-reset"
+              routerLink="/cut-delivery"
+            >
               изменить
             </button>
           </label>
@@ -139,7 +151,7 @@
                       class="input-reset form-pay__input form-pay__card-num"
                       name="card-num"
                       placeholder="Х Х Х Х"
-                      type="number"
+                      type="text"
                       formControlName="cardNumber1"
                       [ngClass]="{
                         error:
@@ -152,7 +164,7 @@
                       class="input-reset form-pay__input form-pay__card-num"
                       name="card-num"
                       placeholder="Х Х Х Х"
-                      type="number"
+                      type="text"
                       formControlName="cardNumber2"
                       [ngClass]="{
                         error:
@@ -165,7 +177,7 @@
                       class="input-reset form-pay__input form-pay__card-num"
                       name="card-num"
                       placeholder="Х Х Х Х"
-                      type="number"
+                      type="text"
                       formControlName="cardNumber3"
                       [ngClass]="{
                         error:
@@ -178,7 +190,7 @@
                       class="input-reset form-pay__input form-pay__card-num"
                       name="card-num"
                       placeholder="Х Х Х Х"
-                      type="number"
+                      type="text"
                       formControlName="cardNumber4"
                       [ngClass]="{
                         error:
@@ -213,7 +225,7 @@
                         class="input-reset form-pay__input form-pay__card-date"
                         name="card-month"
                         placeholder="ХХ"
-                        type="number"
+                        type="text"
                         formControlName="expDateMonth"
                         [ngClass]="{
                           error:
@@ -227,7 +239,7 @@
                         class="input-reset form-pay__input form-pay__card-date"
                         name="card-year"
                         placeholder="ХХ"
-                        type="number"
+                        type="text"
                         formControlName="expDateYear"
                         [ngClass]="{
                           error:
@@ -244,7 +256,7 @@
                       class="input-reset form-pay__input form-pay__card-CVV"
                       name="CVV"
                       placeholder="ХХX"
-                      type="number"
+                      type="text"
                       formControlName="cvv"
                       [ngClass]="{
                         error:

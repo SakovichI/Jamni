@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, map, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { LoaderService } from 'src/app/core/services/loader.service';
@@ -30,38 +30,31 @@ export class ShellComponent implements OnInit, OnDestroy {
     name: new FormControl('', Validators.required),
     cardNumber1: new FormControl('', [
       Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(4),
+      Validators.pattern(/[0-9]{4}/),
     ]),
     cardNumber2: new FormControl('', [
       Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(4),
+      Validators.pattern(/[0-9]{4}/),
     ]),
     cardNumber3: new FormControl('', [
       Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(4),
+      Validators.pattern(/[0-9]{4}/),
     ]),
     cardNumber4: new FormControl('', [
       Validators.required,
-      Validators.minLength(4),
-      Validators.maxLength(4),
+      Validators.pattern(/[0-9]{4}/),
     ]),
     cvv: new FormControl('', [
       Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(3),
+      Validators.pattern(/[0-9]{3}/),
     ]),
     expDateMonth: new FormControl('', [
       Validators.required,
-      Validators.minLength(2),
-      Validators.maxLength(2),
+      Validators.pattern(/[0-9]{2}/),
     ]),
     expDateYear: new FormControl('', [
       Validators.required,
-      Validators.minLength(2),
-      Validators.maxLength(2),
+      Validators.pattern(/[0-9]{2}/),
     ]),
   });
   private userIp: string = '';
@@ -72,21 +65,12 @@ export class ShellComponent implements OnInit, OnDestroy {
     private apiOrderService: ApiOrderService,
     private auth: AuthService,
     private modal: ModalsService,
-    private loader: LoaderService
+    private loader: LoaderService,
+    private activateRouter: ActivatedRoute
   ) {}
 
   public ngOnInit() {
-    setTimeout(() => {
-      const scripts: Element | null = document.querySelector(
-        'script[src="assets/main.js"]'
-      );
-      if (scripts) {
-        document.body.removeChild(scripts);
-      }
-      const script = document.createElement('script');
-      script.src = 'assets/main.js';
-      document.body.appendChild(script);
-    }, 500);
+    this.updateScript();
     this.setPaymentType('CASH');
     if (localStorage.getItem('form')) {
       const savedForm: any = JSON.parse(localStorage.getItem('form') as string);
@@ -198,9 +182,9 @@ export class ShellComponent implements OnInit, OnDestroy {
             })),
           })
           .pipe(
-            map((resp) => {
+            map((id) => {
               const payData: IPayment = {
-                orderId: resp,
+                orderId: id,
                 ipAddress: '',
                 cardCryptogramPacket: '',
                 name: `${userForm.surname} ${userForm.firstname}`,
@@ -215,15 +199,25 @@ export class ShellComponent implements OnInit, OnDestroy {
                       .orderPay(payData)
                       .pipe(takeUntil(this.destroy$))
                       .subscribe((resp) => {
+                        if (resp.success && resp.model.ReasonCode === 0) {
+                          localStorage.removeItem('form');
+                          localStorage.removeItem('delivery');
+                          localStorage.removeItem('payment');
+                          localStorage.removeItem('cart');
+                          this.router.navigateByUrl('/cut-res');
+                          setTimeout(() => {
+                            this.generalService.selectedItems = [];
+                          }, 50000);
+                        } else if (
+                          !resp.success &&
+                          resp.model.ReasonCode !== 0 &&
+                          resp.model.ReasonCode
+                        ) {
+                          this.modal.showError(resp.model.CardHolderMessage);
+                        } else if (!resp.model.ReasonCode) {
+                          this.go3dSecure(resp, id);
+                        }
                         this.loader.loaded = false;
-                        localStorage.removeItem('form');
-                        localStorage.removeItem('delivery');
-                        localStorage.removeItem('payment');
-                        localStorage.removeItem('cart');
-                        this.router.navigateByUrl('/cut-res');
-                        setTimeout(() => {
-                          this.generalService.selectedItems = [];
-                        }, 50000);
                       });
                   });
                 })
@@ -258,9 +252,9 @@ export class ShellComponent implements OnInit, OnDestroy {
             })),
           })
           .pipe(
-            map((resp) => {
+            map((id) => {
               const payData: IPayment = {
-                orderId: resp,
+                orderId: id,
                 ipAddress: '',
                 cardCryptogramPacket: '',
                 name: `${userForm.surname} ${userForm.firstname}`,
@@ -275,15 +269,26 @@ export class ShellComponent implements OnInit, OnDestroy {
                       .orderPay(payData)
                       .pipe(takeUntil(this.destroy$))
                       .subscribe((resp) => {
+                        if (resp.success && resp.model.ReasonCode === 0) {
+                          localStorage.removeItem('form');
+                          localStorage.removeItem('delivery');
+                          localStorage.removeItem('payment');
+                          localStorage.removeItem('cart');
+                          this.router.navigateByUrl('/cut-res');
+                          setTimeout(() => {
+                            this.generalService.selectedItems = [];
+                          }, 50000);
+                        } else if (
+                          !resp.success &&
+                          resp.model.ReasonCode !== 0 &&
+                          resp.model.ReasonCode
+                        ) {
+                          this.modal.showError(resp.model.CardHolderMessage);
+                        } else if (!resp.model.ReasonCode) {
+                          this.go3dSecure(resp, id);
+                        }
+
                         this.loader.loaded = false;
-                        localStorage.removeItem('form');
-                        localStorage.removeItem('delivery');
-                        localStorage.removeItem('payment');
-                        localStorage.removeItem('cart');
-                        this.router.navigateByUrl('/cut-res');
-                        setTimeout(() => {
-                          this.generalService.selectedItems = [];
-                        }, 50000);
                       });
                   });
                 })
@@ -309,8 +314,6 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   createCryptogram(form: FormGroup) {
-    console.log();
-
     //@ts-ignore
     this.checkout = new cp.Checkout({
       publicId: 'pk_78fc46e5dfd9efdc9470c9d81b6d7',
@@ -320,6 +323,7 @@ export class ShellComponent implements OnInit, OnDestroy {
       cardNumber: `${form.value.cardNumber1} ${form.value.cardNumber2} ${form.value.cardNumber3} ${form.value.cardNumber4}`,
       expDateMonth: `${form.value.expDateMonth}`,
       expDateYear: `${form.value.expDateYear}`,
+      name: `${form.value.name}`,
     };
 
     return this.checkout.createPaymentCryptogram(fieldValues);
@@ -329,5 +333,47 @@ export class ShellComponent implements OnInit, OnDestroy {
     return fetch('https://api.ipify.org?format=json')
       .then((response) => response.json())
       .then((data) => data.ip);
+  }
+
+  go3dSecure(data: any, id: number) {
+    const externalUrl = data.model.AcsUrl;
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', 'externalUrl');
+    iframe.setAttribute('name', 'iframe_3d');
+    iframe.classList.add('iframe-3d');
+    document.body.appendChild(iframe);
+    const form = document.createElement('form');
+    form.setAttribute('role', 'form');
+    form.setAttribute('target', 'iframe_3d');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', externalUrl);
+    form.setAttribute('role', 'form');
+    const inputMD = document.createElement('input');
+    inputMD.setAttribute('name', 'MD');
+    inputMD.value = data.model.TransactionId;
+    form.appendChild(inputMD);
+    const inputPaReq = document.createElement('input');
+    inputPaReq.setAttribute('name', 'PaReq');
+    inputPaReq.value = data.model.PaReq;
+    form.appendChild(inputPaReq);
+    const inputTermUrl = document.createElement('input');
+    inputTermUrl.setAttribute('name', 'TermUrl');
+    inputTermUrl.value = `https://jamnitest.ru/api/order/3ds/${id}`;
+    form.appendChild(inputTermUrl);
+    document.body.appendChild(form);
+    form.submit();
+  }
+  updateScript() {
+    setTimeout(() => {
+      const scripts: Element | null = document.querySelector(
+        'script[src="assets/main.js"]'
+      );
+      if (scripts) {
+        document.body.removeChild(scripts);
+      }
+      const script = document.createElement('script');
+      script.src = 'assets/main.js';
+      document.body.appendChild(script);
+    }, 500);
   }
 }

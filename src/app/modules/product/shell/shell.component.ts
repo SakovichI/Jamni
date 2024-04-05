@@ -34,7 +34,8 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     public userApi: ApiUserService,
     private modal: ModalsService,
     private router: Router
-  ) {
+  ) {}
+  ngOnInit() {
     this.activatedRoute.paramMap
       .pipe(takeUntil(this.destroyed$))
       .subscribe((paramMap) => {
@@ -50,15 +51,15 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
         this.initOwnSetCategories();
         this.initOtherProducts();
       });
-  }
-  ngOnInit() {
     this.userApi.userFavoriteS
       .pipe(takeUntil(this.destroyed$))
       .subscribe((resp) => {
         this.favoriteList = resp;
       });
   }
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.updateScript();
+  }
 
   public openDescription() {
     this.accordionViews = !this.accordionViews;
@@ -76,7 +77,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     this.apiItemService.getItem(this.productId).subscribe(
       (product: any) => {
         this.product = product;
-        this.product.additionalImages.coverImage = this.product.coverImage;
+        this.productImages.push(this.product.coverImage);
         for (let k in this.product.additionalImages) {
           this.productImages.push(this.product.additionalImages[k]);
         }
@@ -171,6 +172,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
           }));
         });
         this.selectedOwnSetCategory = this.ownSetCategories[0];
+        this.updateScript();
       });
   }
 
@@ -212,16 +214,13 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     }
   }
   updateScript() {
-    setTimeout(() => {
-      const scriptOld = document.querySelector('[src="assets/main.js"]');
-      if (scriptOld) {
-        document.body.removeChild(scriptOld);
-      }
-    }, 20);
-    setTimeout(() => {
+    const scriptOld = document.querySelector('[src="assets/main.js"]');
+    if (scriptOld) {
+      document.body.removeChild(scriptOld);
+    } else {
       const script = document.createElement('script');
       script.src = 'assets/main.js';
       document.body.appendChild(script);
-    }, 50);
+    }
   }
 }

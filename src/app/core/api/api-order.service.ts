@@ -18,6 +18,10 @@ export class ApiOrderService {
     return this.httpClient.post<any>(`${this.apiUrl}/users/order`, data);
   }
 
+  getPostParams(): Observable<any> {
+    return this.httpClient.get<any>('https://jamni.sakovichi.online/');
+  }
+
   public makeOrderNoName(data: any): Observable<any> {
     return this.httpClient.post<any>(`${this.apiUrl}/order/without-user`, data);
   }
@@ -32,7 +36,7 @@ export class ApiOrderService {
 
   public adminEditOrder(
     id: number,
-    data: { status: 'NEW' | 'CANCELED' | 'PAID' }
+    data: { status: 'NEW' | 'CANCELED' | 'PAID' | 'WAITING' | 'ERROR' }
   ): Observable<void> {
     return this.httpClient.put<void>(`${this.apiUrl}/admin/order/${id}`, data);
   }

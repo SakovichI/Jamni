@@ -76,18 +76,3 @@
     width: 160px;
   }
 }
-::ng-deep .ordersAll .dropdown {
-  max-width: 125px;
-}
-::ng-deep .ordersAll .dropdown__button {
-  min-width: 120px;
-  padding: 6px 24px 6px 12px;
-}
-
-::ng-deep .ordersAll .dropdown__list-item {
-  padding: 6px 4px;
-}
-::ng-deep .ordersAll .dropdown__icon {
-  top: 12px;
-  right: 10px;
-}

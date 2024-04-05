@@ -34,6 +34,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.updateScript();
       });
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -54,23 +55,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  selectStatus(id: number, value: 'NEW' | 'CANCELED' | 'PAID') {
-    const data = {
-      status: value,
-    };
-    this.loader.loaded = true;
-    this.orderApi
-      .adminEditOrder(id, data)
-      .pipe(
-        switchMap(() => this.orderApi.adminGetOrder()),
-        tap((resp) => {
-          this.loader.loaded = false;
-          this.orders = resp;
-        }),
-        takeUntil(this.destroy$)
-      )
-      .subscribe();
-  }
   updateScript() {
     setTimeout(() => {
       const scriptOld = document.querySelector('[src="assets/main.js"]');

@@ -2,7 +2,7 @@
   class="ordersAll"
   [value]="orders"
   #dt1
-  [globalFilterFields]="['id', 'email', 'date', 'totalCost', 'status']"
+  [globalFilterFields]="['id', 'email', 'createdAt', 'totalCost', 'status']"
   [paginator]="true"
   [rows]="10"
   [showCurrentPageReport]="true"
@@ -31,8 +31,8 @@
       <th pSortableColumn="email">
         Пользователь <p-sortIcon field="email"></p-sortIcon>
       </th>
-      <th pSortableColumn="date">
-        Дата и время <p-sortIcon field="date"></p-sortIcon>
+      <th pSortableColumn="createdAt">
+        Дата и время <p-sortIcon field="createdAt"></p-sortIcon>
       </th>
       <th pSortableColumn="totalCost">
         Стоимость<p-sortIcon field="totalCost"></p-sortIcon>
@@ -56,55 +56,19 @@
       </td>
       <td class="order__td">{{ item.totalCost }} руб.</td>
       <td class="order__td">
-        <div class="form-group section-product-form__select">
-          <div class="dropdown section-product-form__dropdown">
-            <button
-              type="button"
-              class="dropdown__button dropdown__button--prod"
-            >
-              <ng-container [ngSwitch]="item.status">
-                <span class="order__info-text" *ngSwitchCase="'NEW'"
-                  >Новый</span
-                >
-                <span class="order__info-text" *ngSwitchCase="'CANCELED'"
-                  >Доставлен</span
-                >
-                <span class="order__info-text" *ngSwitchCase="'PAID'"
-                  >Оплачен</span
-                >
-              </ng-container>
-            </button>
-            <svg class="dropdown__icon">
-              <use xlink:href="assets/img/sprite.svg#arrow-down"></use>
-            </svg>
-            <ul class="dropdown__list">
-              <li
-                class="dropdown__list-item dropdown__list-item--prod dropdown__list-group-name"
-                (click)="selectStatus(item.id, 'NEW')"
-              >
-                Новый
-              </li>
-              <li
-                class="dropdown__list-item dropdown__list-item--prod dropdown__list-group-name"
-                (click)="selectStatus(item.id, 'CANCELED')"
-              >
-                Доставлен
-              </li>
-              <li
-                class="dropdown__list-item dropdown__list-item--prod dropdown__list-group-name"
-                (click)="selectStatus(item.id, 'PAID')"
-              >
-                Оплачен
-              </li>
-            </ul>
-            <input
-              type="text"
-              name="select-category"
-              value=""
-              class="dropdown__input-hidden"
-            />
-          </div>
-        </div>
+        <ng-container [ngSwitch]="item.status">
+          <span class="order__info-text" *ngSwitchCase="'NEW'">Новый</span>
+          <span class="order__info-text" *ngSwitchCase="'CANCELED'"
+            >Доставлен</span
+          >
+          <span class="order__info-text" *ngSwitchCase="'PAID'">Оплачен</span>
+          <span class="order__info-text" *ngSwitchCase="'WAITING'"
+            >Ожидает оплаты</span
+          >
+          <span class="order__info-text" *ngSwitchCase="'ERROR'"
+            >Ошибка при оплате</span
+          >
+        </ng-container>
       </td>
       <td class="order__td">
         <button
