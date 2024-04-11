@@ -9630,6 +9630,8 @@ main {
 .form-pay__input {
   padding: 13px 15px;
   height: 35px;
+  color: #000000;
+  font-family: ProximaNova, sans-serif;
   border-radius: 20px;
   border: 1px solid #d3d3d3;
   background-color: transparent;

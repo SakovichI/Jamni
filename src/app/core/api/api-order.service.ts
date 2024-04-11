@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IOrder, IPayment } from 'src/app/interfaces/orders-payments';
-import { environment } from '../../../environments/environment';
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { Observable } from 'rxjs'
+import { IOrder, IPayment } from 'src/app/interfaces/orders-payments'
+import { environment } from '../../../environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +18,6 @@ export class ApiOrderService {
     return this.httpClient.post<any>(`${this.apiUrl}/users/order`, data);
   }
 
-  getPostParams(): Observable<any> {
-    return this.httpClient.get<any>('https://jamni.sakovichi.online/');
-  }
 
   public makeOrderNoName(data: any): Observable<any> {
     return this.httpClient.post<any>(`${this.apiUrl}/order/without-user`, data);

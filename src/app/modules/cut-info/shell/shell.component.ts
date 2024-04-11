@@ -4,15 +4,15 @@ import {
   Component,
   OnDestroy,
   OnInit,
-} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
-import { ApiAddressService } from 'src/app/core/api/api-address.service';
-import { ApiUserService } from 'src/app/core/api/api-user.service';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { IAddress } from 'src/app/interfaces/address-inteface';
-import { GeneralService } from '../../../core/services/general.service';
+} from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+import { Subject, takeUntil } from 'rxjs'
+import { ApiAddressService } from 'src/app/core/api/api-address.service'
+import { ApiUserService } from 'src/app/core/api/api-user.service'
+import { AuthService } from 'src/app/core/services/auth.service'
+import { IAddress } from 'src/app/interfaces/address-inteface'
+import { GeneralService } from '../../../core/services/general.service'
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,7 +23,7 @@ export class ShellComponent implements OnInit, OnDestroy {
   public destroy$ = new Subject<void>();
   private email = '';
   public form: FormGroup = new FormGroup({
-    id: new FormControl('0', Validators.required),
+    id: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
     firstname: new FormControl('', [Validators.required]),
     surname: new FormControl('', [Validators.required]),
@@ -91,7 +91,6 @@ export class ShellComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    localStorage.setItem('form', JSON.stringify(this.form.value));
   }
 
   public onSaveFormToStorageClick(): void {
@@ -112,17 +111,19 @@ export class ShellComponent implements OnInit, OnDestroy {
     this.form.controls['street'].setValue(value.street);
     this.form.controls['house'].setValue(value.house);
     this.form.controls['phone'].setValue(value.phone);
-
     this.showModal = !this.showModal;
     this.form.updateValueAndValidity();
   }
 
   public submitAddress(form: FormGroup) {
-    if (this.auth.getToken()) {
+    if (this.auth.getToken() && this.form.controls['id'].value) {
       this.addressApi
         .editAddress(form.value, form.value.id)
         .pipe(takeUntil(this.destroy$))
         .subscribe((resp) => {
+          let formData:any = resp
+          formData.email = this.form.value.email
+          
           localStorage.setItem('form', JSON.stringify(resp));
           this.router.navigate(['./cut-delivery']);
         });
@@ -131,6 +132,8 @@ export class ShellComponent implements OnInit, OnDestroy {
         .addAddressNoName(form.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((resp) => {
+          let formData:any = resp
+          formData.email = this.form.value.email
           localStorage.setItem('form', JSON.stringify(resp));
           this.router.navigate(['./cut-delivery']);
         });

@@ -4,16 +4,16 @@ import {
   Component,
   OnDestroy,
   OnInit,
-} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Subject, map, repeat, takeUntil, takeWhile, tap } from 'rxjs';
-import { AuthService } from 'src/app/core/services/auth.service';
-import { LoaderService } from 'src/app/core/services/loader.service';
-import { ModalsService } from 'src/app/core/services/modals.service';
-import { IPayment } from 'src/app/interfaces/orders-payments';
-import { ApiOrderService } from '../../../core';
-import { GeneralService } from '../../../core/services/general.service';
+} from '@angular/core'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { Router } from '@angular/router'
+import { Subject, map, repeat, takeUntil, takeWhile, tap } from 'rxjs'
+import { AuthService } from 'src/app/core/services/auth.service'
+import { LoaderService } from 'src/app/core/services/loader.service'
+import { ModalsService } from 'src/app/core/services/modals.service'
+import { IPayment } from 'src/app/interfaces/orders-payments'
+import { ApiOrderService } from '../../../core'
+import { GeneralService } from '../../../core/services/general.service'
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
