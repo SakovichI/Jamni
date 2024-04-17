@@ -59,6 +59,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
   }
   ngAfterViewInit(): void {
     this.updateScript();
+    this.updateScript();
   }
 
   public openDescription() {
@@ -217,10 +218,9 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     const scriptOld = document.querySelector('[src="assets/main.js"]');
     if (scriptOld) {
       document.body.removeChild(scriptOld);
-    } else {
-      const script = document.createElement('script');
-      script.src = 'assets/main.js';
-      document.body.appendChild(script);
     }
+    const script = document.createElement('script');
+    script.src = 'assets/main.js';
+    document.body.appendChild(script);
   }
 }
