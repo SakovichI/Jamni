@@ -138,21 +138,32 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
       this.userApi
         .getUser()
         .pipe(takeUntil(this.destroy$))
-        .subscribe((resp) => {
-          this.userApi.userS.next(resp);
-          this.user = resp;
-          if (this.user.userType !== 'ADMIN') {
-            this.userApi
-              .getFavorites()
-              .pipe(takeUntil(this.destroy$))
-              .subscribe();
-            this.userApi.userFavoriteS
-              .pipe(takeUntil(this.destroy$))
-              .subscribe((resp) => {
-                this.countFavorite = resp.length;
-              });
+        .subscribe(
+          (resp) => {
+            this.userApi.userS.next(resp);
+            this.user = resp;
+            if (this.user.userType !== 'ADMIN') {
+              this.userApi
+                .getFavorites()
+                .pipe(takeUntil(this.destroy$))
+                .subscribe();
+              this.userApi.userFavoriteS
+                .pipe(takeUntil(this.destroy$))
+                .subscribe((resp) => {
+                  this.countFavorite = resp.length;
+                });
+            }
+          },
+          (error) => {
+            if (
+              error.error.description ===
+              'Invalid authorization token: Unexpected content JWS.'
+            ) {
+              this.route.navigate(['/']);
+              localStorage.clear();
+            }
           }
-        });
+        );
     }
   }
   ngOnDestroy(): void {

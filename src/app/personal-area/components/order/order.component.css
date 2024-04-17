@@ -1,12 +1,10 @@
-.order-table tbody{
-
+.order-table tbody {
 }
 
 .order-item__img-wrap {
   margin-right: 24px;
   width: 155px;
   height: 155px;
-  background: #f8f8f8;
 }
 
 .order-item__img {
@@ -15,9 +13,8 @@
   object-fit: contain;
 }
 
-
 .desc-order {
-  max-width: 150px
+  max-width: 150px;
 }
 
 .desc-order__title {
@@ -91,12 +88,11 @@
     margin-bottom: 12px;
     background: #fcfcfc;
   }
-  .order-date{
+  .order-date {
     padding: 0 12px;
   }
   .order-time {
     padding: 0 12px;
     margin-bottom: 12px;
   }
-
 }
