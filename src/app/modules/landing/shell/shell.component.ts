@@ -7,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ApiCategoryService, ApiOrderService } from '../../../core';
 import { ApiFeedbackService } from '../../../core/api/api-feedback.service';
 
@@ -29,7 +30,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private apiCategoryService: ApiCategoryService,
     private makeOrder: ApiOrderService,
-    private makeFeedback: ApiFeedbackService
+    private makeFeedback: ApiFeedbackService,
+    private route: Router
   ) {
     setTimeout(() => {
       const scriptOld: Element | null = document.querySelector(
@@ -45,11 +47,32 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.apiCategoryService.listCategories().subscribe((categories) => {
-      this.categories = categories;
-      for (let i = 0; i < categories[0].childCategoryIds.length; ++i) {
+    this.apiCategoryService.listCategories().subscribe(
+      (categories) => {
+        this.categories = categories;
+        for (let i = 0; i < categories[0].childCategoryIds.length; ++i) {
+          this.apiCategoryService
+            .getCategory(categories[0].childCategoryIds[i])
+            .subscribe((category) => {
+              for (
+                let i = 0;
+                i <
+                category.items.filter((el: any) => el.enabled === true).length;
+                i++
+              ) {
+                if (category.items[i].id === 1086) {
+                  continue;
+                }
+                this.sliderItems.push(
+                  category.items.filter((el: any) => el.enabled === true)[i]
+                );
+              }
+              this.cdr.detectChanges();
+            });
+        }
+
         this.apiCategoryService
-          .getCategory(categories[0].childCategoryIds[i])
+          .getCategory(categories[1].id)
           .subscribe((category) => {
             for (
               let i = 0;
@@ -57,32 +80,23 @@ export class ShellComponent implements OnInit, OnDestroy {
               category.items.filter((el: any) => el.enabled === true).length;
               i++
             ) {
-              if (category.items[i].id === 1086) {
-                continue;
-              }
-              this.sliderItems.push(
+              this.bestsellers.push(
                 category.items.filter((el: any) => el.enabled === true)[i]
               );
             }
             this.cdr.detectChanges();
           });
+      },
+      (error) => {
+        if (
+          error.error.description ===
+          'Invalid authorization token: Unexpected content JWS.'
+        ) {
+          this.route.navigate(['/']);
+          localStorage.clear();
+        }
       }
-
-      this.apiCategoryService
-        .getCategory(categories[1].id)
-        .subscribe((category) => {
-          for (
-            let i = 0;
-            i < category.items.filter((el: any) => el.enabled === true).length;
-            i++
-          ) {
-            this.bestsellers.push(
-              category.items.filter((el: any) => el.enabled === true)[i]
-            );
-          }
-          this.cdr.detectChanges();
-        });
-    });
+    );
   }
 
   public ngOnDestroy(): void {

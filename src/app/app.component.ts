@@ -203,49 +203,71 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
 
   login() {
     if (this.auth.getToken()) {
-      this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe((resp) => {
-        if (!resp.isLocked) {
-          switch (resp.userRole) {
-            case 'CLIENT':
-              this.route.navigate(['../client-area']);
-              break;
-            case 'DESIGNER':
-              this.route.navigate(['../designer-area']);
-              break;
-            case 'WHOLESALER':
-              this.route.navigate(['../wholesaler-area']);
-              break;
-            case 'ADMIN':
-              this.route.navigate(['../admin']);
-              break;
-            default:
-              this.route.navigate(['/']);
+      this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe(
+        (resp) => {
+          if (!resp.isLocked) {
+            switch (resp.userRole) {
+              case 'CLIENT':
+                this.route.navigate(['../client-area']);
+                break;
+              case 'DESIGNER':
+                this.route.navigate(['../designer-area']);
+                break;
+              case 'WHOLESALER':
+                this.route.navigate(['../wholesaler-area']);
+                break;
+              case 'ADMIN':
+                this.route.navigate(['../admin']);
+                break;
+              default:
+                this.route.navigate(['/']);
+            }
+          } else {
+            this.modal.showError('Ваш аккаунт временно заблокирован');
           }
-        } else {
-          this.modal.showError('Ваш аккаунт временно заблокирован');
+        },
+        (error) => {
+          if (
+            error.error.description ===
+            'Invalid authorization token: Unexpected content JWS.'
+          ) {
+            this.route.navigate(['/']);
+            localStorage.clear();
+          }
         }
-      });
+      );
     } else {
       this.route.navigate(['login']);
     }
   }
   routeFavorites() {
     if (this.auth.getToken()) {
-      this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe((resp) => {
-        switch (resp.userType) {
-          case 'CLIENT':
-            this.route.navigate(['../client-area/favorites']);
-            break;
-          case 'DESIGNER':
-            this.route.navigate(['../designer-area/favorites']);
-            break;
-          case 'WHOLESALER':
-            this.route.navigate(['../wholesaler-area/favorites']);
-            break;
-          default:
-            this.route.navigate(['./']);
+      this.userApi.userS.pipe(takeUntil(this.destroy$)).subscribe(
+        (resp) => {
+          switch (resp.userType) {
+            case 'CLIENT':
+              this.route.navigate(['../client-area/favorites']);
+              break;
+            case 'DESIGNER':
+              this.route.navigate(['../designer-area/favorites']);
+              break;
+            case 'WHOLESALER':
+              this.route.navigate(['../wholesaler-area/favorites']);
+              break;
+            default:
+              this.route.navigate(['./']);
+          }
+        },
+        (error) => {
+          if (
+            error.error.description ===
+            'Invalid authorization token: Unexpected content JWS.'
+          ) {
+            this.route.navigate(['/']);
+            localStorage.clear();
+          }
         }
-      });
+      );
     } else {
       this.route.navigate(['catalog']);
     }
