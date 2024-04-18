@@ -4,15 +4,15 @@ import {
   Component,
   OnDestroy,
   OnInit,
-} from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
-import { Subject, takeUntil } from 'rxjs'
-import { ApiAddressService } from 'src/app/core/api/api-address.service'
-import { ApiUserService } from 'src/app/core/api/api-user.service'
-import { AuthService } from 'src/app/core/services/auth.service'
-import { IAddress } from 'src/app/interfaces/address-inteface'
-import { GeneralService } from '../../../core/services/general.service'
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { ApiAddressService } from 'src/app/core/api/api-address.service';
+import { ApiUserService } from 'src/app/core/api/api-user.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { IAddress } from 'src/app/interfaces/address-inteface';
+import { GeneralService } from '../../../core/services/general.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -121,9 +121,9 @@ export class ShellComponent implements OnInit, OnDestroy {
         .editAddress(form.value, form.value.id)
         .pipe(takeUntil(this.destroy$))
         .subscribe((resp) => {
-          let formData:any = resp
-          formData.email = this.form.value.email
-          
+          let formData: any = resp;
+          formData.email = this.form.value.email;
+
           localStorage.setItem('form', JSON.stringify(resp));
           this.router.navigate(['./cut-delivery']);
         });
@@ -132,11 +132,25 @@ export class ShellComponent implements OnInit, OnDestroy {
         .addAddressNoName(form.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((resp) => {
-          let formData:any = resp
-          formData.email = this.form.value.email
+          let formData: any = resp;
+          formData.email = this.form.value.email;
           localStorage.setItem('form', JSON.stringify(resp));
           this.router.navigate(['./cut-delivery']);
         });
+    }
+  }
+  openDropdown(elem: any) {
+    const dropDown = elem.closest('.dropdown');
+    const dropDownBtn = elem;
+    const dropDownIcon = dropDown.querySelector('.dropdown__icon');
+    const dropDownList = dropDown.querySelector('.dropdown__list');
+    dropDownList.classList.toggle('dropdown__list--visible');
+    dropDownIcon.classList.toggle('dropdown__icon--active');
+    dropDownBtn.classList.add('dropdown__button--active');
+    if (dropDownList.classList.contains('dropdown__list--visible')) {
+      dropDownList.style.maxHeight = dropDownList.scrollHeight + 'px';
+    } else {
+      dropDownList.style.maxHeight = null;
     }
   }
 }

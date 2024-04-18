@@ -51,7 +51,7 @@
                   <button
                     type="button"
                     class="dropdown__button"
-                    style="pointer-events: none"
+                    (click)="openDropdown($event.target)"
                   >
                     {{ this.form.controls["country"].value }}
                   </button>

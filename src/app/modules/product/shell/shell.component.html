@@ -145,7 +145,11 @@
                   <div class="section-product-form__row">
                     <div class="form-group section-product-form__select">
                       <div class="dropdown section-product-form__dropdown">
-                        <button type="button" class="dropdown__button">
+                        <button
+                          type="button"
+                          class="dropdown__button"
+                          (click)="openDropdown($event.target)"
+                        >
                           {{ $any(specFormGroup).value.value.value }}
                         </button>
                         <svg class="dropdown__icon">
@@ -185,7 +189,11 @@
                   <div class="section-product-form__row">
                     <div class="form-group section-product-form__select">
                       <div class="dropdown section-product-form__dropdown">
-                        <button type="button" class="dropdown__button">
+                        <button
+                          type="button"
+                          class="dropdown__button"
+                          (click)="openDropdown($event.target)"
+                        >
                           <span class="dropdown__value">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +261,11 @@
                   <div class="section-product-form__row">
                     <div class="form-group section-product-form__select">
                       <div class="dropdown section-product-form__dropdown">
-                        <button type="button" class="dropdown__button">
+                        <button
+                          type="button"
+                          class="dropdown__button"
+                          (click)="openDropdown($event.target)"
+                        >
                           {{ specFormGroup.get("value")?.value ? "Да" : "Нет" }}
                         </button>
                         <svg class="dropdown__icon">
@@ -322,7 +334,10 @@
       *ngFor="let desc of product.descriptions"
     >
       <div class="small-container">
-        <div class="item-details__title accordion__title">
+        <div
+          class="item-details__title accordion__title"
+          (click)="openAccordion($event.target)"
+        >
           {{ desc.name }}
           <div class="accordion__icon">
             <span
@@ -343,7 +358,10 @@
       class="details-product__item accordion item-details"
     >
       <div class="small-container">
-        <div class="item-details__title accordion__title">
+        <div
+          class="item-details__title accordion__title"
+          (click)="openAccordion($event.target)"
+        >
           обслуживание
           <div class="accordion__icon">
             <span
@@ -393,7 +411,10 @@
       class="details-product__item accordion item-details"
     >
       <div class="small-container">
-        <div class="item-details__title accordion__title">
+        <div
+          class="item-details__title accordion__title"
+          (click)="openAccordion($event.target)"
+        >
           упаковка
           <div class="accordion__icon">
             <span

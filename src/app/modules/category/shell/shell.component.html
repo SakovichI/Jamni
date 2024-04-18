@@ -116,7 +116,10 @@
                 [ngSwitch]="specification?.value.specification.valueType"
               >
                 <ng-template [ngSwitchCase]="'CHAR'">
-                  <div class="section-filter__title accordion__title">
+                  <div
+                    class="section-filter__title accordion__title"
+                    (click)="openAccordion($event.target)"
+                  >
                     {{ specification.value.specification.name }}
                     <div class="accordion__icon">
                       <span
@@ -154,7 +157,10 @@
                   </div>
                 </ng-template>
                 <ng-template [ngSwitchCase]="'BOOLEAN'">
-                  <div class="section-filter__title accordion__title">
+                  <div
+                    class="section-filter__title accordion__title"
+                    (click)="openAccordion($event.target)"
+                  >
                     {{ specification.value.specification.name }}
                     <div class="accordion__icon">
                       <span
@@ -194,7 +200,10 @@
                   </div>
                 </ng-template>
                 <ng-template [ngSwitchCase]="'COLOR'">
-                  <div class="section-filter__title accordion__title">
+                  <div
+                    class="section-filter__title accordion__title"
+                    (click)="openAccordion($event.target)"
+                  >
                     {{ specification.value.specification.name }}
                     <div class="accordion__icon">
                       <span
@@ -232,7 +241,10 @@
                   </div>
                 </ng-template>
                 <ng-template [ngSwitchCase]="'NUMBER'">
-                  <div class="section-filter__title accordion__title">
+                  <div
+                    class="section-filter__title accordion__title"
+                    (click)="openAccordion($event.target)"
+                  >
                     {{ specification.value.specification.name }}
                     <div class="accordion__icon">
                       <span

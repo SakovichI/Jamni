@@ -62,6 +62,9 @@ export class AddressFormComponent implements OnInit, OnDestroy {
           takeUntil(this.destroy$)
         )
         .subscribe();
+    } else {
+      this.form.controls['country'].setValue('Россия');
+      this.loader.loaded = false;
     }
   }
 
@@ -77,6 +80,7 @@ export class AddressFormComponent implements OnInit, OnDestroy {
         .addAddress(form.value)
         .pipe(takeUntil(this.destroy$))
         .subscribe((resp) => {
+          this.loader.loaded = false;
           this.route.navigate(['../'], { relativeTo: this.activeRoute });
         });
     } else {
@@ -116,5 +120,19 @@ export class AddressFormComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe();
+  }
+  openDropdown(elem: any) {
+    const dropDown = elem.closest('.dropdown');
+    const dropDownBtn = elem;
+    const dropDownIcon = dropDown.querySelector('.dropdown__icon');
+    const dropDownList = dropDown.querySelector('.dropdown__list');
+    dropDownList.classList.toggle('dropdown__list--visible');
+    dropDownIcon.classList.toggle('dropdown__icon--active');
+    dropDownBtn.classList.add('dropdown__button--active');
+    if (dropDownList.classList.contains('dropdown__list--visible')) {
+      dropDownList.style.maxHeight = dropDownList.scrollHeight + 'px';
+    } else {
+      dropDownList.style.maxHeight = null;
+    }
   }
 }

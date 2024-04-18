@@ -642,6 +642,18 @@ export class ProductComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.updateScript();
   }
+  openDropdown(elem: any) {
+    const dropDown = elem.closest('.dropdown');
+    const dropDownBtn = elem;
+    const dropDownIcon = dropDown.querySelector('.dropdown__icon');
+    const dropDownList = dropDown.querySelector('.dropdown__list');
+    dropDownList.classList.toggle('dropdown__list--visible');
+    dropDownIcon.classList.toggle('dropdown__icon--active');
+    dropDownBtn.classList.add('dropdown__button--active');
+    if (dropDownList.classList.contains('dropdown__list--visible')) {
+      dropDownList.style.maxHeight = dropDownList.scrollHeight + 'px';
+    } else {
+      dropDownList.style.maxHeight = null;
+    }
+  }
 }
-// 1149_e7afaefb-b476-4ee5-a182-1d1693d71015
-// "http://45.89.66.8:9000/items/1149_e7afaefb-b476-4ee5-a182-1d1693d71015?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=jamni%2F20240404%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20240404T100606Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=28fbc8c1f0b9a07eb9bc19701e9bc2636982d2829699ff1ae963d73a6ba2d3e5"

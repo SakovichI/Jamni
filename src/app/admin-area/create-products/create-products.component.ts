@@ -252,4 +252,18 @@ export class CreateProductsComponent
       document.body.appendChild(script);
     }, 50);
   }
+  openDropdown(elem: any) {
+    const dropDown = elem.closest('.dropdown');
+    const dropDownBtn = elem;
+    const dropDownIcon = dropDown.querySelector('.dropdown__icon');
+    const dropDownList = dropDown.querySelector('.dropdown__list');
+    dropDownList.classList.toggle('dropdown__list--visible');
+    dropDownIcon.classList.toggle('dropdown__icon--active');
+    dropDownBtn.classList.add('dropdown__button--active');
+    if (dropDownList.classList.contains('dropdown__list--visible')) {
+      dropDownList.style.maxHeight = dropDownList.scrollHeight + 'px';
+    } else {
+      dropDownList.style.maxHeight = null;
+    }
+  }
 }

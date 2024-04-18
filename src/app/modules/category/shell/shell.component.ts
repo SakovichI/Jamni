@@ -317,4 +317,23 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
       return false;
     }
   }
+  openAccordion(elem: any) {
+    const accordion = elem.closest('.accordion');
+    const title = accordion.querySelector('.accordion__title');
+    const content = accordion.querySelector('.accordion__content');
+    const icon = accordion.querySelector('.accordion__icon');
+    content.classList.toggle('open-main');
+    content.style.height = '100%';
+    if (!content.classList.contains('open-main')) {
+      accordion.setAttribute('aria-expanded', false);
+      content.setAttribute('aria-hidden', true);
+      icon.classList.remove('accordion__icon--active');
+      content.style.height = 0;
+    } else {
+      accordion.setAttribute('aria-expanded', true);
+      content.setAttribute('aria-hidden', false);
+      icon.classList.add('accordion__icon--active');
+      content.style.height = '100%';
+    }
+  }
 }

@@ -57,10 +57,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
         this.favoriteList = resp;
       });
   }
-  ngAfterViewInit(): void {
-    this.updateScript();
-    this.updateScript();
-  }
+  ngAfterViewInit(): void {}
 
   public openDescription() {
     this.accordionViews = !this.accordionViews;
@@ -120,7 +117,6 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
                 });
             }, 10);
           });
-          this.updateScript();
         });
 
         this.apiItemService
@@ -222,5 +218,39 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     const script = document.createElement('script');
     script.src = 'assets/main.js';
     document.body.appendChild(script);
+  }
+
+  openAccordion(elem: any) {
+    const accordion = elem.closest('.accordion');
+    const title = accordion.querySelector('.accordion__title');
+    const content = accordion.querySelector('.accordion__content');
+    const icon = accordion.querySelector('.accordion__icon');
+    content.classList.toggle('open-main');
+    content.style.height = '100%';
+    if (!content.classList.contains('open-main')) {
+      accordion.setAttribute('aria-expanded', false);
+      content.setAttribute('aria-hidden', true);
+      icon.classList.remove('accordion__icon--active');
+      content.style.height = 0;
+    } else {
+      accordion.setAttribute('aria-expanded', true);
+      content.setAttribute('aria-hidden', false);
+      icon.classList.add('accordion__icon--active');
+      content.style.height = '100%';
+    }
+  }
+  openDropdown(elem: any) {
+    const dropDown = elem.closest('.dropdown');
+    const dropDownBtn = elem;
+    const dropDownIcon = dropDown.querySelector('.dropdown__icon');
+    const dropDownList = dropDown.querySelector('.dropdown__list');
+    dropDownList.classList.toggle('dropdown__list--visible');
+    dropDownIcon.classList.toggle('dropdown__icon--active');
+    dropDownBtn.classList.add('dropdown__button--active');
+    if (dropDownList.classList.contains('dropdown__list--visible')) {
+      dropDownList.style.maxHeight = dropDownList.scrollHeight + 'px';
+    } else {
+      dropDownList.style.maxHeight = null;
+    }
   }
 }

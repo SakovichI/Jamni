@@ -170,6 +170,7 @@
                     <button
                       type="button"
                       class="dropdown__button dropdown__button--prod"
+                      (click)="openDropdown($event.target)"
                     >
                       {{ activeCategory }}
                     </button>
@@ -382,7 +383,11 @@
                   <div class="section-product-form__row">
                     <div class="form-group section-product-form__select">
                       <div class="dropdown section-product-form__dropdown">
-                        <button type="button" class="dropdown__button">
+                        <button
+                          type="button"
+                          class="dropdown__button"
+                          (click)="openDropdown($event.target)"
+                        >
                           {{
                             $any(detailForm).controls["specValue"].value[i]
                               .value
@@ -497,7 +502,11 @@
     <div class="add-attribute">
       <div class="add-attribute__item-select">
         <div class="dropdown section-product-form__dropdown">
-          <button type="button" class="dropdown__button placeholder">
+          <button
+            type="button"
+            class="dropdown__button placeholder"
+            (click)="openDropdown($event.target)"
+          >
             Выберите атрибут
           </button>
           <svg class="dropdown__icon">

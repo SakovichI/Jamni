@@ -1716,33 +1716,10 @@
   \****************************************/
       /***/ () => {
         setTimeout(() => {
-          const accordionTitle = document.querySelectorAll(".accordion__title");
           const btnElse = document.querySelectorAll(
             ".section-filter__title-else"
           );
-          if (accordionTitle) {
-            accordionTitle.forEach((accordionTitle) => {
-              accordionTitle.addEventListener("click", (e) => {
-                const accordion = accordionTitle.closest(".accordion");
-                const title = accordion.querySelector(".accordion__title");
-                const content = accordion.querySelector(".accordion__content");
-                const icon = accordion.querySelector(".accordion__icon");
-                content.classList.toggle("open-main");
-                content.style.height = "100%";
-                if (!content.classList.contains("open-main")) {
-                  accordion.setAttribute("aria-expanded", false);
-                  content.setAttribute("aria-hidden", true);
-                  icon.classList.remove("accordion__icon--active");
-                  content.style.height = 0;
-                } else {
-                  accordion.setAttribute("aria-expanded", true);
-                  content.setAttribute("aria-hidden", false);
-                  icon.classList.add("accordion__icon--active");
-                  content.style.height = "100%";
-                }
-              });
-            });
-          }
+
           if (btnElse) {
             btnElse.forEach((el) => {
               el.addEventListener("click", () => {
@@ -2924,21 +2901,6 @@
                 ".dropdown__input-hidden"
               );
 
-              // Клик по кнопке. Открыть/Закрыть select
-              dropDownBtn.addEventListener("click", function (e) {
-                dropDownList.classList.toggle("dropdown__list--visible");
-                dropDownIcon.classList.toggle("dropdown__icon--active");
-                this.classList.add("dropdown__button--active");
-                if (
-                  dropDownList.classList.contains("dropdown__list--visible")
-                ) {
-                  dropDownList.style.maxHeight =
-                    dropDownList.scrollHeight + "px";
-                } else {
-                  dropDownList.style.maxHeight = null;
-                }
-              });
-
               //Выбор элемента списка. Запомнить выбранное значение. Закрыть дропдаун
               dropDownListItems.forEach(function (listItem) {
                 listItem.addEventListener("click", function (e) {
@@ -2951,7 +2913,6 @@
                   if (dropDownInput) {
                     dropDownInput.value = this.dataset.value;
                   }
-
                   dropDownList.classList.remove("dropdown__list--visible");
                   dropDownList.style.maxHeight = null;
                   dropDownIcon.classList.remove("dropdown__icon--active");
