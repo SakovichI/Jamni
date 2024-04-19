@@ -43,6 +43,7 @@ export class GeneralService {
     const item = this.selectedItems.filter(
       (item: any) => item.product.id == product.product.id
     );
+
     const item2 = item.find(
       (ep: any) =>
         ep.appliedSpecs.length == product.appliedSpecs.length &&
@@ -52,7 +53,7 @@ export class GeneralService {
           ))
     );
     if (item2.amount == 1) {
-      this.selectedItems.splice(this.selectedItems.indexOf(item), 1);
+      this.selectedItems.splice(this.selectedItems.indexOf(item[0]), 1);
     } else {
       item2.amount -= 1;
     }

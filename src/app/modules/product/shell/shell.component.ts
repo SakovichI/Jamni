@@ -75,6 +75,7 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     this.apiItemService.getItem(this.productId).subscribe(
       (product: any) => {
         this.product = product;
+        this.productImages = [];
         this.productImages.push(this.product.coverImage);
         for (let k in this.product.additionalImages) {
           this.productImages.push(this.product.additionalImages[k]);

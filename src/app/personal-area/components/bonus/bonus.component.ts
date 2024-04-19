@@ -17,7 +17,8 @@ import { LoaderService } from 'src/app/core/services/loader.service';
   providers: [NgModel],
 })
 export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
-  balance: number = 0;
+  actualBalance = 800000;
+  balance: number = 800000;
   percentBonus: number = 0;
   public destroy$ = new Subject<void>();
   public form: FormGroup = new FormGroup({
@@ -27,11 +28,12 @@ export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private userApi: ApiUserService, private loader: LoaderService) {}
 
   ngOnInit(): void {
-    this.loader.loaded = true;
+    this.loader.loaded = false;
     this.userApi
       .getUserBalance()
       .pipe(takeUntil(this.destroy$))
       .subscribe((resp) => {
+        this.actualBalance = resp.balance;
         this.balance = resp.balance;
         this.updateValue();
         this.loader.loaded = false;
@@ -41,7 +43,9 @@ export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.line) {
       const dotWrap: HTMLElement = this.line.sliderHandle.nativeElement;
       const tooltip = `<div class="chart__main-dot-tooltip">
-      <span class="chart__main-dot-text" >Сумма: ${this.balance + ' $'}</span>
+      <span class="chart__main-dot-text" >Сумма: ${
+        this.addCommasToNumber(this.balance) + ' руб.'
+      }</span>
       <span class="chart__main-dot-text percentBonus">Вознаграждение: ${
         this.percentBonus + ' %'
       }</span>
@@ -71,7 +75,7 @@ export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
     const value = tooltip?.querySelector('.chart__main-dot-text');
     const percentBonus = tooltip?.querySelector('.percentBonus');
     if (value && percentBonus) {
-      value.textContent = `Сумма:${this.balance} $`;
+      value.textContent = `Сумма:${this.addCommasToNumber(this.balance)} руб.`;
       if (this.balance >= 500000 && this.balance < 1500000) {
         this.percentBonus = 10;
       } else if (this.balance >= 1500000 && this.balance < 3000000) {
@@ -110,5 +114,8 @@ export class BonusComponent implements OnInit, AfterViewInit, OnDestroy {
       this.balance = this.balance;
       this.updateValue();
     }
+  }
+  addCommasToNumber(number: number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 }
