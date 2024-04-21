@@ -719,6 +719,14 @@ main {
   -ms-flex-align: center;
   align-items: center;
 }
+.item-cut__wrap picture {
+  flex: 0 0 130px;
+}
+.item-cut__wrap img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
 
 .item-cut__content {
   margin-left: 30px;
@@ -755,6 +763,7 @@ main {
 }
 
 .item-cut__delete {
+  flex: 0 0 38px;
   height: -webkit-min-content;
   height: -moz-min-content;
   height: min-content;
