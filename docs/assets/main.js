@@ -2058,6 +2058,7 @@
             wrapperClass: "slider-thumbs__wrapper",
             slideClass: "slider-thumbs__slide",
             slidesPerView: "auto",
+
             spaceBetween: 15,
             speed: 800,
             watchSlidesProgress: true,
@@ -2067,6 +2068,7 @@
               },
               850: {
                 spaceBetween: 25,
+                slidesPerView: 2,
               },
             },
           });
@@ -2075,7 +2077,8 @@
           ](".slider", {
             wrapperClass: "slider-wrapper",
             slideClass: "slider-slide",
-            slidesPerView: "auto",
+            slidesPerView: 1,
+
             spaceBetween: 120,
             speed: 800,
             breakpoints: {
