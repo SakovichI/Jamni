@@ -118,6 +118,11 @@
                   >
                 </li>
                 <li class="burger-menu__item" (click)="openBurger()">
+                  <a [routerLink]="'load-project'" class="burger-menu__link"
+                    >индивидуальные заказы</a
+                  >
+                </li>
+                <li class="burger-menu__item" (click)="openBurger()">
                   <a [routerLink]="'contacts-page'" class="burger-menu__link"
                     >контакты</a
                   >
@@ -373,6 +378,11 @@
           </li>
           <li class="nav-header__item">
             <a [routerLink]="'about-company'" class="nav-header__link">о нас</a>
+          </li>
+          <li class="nav-header__item">
+            <a [routerLink]="'load-project'" class="nav-header__link"
+              >индивидуальные заказы</a
+            >
           </li>
           <li class="nav-header__item">
             <a [routerLink]="'reviews'" class="nav-header__link">отзывы</a>
