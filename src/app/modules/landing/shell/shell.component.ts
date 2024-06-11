@@ -43,7 +43,7 @@ export class ShellComponent implements OnInit, OnDestroy {
       const script = document.createElement('script');
       script.src = 'assets/main.js';
       document.body.appendChild(script);
-    }, 1000);
+    }, 200);
   }
 
   public ngOnInit(): void {

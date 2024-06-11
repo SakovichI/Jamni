@@ -3,24 +3,56 @@
     <div class="hero__wrap">
       <div class="hero__slider slider">
         <div class="slider-wrapper">
-          <a
-            [href]="'product/' + item.id"
-            class="slider-slide slide"
-            *ngFor="let item of sliderItems"
-          >
+          <a class="slider-slide slide">
             <picture>
               <source
-                [srcset]="
-                  item.coverImage || 'assets/img/no-img-placeholder.svg'
+                src="
+                  assets/img/main-slider/slide_1.jpg
                 "
                 type="image/webp"
               />
               <img
                 loading="lazy"
-                [src]="item.coverImage || 'assets/img/no-img-placeholder.svg'"
+                src="assets/img/main-slider/slide_1.jpg"
                 class="image"
                 width="651"
-                height="726"
+                height="756"
+                alt="slide1"
+              />
+            </picture>
+          </a>
+          <a class="slider-slide slide">
+            <picture>
+              <source
+                src="
+                  assets/img/main-slider/slide_0.png
+                "
+                type="image/webp"
+              />
+              <img
+                loading="lazy"
+                src="assets/img/main-slider/slide_0.png"
+                class="image"
+                width="651"
+                height="756"
+                alt="slide1"
+              />
+            </picture>
+          </a>
+          <a class="slider-slide slide">
+            <picture>
+              <source
+                src="
+                  assets/img/main-slider/slide_2.jpg
+                "
+                type="image/webp"
+              />
+              <img
+                loading="lazy"
+                src="assets/img/main-slider/slide_2.jpg"
+                class="image"
+                width="651"
+                height="756"
                 alt="slide1"
               />
             </picture>
@@ -61,21 +93,54 @@
       </div>
       <div class="hero__slider-thumbs slider-thumbs">
         <div class="slider-thumbs__wrapper">
-          <a
-            [href]="'product/' + item.id"
-            class="slider-thumbs__slide slide-thumbs"
-            *ngFor="let item of sliderItems"
-          >
+          <a class="slider-thumbs__slide slide-thumbs">
             <picture>
               <source
-                [srcset]="
-                  item.coverImage || 'assets/img/no-img-placeholder.svg'
+                srcs="
+                  assets/img/main-slider/slide_1.jpg
                 "
                 type="image/webp"
               />
               <img
                 loading="lazy"
-                [src]="item.coverImage || 'assets/img/no-img-placeholder.svg'"
+                src="assets/img/main-slider/slide_1.jpg"
+                class="image slide-thumbs__image"
+                width="187"
+                height="187"
+                alt="slide"
+              />
+            </picture>
+          </a>
+          <a class="slider-thumbs__slide slide-thumbs">
+            <picture>
+              <source
+                srcs="
+                  assets/img/main-slider/slide_0.png
+                "
+                type="image/webp"
+              />
+              <img
+                loading="lazy"
+                src="assets/img/main-slider/slide_0.png"
+                class="image slide-thumbs__image"
+                width="187"
+                height="187"
+                alt="slide"
+              />
+            </picture>
+          </a>
+
+          <a class="slider-thumbs__slide slide-thumbs">
+            <picture>
+              <source
+                srcs="
+                  assets/img/main-slider/slide_2.jpg
+                "
+                type="image/webp"
+              />
+              <img
+                loading="lazy"
+                src="assets/img/main-slider/slide_2.jpg"
                 class="image slide-thumbs__image"
                 width="187"
                 height="187"
@@ -207,7 +272,8 @@
       <li
         class="categories__bg categories__bg--product"
         [ngClass]="{
-          'categories__bg--product': categoriesName === 'Каталог товаров',
+          'categories__bg--product':
+            categoriesName === 'Декор' || categoriesName === 'Постельное белье',
           'categories__bg--pufs': categoriesName === 'Пуфы и банкетки',
           'categories__bg--sofas': categoriesName === 'Диваны',
           'categories__bg--furniture': categoriesName === 'Бескаркасная мебель',

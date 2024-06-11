@@ -1940,6 +1940,10 @@ main {
   width: 23px;
   height: 23px;
 }
+.header__search {
+  opacity: 0;
+  visibility: hidden;
+}
 
 .search-form__input {
   width: 100%;
@@ -2535,10 +2539,10 @@ main {
 .hero__wrap {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: -webkit-min-content 1fr;
-  -ms-grid-columns: min-content 1fr;
-  grid-template-columns: -webkit-min-content 1fr;
-  grid-template-columns: min-content 1fr;
+  -ms-grid-columns: 1fr 1fr;
+  -ms-grid-columns: 1fr 0.6fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   -ms-grid-rows: -webkit-max-content -webkit-min-content;
   -ms-grid-rows: max-content min-content;
   grid-template-rows: -webkit-max-content -webkit-min-content;
@@ -2553,10 +2557,9 @@ main {
   -ms-grid-row-span: 2;
   grid-row: 1/3;
   -ms-grid-column-align: end;
-  justify-self: end;
   padding: 0 60px;
   position: relative;
-  width: 771px;
+  width: 100%;
   overflow: hidden;
   list-style: none;
   /* Fix of Webkit flickering */
@@ -2626,16 +2629,18 @@ main {
 }
 
 .slider-slide {
-  -webkit-box-flex: 1;
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  height: 726px;
-  width: 651px;
+  flex: 0 0 auto;
+  height: 756px;
   position: relative;
   -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
+}
+.slider-slide .image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .slider-slide.swiper-slide-active .tooltip {
@@ -2999,12 +3004,20 @@ main {
 }
 
 .slider-thumbs__slide {
+  flex: 0 0 auto;
+  height: 180px;
   position: relative;
   opacity: 0.5;
   -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   transition-property: transform;
   transition-property: transform, -webkit-transform;
+}
+
+.slide-thumbs__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .slider-thumbs__slide.swiper-slide-thumb-active {
@@ -3060,8 +3073,6 @@ main {
 
   .slide-thumbs__image {
     vertical-align: top;
-    width: 140px;
-    height: 140px;
   }
 
   .wrap-tooltip__img {
@@ -3572,15 +3583,15 @@ main {
 .categories__bg--product {
   background: url("./assets/img/categories/decor1.jpg") no-repeat 23% 5%/10%,
     url("./assets/img/categories/decor2.jpg") no-repeat 0 50%/22%,
-    url("./assets/img/categories/decor3.jpg") no-repeat 20% 94%/13%,
+    url("./assets/img/categories/decor3.jpg") no-repeat 12% 94%/13%,
     url("./assets/img/categories/decor4.jpg") no-repeat 85% 11%/15%,
-    url("./assets/img/categories/decor5.jpg") no-repeat 96% 81%/18%;
+    url("./assets/img/categories/decor5.jpg") no-repeat 96% 95%/18%;
   animation: openCategory1 0.5s ease-in-out;
 }
 .categories__bg--pufs {
   background: url("./assets/img/categories/pufs3.jpg") no-repeat 3% 44%/25%,
     url("./assets/img/categories/pufs1.jpg") no-repeat 24% 0%/13%,
-    url("./assets/img/categories/pufs2.jpg") no-repeat 17% 94%/18%,
+    url("./assets/img/categories/pufs2.jpg") no-repeat 11% 94%/18%,
     url("./assets/img/categories/pufs4.jpg") no-repeat 88% 3%/17%,
     url("./assets/img/categories/pufs5.jpg") no-repeat 97% 38%/19%,
     url("./assets/img/categories/pufs6.jpg") no-repeat 95% 86%/18%;
@@ -3589,15 +3600,15 @@ main {
 .categories__bg--sofas {
   background: url("./assets/img/categories/sofas2.jpg") no-repeat 25% 0%/15%,
     url("./assets/img/categories/sofas1.jpg") no-repeat 0 43%/23%,
-    url("./assets/img/categories/sofas5.jpg") no-repeat 16% 99%/25%,
+    url("./assets/img/categories/sofas5.jpg") no-repeat 4% 99%/23%,
     url("./assets/img/categories/sofas4.jpg") no-repeat 96% 4%/24%,
-    url("./assets/img/categories/sofas3.jpg") no-repeat 100% 81%/20%;
+    url("./assets/img/categories/sofas3.jpg") no-repeat 100% 87%/20%;
   animation: openCategory3 0.5s ease-in-out;
 }
 .categories__bg--furniture {
   background: url("./assets/img/categories/furniture2.jpg") no-repeat 18% 0%/17%,
     url("./assets/img/categories/furniture5.jpg") no-repeat 0 45%/21%,
-    url("./assets/img/categories/furniture3.jpg") no-repeat 24% 93%/21%,
+    url("./assets/img/categories/furniture3.jpg") no-repeat 6% 93%/21%,
     url("./assets/img/categories/furniture4.jpg") no-repeat 96% 4%/24%,
     url("./assets/img/categories/furniture1.jpg") no-repeat 100% 81%/20%;
   animation: openCategory4 0.5s ease-in-out;
@@ -3605,16 +3616,16 @@ main {
 .categories__bg--chairs {
   background: url("./assets/img/categories/chairs1.jpg") no-repeat 3% 28%/18%,
     url("./assets/img/categories/chairs2.jpg") no-repeat 24% 3%/11%,
-    url("./assets/img/categories/chairs3.jpg") no-repeat 17% 94%/20%,
+    url("./assets/img/categories/chairs3.jpg") no-repeat 5% 94%/20%,
     url("./assets/img/categories/chairs4.jpg") no-repeat 80% 6%/9%,
     url("./assets/img/categories/chairs5.jpg") no-repeat 97% 26%/13%,
-    url("./assets/img/categories/chairs6.jpg") no-repeat 91% 88%/13%;
+    url("./assets/img/categories/chairs6.jpg") no-repeat 91% 96%/13%;
   animation: openCategory5 0.5s ease-in-out;
 }
 .categories__bg--bed {
   background: url("./assets/img/categories/bed1.jpg") no-repeat 19% -2%/15%,
     url("./assets/img/categories/bed2.jpg") no-repeat 0 46%/24%,
-    url("./assets/img/categories/bed3.jpg") no-repeat 29% 94%/16%,
+    url("./assets/img/categories/bed3.jpg") no-repeat 11% 94%/16%,
     url("./assets/img/categories/bed4.jpg") no-repeat 94% 3%/19%,
     url("./assets/img/categories/bed5.jpg") no-repeat 96% 81%/23%;
   animation: openCategory6 0.5s ease-in-out;
@@ -3622,7 +3633,7 @@ main {
 .categories__bg--armchair {
   background: url("./assets/img/categories/armchair6.jpg") no-repeat 3% 43%/21%,
     url("./assets/img/categories/armchair5.jpg") no-repeat 24% 3%/11%,
-    url("./assets/img/categories/armchair2.jpg") no-repeat 20% 94%/16%,
+    url("./assets/img/categories/armchair2.jpg") no-repeat 10% 94%/16%,
     url("./assets/img/categories/armchair3.jpg") no-repeat 81% 6%/14%,
     url("./assets/img/categories/armchair4.jpg") no-repeat 97% 30%/15%,
     url("./assets/img/categories/armchair1.jpg") no-repeat 95% 88%/20%;
@@ -3821,6 +3832,11 @@ main {
 
   .categories__count {
     font-size: 12px;
+  }
+}
+@media all and (max-width: 400px) {
+  .categories__item:nth-child(7) a {
+    margin-left: 0px;
   }
 }
 
