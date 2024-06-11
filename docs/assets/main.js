@@ -2064,6 +2064,7 @@
             watchSlidesProgress: true,
             breakpoints: {
               1250: {
+                slidesPerView: 2,
                 spaceBetween: 46,
               },
               850: {

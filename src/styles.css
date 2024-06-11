@@ -2544,10 +2544,10 @@ main {
 .hero__wrap {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 1fr;
   -ms-grid-columns: 1fr 0.6fr;
-  grid-template-columns: 1fr 1fr;
-  grid-template-columns: 1fr 1fr;
+  -ms-grid-columns: 1fr 0.6fr;
+  grid-template-columns: 1fr 0.6fr;
+  grid-template-columns: 1fr 0.6fr;
   -ms-grid-rows: -webkit-max-content -webkit-min-content;
   -ms-grid-rows: max-content min-content;
   grid-template-rows: -webkit-max-content -webkit-min-content;
@@ -3033,21 +3033,14 @@ main {
   .hero__wrap {
     display: -ms-grid;
     display: grid;
-    -ms-grid-columns: -webkit-min-content 1fr;
-    -ms-grid-columns: min-content 1fr;
-    grid-template-columns: -webkit-min-content 1fr;
-    grid-template-columns: min-content 1fr;
+    -ms-grid-columns: 1fr 0.6fr;
+    -ms-grid-columns: 1fr 0.6fr;
+    grid-template-columns: 1fr 0.6fr;
+    grid-template-columns: 1fr 0.6fr;
     -ms-grid-rows: -webkit-max-content -webkit-min-content;
     -ms-grid-rows: max-content min-content;
     grid-template-rows: -webkit-max-content -webkit-min-content;
     grid-template-rows: max-content min-content;
-  }
-
-  .hero__slider {
-    width: 530px;
-    margin-right: -30px;
-    /* Fix of Webkit flickering */
-    z-index: 1;
   }
 
   .hero__slider-thumbs {
@@ -3068,12 +3061,6 @@ main {
 
   .slider-slide {
     height: 540px;
-    width: 410px;
-  }
-
-  .slider-slide .image {
-    height: 540px;
-    width: 410px;
   }
 
   .slide-thumbs__image {
