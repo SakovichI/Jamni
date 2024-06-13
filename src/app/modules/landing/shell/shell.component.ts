@@ -50,6 +50,8 @@ export class ShellComponent implements OnInit, OnDestroy {
     this.apiCategoryService.listCategories().subscribe(
       (categories) => {
         this.categories = categories;
+        console.log(categories);
+
         for (let i = 0; i < categories[0].childCategoryIds.length; ++i) {
           this.apiCategoryService
             .getCategory(categories[0].childCategoryIds[i])

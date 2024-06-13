@@ -2051,6 +2051,7 @@
           swiper__WEBPACK_IMPORTED_MODULE_0__["default"].use([
             swiper__WEBPACK_IMPORTED_MODULE_0__.Navigation,
             swiper__WEBPACK_IMPORTED_MODULE_0__.Thumbs,
+            swiper__WEBPACK_IMPORTED_MODULE_0__.Autoplay,
           ]);
           const swiperThumbs = new swiper__WEBPACK_IMPORTED_MODULE_0__[
             "default"
@@ -2058,7 +2059,11 @@
             wrapperClass: "slider-thumbs__wrapper",
             slideClass: "slider-thumbs__slide",
             slidesPerView: "auto",
-
+            autoplay: {
+              delay: 2000,
+              disableOnInteraction: false,
+            },
+            loop: true,
             spaceBetween: 15,
             speed: 800,
             watchSlidesProgress: true,
@@ -2079,8 +2084,12 @@
             wrapperClass: "slider-wrapper",
             slideClass: "slider-slide",
             slidesPerView: 1,
-
             spaceBetween: 120,
+            autoplay: {
+              delay: 2000,
+              disableOnInteraction: false,
+            },
+            loop: true,
             speed: 800,
             breakpoints: {
               1250: {
