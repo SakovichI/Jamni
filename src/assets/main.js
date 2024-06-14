@@ -2060,12 +2060,12 @@
             slideClass: "slider-thumbs__slide",
             slidesPerView: "auto",
             autoplay: {
-              delay: 2000,
+              delay: 5000,
               disableOnInteraction: false,
             },
             loop: true,
             spaceBetween: 15,
-            speed: 800,
+            speed: 1500,
             watchSlidesProgress: true,
             breakpoints: {
               1250: {
@@ -2086,11 +2086,11 @@
             slidesPerView: 1,
             spaceBetween: 120,
             autoplay: {
-              delay: 2000,
+              delay: 5000,
               disableOnInteraction: false,
             },
             loop: true,
-            speed: 800,
+            speed: 1500,
             breakpoints: {
               1250: {
                 spaceBetween: 90,
