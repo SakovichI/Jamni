@@ -2590,21 +2590,22 @@ main {
 }
 
 .slider__btn {
-  display: none;
   position: absolute;
   top: 50%;
   -webkit-transform: translateX(-50%);
   -ms-transform: translateX(-50%);
   transform: translateX(-50%);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
 }
 
 .slider__btn-prev {
-  left: 20px;
+  left: 30px;
   z-index: 100;
 }
 
 .slider__btn-next {
-  right: 0px;
+  right: 10px;
   z-index: 100;
   -webkit-transform-origin: center;
   -ms-transform-origin: center;
@@ -3050,6 +3051,13 @@ main {
   }
   .slider__btn {
     display: block;
+  }
+  .slider__btn-prev {
+    left: 20px;
+  }
+
+  .slider__btn-next {
+    right: 0px;
   }
 
   .hero__slider-thumbs {
