@@ -32,7 +32,9 @@ export class ShellComponent implements OnInit, OnDestroy {
     private makeOrder: ApiOrderService,
     private makeFeedback: ApiFeedbackService,
     private route: Router
-  ) {
+  ) {}
+
+  public ngOnInit(): void {
     setTimeout(() => {
       const scriptOld: Element | null = document.querySelector(
         'script[src="assets/main.js"]'
@@ -43,10 +45,7 @@ export class ShellComponent implements OnInit, OnDestroy {
       const script = document.createElement('script');
       script.src = 'assets/main.js';
       document.body.appendChild(script);
-    }, 200);
-  }
-
-  public ngOnInit(): void {
+    }, 50);
     this.apiCategoryService.listCategories().subscribe(
       (categories) => {
         this.categories = categories;
