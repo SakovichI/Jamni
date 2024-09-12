@@ -186,20 +186,16 @@
         </svg>
       </a>
       <div class="slider-bestseller__wrap">
-        <div
-          class="slider-bestseller__slide"
-          *ngFor="let bestseller of bestsellers"
-        >
+        <div class="slider-bestseller__slide">
           <a
-            [href]="'product/' + bestseller.id"
-            [routerLink]="'product/' + bestseller.id"
+            [href]="'product/106'"
+            [routerLink]="'product/106'"
             class="slider-bestseller__link"
           >
             <div
               class="bestseller-image-container"
-              [style.background-image]="
-                'url(' + bestseller.coverImage ||
-                'assets/img/no-img-placeholder.svg' + ')'
+              style="
+                background-image: url('assets/img/bestsellers-slide/best1.jpg');
               "
             ></div>
             <!--            <picture>-->
@@ -207,7 +203,87 @@
             <!--              <img loading="lazy" [src]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" class="image slider-bestseller__img"-->
             <!--                   width="360" height="550" alt="slide">-->
             <!--            </picture>-->
-            <span class="slider-bestseller__text">{{ bestseller.name }}</span>
+            <span class="slider-bestseller__text">Cocon</span>
+          </a>
+        </div>
+        <div class="slider-bestseller__slide">
+          <a
+            [href]="'product/85'"
+            [routerLink]="'product/85'"
+            class="slider-bestseller__link"
+          >
+            <div
+              class="bestseller-image-container"
+              style="
+                background-image: url('assets/img/bestsellers-slide/best2.jpg');
+              "
+            ></div>
+            <!--            <picture>-->
+            <!--              <source [srcset]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">-->
+            <!--              <img loading="lazy" [src]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" class="image slider-bestseller__img"-->
+            <!--                   width="360" height="550" alt="slide">-->
+            <!--            </picture>-->
+            <span class="slider-bestseller__text">Rondo</span>
+          </a>
+        </div>
+        <div class="slider-bestseller__slide">
+          <a
+            [href]="'product/85'"
+            [routerLink]="'product/85'"
+            class="slider-bestseller__link"
+          >
+            <div
+              class="bestseller-image-container"
+              style="
+                background-image: url('assets/img/bestsellers-slide/best3.jpg');
+              "
+            ></div>
+            <!--            <picture>-->
+            <!--              <source [srcset]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">-->
+            <!--              <img loading="lazy" [src]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" class="image slider-bestseller__img"-->
+            <!--                   width="360" height="550" alt="slide">-->
+            <!--            </picture>-->
+            <span class="slider-bestseller__text">PATIO</span>
+          </a>
+        </div>
+        <div class="slider-bestseller__slide">
+          <a
+            [href]="'product/63'"
+            [routerLink]="'product/63'"
+            class="slider-bestseller__link"
+          >
+            <div
+              class="bestseller-image-container"
+              style="
+                background-image: url('assets/img/bestsellers-slide/best4.jpg');
+              "
+            ></div>
+            <!--            <picture>-->
+            <!--              <source [srcset]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">-->
+            <!--              <img loading="lazy" [src]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" class="image slider-bestseller__img"-->
+            <!--                   width="360" height="550" alt="slide">-->
+            <!--            </picture>-->
+            <span class="slider-bestseller__text">NOODLES</span>
+          </a>
+        </div>
+        <div class="slider-bestseller__slide">
+          <a
+            [href]="'product/124'"
+            [routerLink]="'product/124'"
+            class="slider-bestseller__link"
+          >
+            <div
+              class="bestseller-image-container"
+              style="
+                background-image: url('assets/img/bestsellers-slide/best5.jpg');
+              "
+            ></div>
+            <!--            <picture>-->
+            <!--              <source [srcset]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" type="image/webp">-->
+            <!--              <img loading="lazy" [src]="bestseller.coverImage || 'assets/img/no-img-placeholder.svg'" class="image slider-bestseller__img"-->
+            <!--                   width="360" height="550" alt="slide">-->
+            <!--            </picture>-->
+            <span class="slider-bestseller__text">SOFA BED</span>
           </a>
         </div>
       </div>
