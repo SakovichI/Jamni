@@ -129,13 +129,16 @@ export class CreateProductsComponent
     const data = new FormData();
     data.append('name', form.value.name);
     data.append('categoryId', form.value.category);
+    data.append('image', '');
+    data.append('loadAdditionalImages', JSON.stringify(['']));
     if (form.value.image) {
-      data.append('image', form.value.image);
+      data.set('image', form.value.image);
     }
     if (form.value.loadAdditionalImages) {
       [...form.value.loadAdditionalImages].forEach((file: any) => {
-        data.append('loadAdditionalImages', file);
+        data.set('loadAdditionalImages', file);
       });
+    } else {
     }
 
     this.adminProd
