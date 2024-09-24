@@ -4195,6 +4195,9 @@ main {
   width: 700px;
   height: 460px;
 }
+.slider-project__slide.swiper-slide-active .slider-project__decription {
+  display: block;
+}
 
 .slider-project__slide.swiper-slide-next .slider-project__image,
 .slider-project__slide.swiper-slide-prev .slider-project__image {
@@ -4222,6 +4225,10 @@ main {
 }
 
 .slider-project__decription {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   color: var(--black);
   font-size: 16px;
   font-style: normal;
