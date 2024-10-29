@@ -2579,7 +2579,7 @@
           centeredSlides: false,
           autoHeight: true,
           init: false,
-          speed: 800,
+          speed: 900,
           //loop:true,
           navigation: {
             nextEl: ".slider-project__btn--next",
