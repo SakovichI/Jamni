@@ -1,12 +1,14 @@
-import {Component, OnInit} from "@angular/core";
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 // import {ApiNewsService} from "../../../core";
-import {ActivatedRoute, ParamMap} from "@angular/router";
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   templateUrl: './shell.component.html',
-  styleUrls: ['./shell.component.css']
+  styleUrls: ['./shell.component.css'],
 })
-export class ShellComponent implements OnInit{
+export class ShellComponent implements OnInit, AfterViewInit {
+  constructor(private loader: LoaderService) {}
   // public news: any;
   // constructor(private apiNewsService: ApiNewsService, private ar: ActivatedRoute) {
   //   this.ar.paramMap.subscribe((paramMap: ParamMap) => {
@@ -17,5 +19,11 @@ export class ShellComponent implements OnInit{
   //   })
   // }
   ngOnInit() {
+    this.loader.setLoader(true);
+  }
+
+  ngAfterViewInit(): void {
+    this.loader.setLoader(false);
+    this.loader.imgLoader();
   }
 }

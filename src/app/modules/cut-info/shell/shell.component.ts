@@ -13,6 +13,7 @@ import { ApiUserService } from 'src/app/core/api/api-user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { IAddress } from 'src/app/interfaces/address-inteface';
 import { GeneralService } from '../../../core/services/general.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -46,10 +47,12 @@ export class ShellComponent implements OnInit, OnDestroy {
     public auth: AuthService,
     private userApi: ApiUserService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private loader: LoaderService
   ) {}
 
   public ngOnInit(): void {
+    this.loader.setLoader(true);
     setTimeout(() => {
       const scripts: Element | null = document.querySelector(
         'script[src="assets/main.js"]'
@@ -84,7 +87,9 @@ export class ShellComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe((resp) => {
           this.addressArray = resp;
+          this.loader.setLoader(false);
           this.cdr.detectChanges();
+          this.loader.imgLoader();
         });
     }
   }

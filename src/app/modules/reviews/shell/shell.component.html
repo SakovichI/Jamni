@@ -1,16 +1,16 @@
 <section class="reviews">
   <div class="reviews__header">
-    <h1 class="reviews__title">
-      отзывы
-    </h1>
-    <p class="reviews__subtitle">
-      Мнение наших клиентов очень важно для нас
-    </p>
+    <h1 class="reviews__title">отзывы</h1>
+    <p class="reviews__subtitle">Мнение наших клиентов очень важно для нас</p>
   </div>
   <div class="small-container">
     <div class="breadcrumbs reviews__breadcrumbs">
       <a [routerLink]="'/'" class="breadcrumbs__link">главная</a>
-      <a [routerLink]="'reviews'" class="breadcrumbs__link breadcrumbs__link--active">отзывы</a>
+      <a
+        [routerLink]="'reviews'"
+        class="breadcrumbs__link breadcrumbs__link--active"
+        >отзывы</a
+      >
     </div>
     <div class="reviews__content content-reviews">
       <div class="content-reviews__header header-reviews">
@@ -54,9 +54,11 @@
           </div>
           <span class="main-rating__count">На основе 350 отзывов</span>
         </div>
-        <div class="header-reviews__slider sliderMy ">
-          <div class="header-reviews__filter filter-reviews sliderMy__wrapper ">
-            <button class="sliderMy__slide filter-reviews__btn btn-reset active">
+        <div class="header-reviews__slider sliderMy">
+          <div class="header-reviews__filter filter-reviews sliderMy__wrapper">
+            <button
+              class="sliderMy__slide filter-reviews__btn btn-reset active"
+            >
               <span class="filter-reviews__text">5</span>
               <svg class="filter-reviews__icon">
                 <use xlink:href="assets/img/sprite.svg#rate-star"></use>
@@ -100,7 +102,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">3.2</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >3.2</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -141,14 +146,25 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Диван превзошел все мои ожидания! Он не только выглядит стильно и современно,
-              но
-              и очень удобный. Мягкие подушки и удобные подлокотники создают идеальную атмосферу для отдыха.<br>
-              Качество материалов и отделки безупречное. Я очень доволен своей покупкой!</p>
+            <p class="item-reviews__text">
+              Диван превзошел все мои ожидания! Он не только выглядит стильно и
+              современно, но и очень удобный. Мягкие подушки и удобные
+              подлокотники создают идеальную атмосферу для отдыха.<br />
+              Качество материалов и отделки безупречное. Я очень доволен своей
+              покупкой!
+            </p>
             <picture class="item-reviews__image">
-              <source srcset="assets/img/reviews/reviews1.webp" type="image/webp">
-              <img loading="lazy" src="assets/img/reviews/reviews1.jpg" class="image " width="395" height="142"
-                   alt="reviews-image">
+              <source
+                srcset="assets/img/reviews/reviews1.webp"
+                type="image/webp"
+              />
+              <img
+                src="assets/img/reviews/reviews1.jpg"
+                class="image"
+                width="395"
+                height="142"
+                alt="reviews-image"
+              />
             </picture>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
@@ -158,7 +174,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">4</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >4</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -199,10 +218,13 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Стулья обеденные превзошли мои ожидания! Они красиво смотрятся в моей столовой
-              и очень удобные для сидения. Материалы, из которых они сделаны, высококачественные и прочные. У меня
-              большая семья, и стулья выдерживают все наши ежедневные приемы пищи без проблем. С доставкой были
-              проблемы, поэтому 4.</p>
+            <p class="item-reviews__text">
+              Стулья обеденные превзошли мои ожидания! Они красиво смотрятся в
+              моей столовой и очень удобные для сидения. Материалы, из которых
+              они сделаны, высококачественные и прочные. У меня большая семья, и
+              стулья выдерживают все наши ежедневные приемы пищи без проблем. С
+              доставкой были проблемы, поэтому 4.
+            </p>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
         </li>
@@ -211,7 +233,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">5</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >5</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -252,12 +277,23 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Кровать просто восхитительная! Она идеально вписалась в мой интерьер. Качество
-              изготовления на высшем уровне, каждая деталь продумана до мелочей. Я сплю как на облаке каждую ночь.</p>
+            <p class="item-reviews__text">
+              Кровать просто восхитительная! Она идеально вписалась в мой
+              интерьер. Качество изготовления на высшем уровне, каждая деталь
+              продумана до мелочей. Я сплю как на облаке каждую ночь.
+            </p>
             <picture class="item-reviews__image">
-              <source srcset="assets/img/reviews/reviews1.webp" type="image/webp">
-              <img loading="lazy" src="assets/img/reviews/reviews1.jpg" class="image " width="395" height="142"
-                   alt="reviews-image">
+              <source
+                srcset="assets/img/reviews/reviews1.webp"
+                type="image/webp"
+              />
+              <img
+                src="assets/img/reviews/reviews1.jpg"
+                class="image"
+                width="395"
+                height="142"
+                alt="reviews-image"
+              />
             </picture>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
@@ -267,7 +303,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">3.5</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >3.5</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -308,9 +347,12 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Долго искали идеальный диван для нашего небольшого пространства. Этот
-              модульный диван оказался идеальным решением!
-              Он легко трансформируется и прекрасно вписывается в наш интерьер. Очень довольны!</p>
+            <p class="item-reviews__text">
+              Долго искали идеальный диван для нашего небольшого пространства.
+              Этот модульный диван оказался идеальным решением! Он легко
+              трансформируется и прекрасно вписывается в наш интерьер. Очень
+              довольны!
+            </p>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
         </li>
@@ -319,7 +361,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">3.2</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >3.2</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -360,14 +405,25 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Диван превзошел все мои ожидания! Он не только выглядит стильно и современно,
-              но
-              и очень удобный. Мягкие подушки и удобные подлокотники создают идеальную атмосферу для отдыха.<br>
-              Качество материалов и отделки безупречное. Я очень доволен своей покупкой!</p>
+            <p class="item-reviews__text">
+              Диван превзошел все мои ожидания! Он не только выглядит стильно и
+              современно, но и очень удобный. Мягкие подушки и удобные
+              подлокотники создают идеальную атмосферу для отдыха.<br />
+              Качество материалов и отделки безупречное. Я очень доволен своей
+              покупкой!
+            </p>
             <picture class="item-reviews__image">
-              <source srcset="assets/img/reviews/reviews1.webp" type="image/webp">
-              <img loading="lazy" src="assets/img/reviews/reviews1.jpg" class="image " width="395" height="142"
-                   alt="reviews-image">
+              <source
+                srcset="assets/img/reviews/reviews1.webp"
+                type="image/webp"
+              />
+              <img
+                src="assets/img/reviews/reviews1.jpg"
+                class="image"
+                width="395"
+                height="142"
+                alt="reviews-image"
+              />
             </picture>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
@@ -377,7 +433,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">4</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >4</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -418,10 +477,13 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Стулья обеденные превзошли мои ожидания! Они красиво смотрятся в моей столовой
-              и очень удобные для сидения. Материалы, из которых они сделаны, высококачественные и прочные. У меня
-              большая семья, и стулья выдерживают все наши ежедневные приемы пищи без проблем. С доставкой были
-              проблемы, поэтому 4.</p>
+            <p class="item-reviews__text">
+              Стулья обеденные превзошли мои ожидания! Они красиво смотрятся в
+              моей столовой и очень удобные для сидения. Материалы, из которых
+              они сделаны, высококачественные и прочные. У меня большая семья, и
+              стулья выдерживают все наши ежедневные приемы пищи без проблем. С
+              доставкой были проблемы, поэтому 4.
+            </p>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
         </li>
@@ -430,7 +492,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">5</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >5</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -471,12 +536,23 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Кровать просто восхитительная! Она идеально вписалась в мой интерьер. Качество
-              изготовления на высшем уровне, каждая деталь продумана до мелочей. Я сплю как на облаке каждую ночь.</p>
+            <p class="item-reviews__text">
+              Кровать просто восхитительная! Она идеально вписалась в мой
+              интерьер. Качество изготовления на высшем уровне, каждая деталь
+              продумана до мелочей. Я сплю как на облаке каждую ночь.
+            </p>
             <picture class="item-reviews__image">
-              <source srcset="assets/img/reviews/reviews1.webp" type="image/webp">
-              <img loading="lazy" src="assets/img/reviews/reviews1.jpg" class="image " width="395" height="142"
-                   alt="reviews-image">
+              <source
+                srcset="assets/img/reviews/reviews1.webp"
+                type="image/webp"
+              />
+              <img
+                src="assets/img/reviews/reviews1.jpg"
+                class="image"
+                width="395"
+                height="142"
+                alt="reviews-image"
+              />
             </picture>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
@@ -486,7 +562,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">3.5</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >3.5</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -527,9 +606,12 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Долго искали идеальный диван для нашего небольшого пространства. Этот
-              модульный диван оказался идеальным решением!
-              Он легко трансформируется и прекрасно вписывается в наш интерьер. Очень довольны!</p>
+            <p class="item-reviews__text">
+              Долго искали идеальный диван для нашего небольшого пространства.
+              Этот модульный диван оказался идеальным решением! Он легко
+              трансформируется и прекрасно вписывается в наш интерьер. Очень
+              довольны!
+            </p>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
         </li>
@@ -538,7 +620,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">5</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >5</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -579,12 +664,23 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Кровать просто восхитительная! Она идеально вписалась в мой интерьер. Качество
-              изготовления на высшем уровне, каждая деталь продумана до мелочей. Я сплю как на облаке каждую ночь.</p>
+            <p class="item-reviews__text">
+              Кровать просто восхитительная! Она идеально вписалась в мой
+              интерьер. Качество изготовления на высшем уровне, каждая деталь
+              продумана до мелочей. Я сплю как на облаке каждую ночь.
+            </p>
             <picture class="item-reviews__image">
-              <source srcset="assets/img/reviews/reviews1.webp" type="image/webp">
-              <img loading="lazy" src="assets/img/reviews/reviews1.jpg" class="image " width="395" height="142"
-                   alt="reviews-image">
+              <source
+                srcset="assets/img/reviews/reviews1.webp"
+                type="image/webp"
+              />
+              <img
+                src="assets/img/reviews/reviews1.jpg"
+                class="image"
+                width="395"
+                height="142"
+                alt="reviews-image"
+              />
             </picture>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
@@ -594,7 +690,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">3.5</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >3.5</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -635,9 +734,12 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Долго искали идеальный диван для нашего небольшого пространства. Этот
-              модульный диван оказался идеальным решением!
-              Он легко трансформируется и прекрасно вписывается в наш интерьер. Очень довольны!</p>
+            <p class="item-reviews__text">
+              Долго искали идеальный диван для нашего небольшого пространства.
+              Этот модульный диван оказался идеальным решением! Он легко
+              трансформируется и прекрасно вписывается в наш интерьер. Очень
+              довольны!
+            </p>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
         </li>
@@ -646,7 +748,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">3.2</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >3.2</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -687,14 +792,25 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Диван превзошел все мои ожидания! Он не только выглядит стильно и современно,
-              но
-              и очень удобный. Мягкие подушки и удобные подлокотники создают идеальную атмосферу для отдыха.<br>
-              Качество материалов и отделки безупречное. Я очень доволен своей покупкой!</p>
+            <p class="item-reviews__text">
+              Диван превзошел все мои ожидания! Он не только выглядит стильно и
+              современно, но и очень удобный. Мягкие подушки и удобные
+              подлокотники создают идеальную атмосферу для отдыха.<br />
+              Качество материалов и отделки безупречное. Я очень доволен своей
+              покупкой!
+            </p>
             <picture class="item-reviews__image">
-              <source srcset="assets/img/reviews/reviews1.webp" type="image/webp">
-              <img loading="lazy" src="assets/img/reviews/reviews1.jpg" class="image " width="395" height="142"
-                   alt="reviews-image">
+              <source
+                srcset="assets/img/reviews/reviews1.webp"
+                type="image/webp"
+              />
+              <img
+                src="assets/img/reviews/reviews1.jpg"
+                class="image"
+                width="395"
+                height="142"
+                alt="reviews-image"
+              />
             </picture>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
@@ -704,7 +820,10 @@
           <div class="item-reviews__state">верифицирован</div>
           <div class="item-reviews__row">
             <div class="item-reviews__rating item-rating rating">
-              <span class="item-rating__value rating__value item-rating__value--hidden">4</span>
+              <span
+                class="item-rating__value rating__value item-rating__value--hidden"
+                >4</span
+              >
               <div class="item-rating__body rating__body">
                 <div class="rating__items">
                   <svg class="rating__icon">
@@ -745,29 +864,32 @@
             <div class="item-reviews__date">03.02.23</div>
           </div>
           <div class="item-reviews__content">
-            <p class="item-reviews__text">Стулья обеденные превзошли мои ожидания! Они красиво смотрятся в моей столовой
-              и очень удобные для сидения. Материалы, из которых они сделаны, высококачественные и прочные. У меня
-              большая семья, и стулья выдерживают все наши ежедневные приемы пищи без проблем. С доставкой были
-              проблемы, поэтому 4.</p>
+            <p class="item-reviews__text">
+              Стулья обеденные превзошли мои ожидания! Они красиво смотрятся в
+              моей столовой и очень удобные для сидения. Материалы, из которых
+              они сделаны, высококачественные и прочные. У меня большая семья, и
+              стулья выдерживают все наши ежедневные приемы пищи без проблем. С
+              доставкой были проблемы, поэтому 4.
+            </p>
             <span class="item-reviews__product-name">Диван FRIDA</span>
           </div>
         </li>
       </ul>
     </div>
-<!--    <div class="breadcrumbs-number all-news__breadcrumbs-number">-->
-<!--      <div class="breadcrumbs-number__wrap">-->
-<!--        <button class="btn-reset breadcrumbs-number__btn breadcrumbs-number__bnt&#45;&#45;prev"><</button>-->
-<!--        <div class="breadcrumbs-number__links">-->
-<!--          <a href="#" class="breadcrumbs-number__link breadcrumbs-number__link&#45;&#45;active">1</a>-->
-<!--          <a href="#" class="breadcrumbs-number__link">2</a>-->
-<!--          <a href="#" class="breadcrumbs-number__link">3</a>-->
-<!--          <a href="#" class="breadcrumbs-number__link">4</a>-->
-<!--          <a href="#" class="breadcrumbs-number__link">5</a>-->
-<!--          <span class="breadcrumbs-number__doted">...</span>-->
-<!--          <a href="#" class="breadcrumbs-number__link">21</a>-->
-<!--        </div>-->
-<!--        <button class="btn-reset breadcrumbs-number__btn breadcrumbs-number__bnt&#45;&#45;next">></button>-->
-<!--      </div>-->
-<!--    </div>-->
+    <!--    <div class="breadcrumbs-number all-news__breadcrumbs-number">-->
+    <!--      <div class="breadcrumbs-number__wrap">-->
+    <!--        <button class="btn-reset breadcrumbs-number__btn breadcrumbs-number__bnt&#45;&#45;prev"><</button>-->
+    <!--        <div class="breadcrumbs-number__links">-->
+    <!--          <a href="#" class="breadcrumbs-number__link breadcrumbs-number__link&#45;&#45;active">1</a>-->
+    <!--          <a href="#" class="breadcrumbs-number__link">2</a>-->
+    <!--          <a href="#" class="breadcrumbs-number__link">3</a>-->
+    <!--          <a href="#" class="breadcrumbs-number__link">4</a>-->
+    <!--          <a href="#" class="breadcrumbs-number__link">5</a>-->
+    <!--          <span class="breadcrumbs-number__doted">...</span>-->
+    <!--          <a href="#" class="breadcrumbs-number__link">21</a>-->
+    <!--        </div>-->
+    <!--        <button class="btn-reset breadcrumbs-number__btn breadcrumbs-number__bnt&#45;&#45;next">></button>-->
+    <!--      </div>-->
+    <!--    </div>-->
   </div>
 </section>

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { ModalsService } from 'src/app/core/services/modals.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ModalsService } from 'src/app/core/services/modals.service';
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.css'],
 })
-export class ShellComponent implements OnInit {
+export class ShellComponent implements OnInit, AfterViewInit {
   private destroy$ = new Subject<void>();
   public formType: string = 'клиент';
   public clientForm: FormGroup = new FormGroup({
@@ -44,10 +45,18 @@ export class ShellComponent implements OnInit {
   constructor(
     private auth: AuthService,
     private route: Router,
-    private modal: ModalsService
+    private modal: ModalsService,
+    private loader: LoaderService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loader.setLoader(true);
+    this.loader.imgLoader();
+  }
+
+  ngAfterViewInit(): void {
+    this.loader.setLoader(false);
+  }
 
   changeForm(event: any) {
     this.formType = event.target.value.toLowerCase();

@@ -38,7 +38,6 @@
                   type="image/webp"
                 />
                 <img
-                  loading="lazy"
                   [src]="
                     subCategory.image || 'assets/img/no-image-placeholder.svg'
                   "
@@ -344,14 +343,13 @@
                       type="image/webp"
                     />
                     <img
-                      loading="lazy"
                       [src]="
                         product.coverImage ||
                         'assets/img/no-image-placeholder.svg'
                       "
                       class="image product__image"
-                      width=""
-                      height=""
+                      width="100%"
+                      height="100%"
                       alt="product-image"
                     />
                   </picture>
@@ -433,7 +431,6 @@
                           type="image/webp"
                         />
                         <img
-                          loading="lazy"
                           [src]="product.coverImage"
                           class="image product__image"
                           width=""

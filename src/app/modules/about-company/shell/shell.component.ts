@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -6,7 +7,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   templateUrl: './shell.component.html',
 })
 export class ShellComponent implements OnInit {
-  constructor() {
+  constructor(private loader: LoaderService) {
+    this.loader.setLoader(true);
     const script: Element | null = document.querySelector(
       'script[src="assets/main.js"]'
     );
@@ -17,7 +19,10 @@ export class ShellComponent implements OnInit {
       const script = document.createElement('script');
       script.src = 'assets/main.js';
       document.body.appendChild(script);
+      this.loader.setLoader(false);
     }, 100);
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.loader.imgLoader();
+  }
 }

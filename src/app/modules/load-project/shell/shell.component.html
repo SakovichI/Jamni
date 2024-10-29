@@ -2,113 +2,222 @@
   <div class="load-proj__head">
     <div class="container">
       <h1 class="load-proj__title">
-        Воплотим ваш проект <br>в уникальную мебель
+        Воплотим ваш проект <br />в уникальную мебель
       </h1>
       <p class="load-proj__subtitle">
         Мы открыты к сотрудничеству и предложениям
       </p>
       <p class="load-proj__text">
-        Команда Jamni продолжает работать с профессионалами! Работать с архитекторами, дизайнерами и уникальными
-        проектами
-         — наша страсть, давайте делать это вместе! Мы всегда готовы встретиться с вами в Шоу Руме, подобрать и
-        предоставить материалы, дать доступ к коллекции оцифрованных моделей.
-        Если у вас есть индивидуальный запрос, проект или необходимо найти и реализовать нестандартное решение для
-        вашего
-        дома или сада, мы с удовольствием вам с этим поможем.
+        Команда Jamni продолжает работать с профессионалами! Работать
+        с архитекторами, дизайнерами и уникальными проектами  — наша страсть,
+        давайте делать это вместе! Мы всегда готовы встретиться с вами в Шоу
+        Руме, подобрать и предоставить материалы, дать доступ к коллекции
+        оцифрованных моделей. Если у вас есть индивидуальный запрос, проект или
+        необходимо найти и реализовать нестандартное решение для вашего дома или
+        сада, мы с удовольствием вам с этим поможем.
       </p>
-      <img alt="icon" class="load-proj__image-arrow" height="95px" src="assets/img/arrow-down.png" width="38px">
+      <img
+        alt="icon"
+        class="load-proj__image-arrow"
+        height="95px"
+        src="assets/img/arrow-down.png"
+        width="38px"
+      />
     </div>
-
   </div>
   <div class="load-proj__wrap">
     <div class="load-proj__row">
-      <form action="#" class="load-proj__form form form-load3d" enctype="multipart/form-data" [formGroup]="form" (ngSubmit)="formSubmit($any($event.target))">
+      <form
+        action="#"
+        class="load-proj__form form form-load3d"
+        enctype="multipart/form-data"
+        [formGroup]="form"
+        (ngSubmit)="formSubmit($any($event.target))"
+      >
         <p class="form-load3d__description">
-          Если у вас, как у дизайнера, уже есть готовый проект и вы ищете возможность его реализации, обратитесь к
-          нам, заполнив форму обратной связи
+          Если у вас, как у дизайнера, уже есть готовый проект и вы ищете
+          возможность его реализации, обратитесь к нам, заполнив форму обратной
+          связи
         </p>
         <label class="form-load3d__label form__label">
-          <input class="input-reset form__input form-load3d__input" name="name" placeholder="Имя*" type="text" formControlName="name"
-                 [class.error]="form.controls['name'].invalid && form.controls['name'].touched">
+          <input
+            class="input-reset form__input form-load3d__input"
+            name="name"
+            placeholder="Имя*"
+            type="text"
+            formControlName="name"
+            [class.error]="
+              form.controls['name'].invalid && form.controls['name'].touched
+            "
+          />
         </label>
-        <label class="form-load3d__label form__label form__label--file"
-               [class.error]="file?.name === '' && form.controls['file'].touched">
+        <label
+          class="form-load3d__label form__label form__label--file"
+          [class.error]="file?.name === '' && form.controls['file'].touched"
+        >
           <span class="form__file-text">
-                  <svg class="form__file-icon">
-                          <use xlink:href="assets/img/sprite.svg#download"></use>
-                        </svg>
-            <span class="form__file-txt">{{file?.name || 'Загрузить проект*'}}</span>
+            <svg class="form__file-icon">
+              <use xlink:href="assets/img/sprite.svg#download"></use>
+            </svg>
+            <span class="form__file-txt">{{
+              file?.name || "Загрузить проект*"
+            }}</span>
           </span>
-          <input class="input-reset form__input form-load3d__input form__input--file" name="file"
-                 placeholder="Загрузить проект*"
-                 type="file"
-                 formControlName="file"
-                 (change)="getFile($any($event.target).files)">
+          <input
+            class="input-reset form__input form-load3d__input form__input--file"
+            name="file"
+            placeholder="Загрузить проект*"
+            type="file"
+            formControlName="file"
+            (change)="getFile($any($event.target).files)"
+          />
         </label>
         <label class="form-load3d__label form__label">
-          <input class="input-reset form__input form-load3d__input" name="phone" placeholder="Телефон" type="text" formControlName="phone"
-                 [class.error]="form.controls['phone'].invalid && form.controls['phone'].touched">
+          <input
+            class="input-reset form__input form-load3d__input"
+            name="phone"
+            placeholder="Телефон"
+            type="text"
+            formControlName="phone"
+            [class.error]="
+              form.controls['phone'].invalid && form.controls['phone'].touched
+            "
+          />
         </label>
         <label class="form-load3d__label form__label">
-          <textarea class="input-reset form__textarea form-load3d__textarea" name="message" placeholder="Сообщение"
-                    type="text" formControlName="message"
-                    [class.error]="form.controls['message'].invalid && form.controls['message'].touched"></textarea>
+          <textarea
+            class="input-reset form__textarea form-load3d__textarea"
+            name="message"
+            placeholder="Сообщение"
+            type="text"
+            formControlName="message"
+            [class.error]="
+              form.controls['message'].invalid &&
+              form.controls['message'].touched
+            "
+          ></textarea>
         </label>
         <label class="form-load3d__label form__label">
-          <input class="input-reset form__input form-load3d__input" name="email" placeholder="E-mail*" type="text" formControlName="email"
-                 [class.error]="form.controls['email'].invalid && form.controls['email'].touched">
+          <input
+            class="input-reset form__input form-load3d__input"
+            name="email"
+            placeholder="E-mail*"
+            type="text"
+            formControlName="email"
+            [class.error]="
+              form.controls['email'].invalid && form.controls['email'].touched
+            "
+          />
         </label>
-        <button class="form-load3d__btn btn-reset btn-anim" type="submit" [disabled]="form.invalid">
-              <span class="btn-anim__text">
-                <svg class="form__icon">
-                  <use xlink:href="assets/img/sprite.svg#mail"></use>
-                </svg>
-                отправить</span>
+        <button
+          class="form-load3d__btn btn-reset btn-anim"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          <span class="btn-anim__text">
+            <svg class="form__icon">
+              <use xlink:href="assets/img/sprite.svg#mail"></use>
+            </svg>
+            отправить</span
+          >
         </button>
       </form>
       <picture class="load-proj__image">
-        <source srcset="assets/img/3d-proj/proj-img1.webp" type="image/webp">
-        <img alt="image" class="image load-proj__img" height="710" loading="lazy" src="assets/img/3d-proj/proj-img1.jpg"
-             width="790">
+        <source srcset="assets/img/3d-proj/proj-img1.webp" type="image/webp" />
+        <img
+          alt="image"
+          class="image load-proj__img"
+          height="710"
+          src="assets/img/3d-proj/proj-img1.jpg"
+          width="790"
+        />
       </picture>
     </div>
     <div class="load-proj__logo">
-      <img alt="logo" height="31" src="assets/img/logo_black.png" width="113">
+      <img alt="logo" height="31" src="assets/img/logo_black.png" width="113" />
     </div>
     <div class="load-proj__row">
       <picture class="load-proj__image">
-        <source srcset="assets/img/3d-proj/proj-img2.webp" type="image/webp">
-        <img alt="image" class="image load-proj__img" height="710" loading="lazy" src="assets/img/3d-proj/proj2-img.jpg"
-             width="790">
+        <source srcset="assets/img/3d-proj/proj-img2.webp" type="image/webp" />
+        <img
+          alt="image"
+          class="image load-proj__img"
+          height="710"
+          src="assets/img/3d-proj/proj2-img.jpg"
+          width="790"
+        />
       </picture>
-      <form action="#" class="load-proj__form form form-load3d--callback" [formGroup]="form1" (ngSubmit)="formSubmit($any($event.target))">
+      <form
+        action="#"
+        class="load-proj__form form form-load3d--callback"
+        [formGroup]="form1"
+        (ngSubmit)="formSubmit($any($event.target))"
+      >
         <p class="form-load3d__description">
-          Если вы хотите заказать дизайн-проект, мы с удовольствием поможем вам связаться с профессиональным дизайнером
-          для сотрудничества. ЗАПОЛНИТЕ ФОРМУ ДЛЯ СВЯЗИ
+          Если вы хотите заказать дизайн-проект, мы с удовольствием поможем вам
+          связаться с профессиональным дизайнером для сотрудничества. ЗАПОЛНИТЕ
+          ФОРМУ ДЛЯ СВЯЗИ
         </p>
         <label class="form-load3d__label form__label">
-          <input class="input-reset form__input form-load3d__input" name="name" placeholder="Имя*" type="text" formControlName="name"
-            [class.error]="form1.controls['name'].invalid && form1.controls['name'].touched">
+          <input
+            class="input-reset form__input form-load3d__input"
+            name="name"
+            placeholder="Имя*"
+            type="text"
+            formControlName="name"
+            [class.error]="
+              form1.controls['name'].invalid && form1.controls['name'].touched
+            "
+          />
         </label>
         <label class="form-load3d__label form__label">
-          <input class="input-reset form__input form-load3d__input" name="phone" placeholder="Телефон" type="text" formControlName="phone"
-                 [class.error]="form1.controls['phone'].invalid && form1.controls['phone'].touched">
+          <input
+            class="input-reset form__input form-load3d__input"
+            name="phone"
+            placeholder="Телефон"
+            type="text"
+            formControlName="phone"
+            [class.error]="
+              form1.controls['phone'].invalid && form1.controls['phone'].touched
+            "
+          />
         </label>
         <label class="form-load3d__label form__label">
-          <textarea class="input-reset form__textarea form-load3d__textarea" name="message" placeholder="Сообщение"
-                    type="text" formControlName="message"
-                    [class.error]="form1.controls['message'].invalid && form1.controls['message'].touched"></textarea>
+          <textarea
+            class="input-reset form__textarea form-load3d__textarea"
+            name="message"
+            placeholder="Сообщение"
+            type="text"
+            formControlName="message"
+            [class.error]="
+              form1.controls['message'].invalid &&
+              form1.controls['message'].touched
+            "
+          ></textarea>
         </label>
         <label class="form-load3d__label form__label">
-          <input class="input-reset form__input form-load3d__input" name="email" placeholder="E-mail*" type="text" formControlName="email"
-                 [class.error]="form1.controls['email'].invalid && form1.controls['email'].touched">
+          <input
+            class="input-reset form__input form-load3d__input"
+            name="email"
+            placeholder="E-mail*"
+            type="text"
+            formControlName="email"
+            [class.error]="
+              form1.controls['email'].invalid && form1.controls['email'].touched
+            "
+          />
         </label>
-        <button class="form-load3d__btn btn-reset btn-anim" type="submit" [disabled]="form1.invalid">
-              <span class="btn-anim__text">
-                <svg class="form__icon">
-                  <use xlink:href="assets/img/sprite.svg#mail"></use>
-                </svg>
-                отправить</span>
+        <button
+          class="form-load3d__btn btn-reset btn-anim"
+          type="submit"
+          [disabled]="form1.invalid"
+        >
+          <span class="btn-anim__text">
+            <svg class="form__icon">
+              <use xlink:href="assets/img/sprite.svg#mail"></use>
+            </svg>
+            отправить</span
+          >
         </button>
       </form>
     </div>

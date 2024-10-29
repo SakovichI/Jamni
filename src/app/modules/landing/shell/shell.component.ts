@@ -10,6 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiCategoryService, ApiOrderService } from '../../../core';
 import { ApiFeedbackService } from '../../../core/api/api-feedback.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   styleUrls: ['./shell.component.css'],
@@ -31,11 +32,13 @@ export class ShellComponent implements OnInit, OnDestroy {
     private apiCategoryService: ApiCategoryService,
     private makeOrder: ApiOrderService,
     private makeFeedback: ApiFeedbackService,
-    private route: Router
+    private route: Router,
+    private loader: LoaderService
   ) {}
 
   public ngOnInit(): void {
     setTimeout(() => {
+      this.loader.setLoader(true);
       const scriptOld: Element | null = document.querySelector(
         'script[src="assets/main.js"]'
       );
@@ -67,6 +70,7 @@ export class ShellComponent implements OnInit, OnDestroy {
                   category.items.filter((el: any) => el.enabled === true)[i]
                 );
               }
+
               this.cdr.detectChanges();
             });
         }
@@ -84,7 +88,9 @@ export class ShellComponent implements OnInit, OnDestroy {
                 category.items.filter((el: any) => el.enabled === true)[i]
               );
             }
+            this.loader.setLoader(false);
             this.cdr.detectChanges();
+            this.loader.imgLoader();
           });
       },
       (error) => {

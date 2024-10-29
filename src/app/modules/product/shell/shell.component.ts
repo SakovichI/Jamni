@@ -8,6 +8,7 @@ import { IProduct } from 'src/app/interfaces/product-interface';
 import { IUserFavorites } from 'src/app/interfaces/users-interface';
 import { ApiCategoryService, ApiItemService } from '../../../core';
 import { GeneralService } from '../../../core/services/general.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   styleUrls: ['./shell.component.css'],
@@ -33,9 +34,11 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
     private apiCategoryService: ApiCategoryService,
     public userApi: ApiUserService,
     private modal: ModalsService,
-    private router: Router
+    private router: Router,
+    private loader: LoaderService
   ) {}
   ngOnInit() {
+    this.loader.setLoader(true);
     this.activatedRoute.paramMap
       .pipe(takeUntil(this.destroyed$))
       .subscribe((paramMap) => {
@@ -127,11 +130,15 @@ export class ShellComponent implements OnDestroy, OnInit, AfterViewInit {
           )
           .subscribe((v) => {
             this.product.price = v.price;
+            this.loader.setLoader(false);
+            this.loader.imgLoader();
           });
       },
       (error) => {
         this.router.navigate(['/catalog/']);
         this.modal.showError('Данного товара нет в наличии');
+        this.loader.setLoader(false);
+        this.loader.imgLoader();
       }
     );
   }

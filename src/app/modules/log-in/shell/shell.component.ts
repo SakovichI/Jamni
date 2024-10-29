@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 import { ModalsService } from 'src/app/core/services/modals.service';
 
 @Component({
@@ -11,7 +12,7 @@ import { ModalsService } from 'src/app/core/services/modals.service';
   templateUrl: './shell.component.html',
   styleUrls: ['./shell.component.css'],
 })
-export class ShellComponent implements OnInit, OnDestroy {
+export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
   public destroy$ = new Subject<void>();
   public form: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -22,10 +23,16 @@ export class ShellComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private modal: ModalsService,
     public usersApi: ApiUserService,
-    private route: Router
+    private route: Router,
+    private loader: LoaderService
   ) {}
+  ngAfterViewInit(): void {
+    this.loader.setLoader(false);
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loader.setLoader(true);
+  }
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

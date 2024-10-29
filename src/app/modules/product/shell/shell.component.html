@@ -12,7 +12,6 @@
               <picture>
                 <source [srcset]="img" type="image/webp" />
                 <img
-                  loading="lazy"
                   [src]="img"
                   class="image product-slide__image"
                   width="736"
@@ -38,7 +37,6 @@
               <picture>
                 <source [srcset]="img" type="image/webp" />
                 <img
-                  loading="lazy"
                   [src]="img"
                   class="image product-slide__image"
                   width="140"
@@ -493,7 +491,6 @@
                     type="image/webp"
                   />
                   <img
-                    loading="lazy"
                     [src]="
                       category.category.image ||
                       'assets/img/no-img-placeholder.svg'
@@ -542,7 +539,6 @@
                         type="image/webp"
                       />
                       <img
-                        loading="lazy"
                         [src]="
                           product.product.coverImage ||
                           'assets/img/no-img-placeholder.svg'
@@ -666,7 +662,6 @@
                     type="image/webp"
                   />
                   <img
-                    loading="lazy"
                     [src]="
                       product.coverImage || 'assets/img/no-img-placeholder.svg'
                     "

@@ -134,6 +134,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loader.setLoader(true);
     if (this.auth.getToken()) {
       this.userApi
         .getUser()
@@ -151,6 +152,7 @@ export class AppComponent implements AfterViewInit, OnInit, OnDestroy {
                 .pipe(takeUntil(this.destroy$))
                 .subscribe((resp) => {
                   this.countFavorite = resp.length;
+                  this.loader.setLoader(false);
                 });
             }
           },

@@ -5,6 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { GeneralService } from '../../../core/services/general.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -15,9 +16,13 @@ export class ShellComponent implements OnInit, OnDestroy {
   public email?: string;
   public address?: string;
   public deliveryMethod: 'courier' | 'self' = 'courier';
-  constructor(public generalService: GeneralService) {}
+  constructor(
+    public generalService: GeneralService,
+    private loader: LoaderService
+  ) {}
 
   public ngOnInit() {
+    this.loader.setLoader(true);
     setTimeout(() => {
       const scripts: Element | null = document.querySelector(
         'script[src="assets/main.js"]'
@@ -28,6 +33,8 @@ export class ShellComponent implements OnInit, OnDestroy {
       const script = document.createElement('script');
       script.src = 'assets/main.js';
       document.body.appendChild(script);
+      this.loader.setLoader(false);
+      this.loader.imgLoader();
     }, 500);
     if (localStorage.getItem('form')) {
       const savedForm: any = JSON.parse(localStorage.getItem('form') as string);

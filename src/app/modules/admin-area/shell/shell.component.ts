@@ -10,6 +10,7 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
 
 @Component({
   selector: 'app-shell',
@@ -49,9 +50,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
   ],
 })
 export class ShellComponent implements OnInit {
-  constructor(public auth: AuthService) {}
+  constructor(public auth: AuthService, private loader: LoaderService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loader.imgLoader();
+  }
   prepareRoute(outlet: RouterOutlet) {
     return (
       outlet &&

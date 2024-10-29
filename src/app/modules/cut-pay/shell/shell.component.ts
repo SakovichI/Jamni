@@ -4,16 +4,16 @@ import {
   Component,
   OnDestroy,
   OnInit,
-} from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
-import { Subject, map, repeat, takeUntil, takeWhile, tap } from 'rxjs'
-import { AuthService } from 'src/app/core/services/auth.service'
-import { LoaderService } from 'src/app/core/services/loader.service'
-import { ModalsService } from 'src/app/core/services/modals.service'
-import { IPayment } from 'src/app/interfaces/orders-payments'
-import { ApiOrderService } from '../../../core'
-import { GeneralService } from '../../../core/services/general.service'
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subject, map, repeat, takeUntil, takeWhile, tap } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { LoaderService } from 'src/app/core/services/loader.service';
+import { ModalsService } from 'src/app/core/services/modals.service';
+import { IPayment } from 'src/app/interfaces/orders-payments';
+import { ApiOrderService } from '../../../core';
+import { GeneralService } from '../../../core/services/general.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -71,6 +71,7 @@ export class ShellComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit() {
+    this.loader.setLoader(true);
     this.updateScript();
     this.setPaymentType('CASH');
     if (localStorage.getItem('form')) {
@@ -90,6 +91,7 @@ export class ShellComponent implements OnInit, OnDestroy {
     if (localStorage.getItem('payment')) {
       this.payment = localStorage.getItem('payment') as any;
     }
+    this.loader.imgLoader();
   }
 
   public ngOnDestroy() {
@@ -97,7 +99,7 @@ export class ShellComponent implements OnInit, OnDestroy {
   }
 
   public pay(): void {
-    this.loader.loaded = true;
+    this.loader.setLoader(true);
     const userForm = JSON.parse(localStorage.getItem('form') as string);
     const cart = JSON.parse(localStorage.getItem('cart') as string);
     const payType = localStorage.getItem('payment');
@@ -122,7 +124,7 @@ export class ShellComponent implements OnInit, OnDestroy {
           })
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
-            this.loader.loaded = false;
+            this.loader.setLoader(false);
             localStorage.removeItem('form');
             localStorage.removeItem('delivery');
             localStorage.removeItem('payment');
@@ -152,7 +154,7 @@ export class ShellComponent implements OnInit, OnDestroy {
           })
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
-            this.loader.loaded = false;
+            this.loader.setLoader(false);
             localStorage.removeItem('form');
             localStorage.removeItem('delivery');
             localStorage.removeItem('payment');
@@ -255,7 +257,7 @@ export class ShellComponent implements OnInit, OnDestroy {
                             )
                             .subscribe();
                         }
-                        this.loader.loaded = false;
+                        this.loader.setLoader(false);
                       });
                   });
                 })
@@ -264,7 +266,7 @@ export class ShellComponent implements OnInit, OnDestroy {
                   for (let k in errors) {
                     error.push(errors[k]);
                   }
-                  this.loader.loaded = false;
+                  this.loader.setLoader(false);
                   this.modal.showError(error.join(', '));
                 });
             }),
@@ -363,7 +365,7 @@ export class ShellComponent implements OnInit, OnDestroy {
                             .subscribe();
                         }
 
-                        this.loader.loaded = false;
+                        this.loader.setLoader(false);
                       });
                   });
                 })
@@ -372,7 +374,7 @@ export class ShellComponent implements OnInit, OnDestroy {
                   for (let k in errors) {
                     error.push(errors[k]);
                   }
-                  this.loader.loaded = false;
+                  this.loader.setLoader(false);
                   this.modal.showError(error.join(', '));
                 });
             }),
@@ -463,6 +465,7 @@ export class ShellComponent implements OnInit, OnDestroy {
       const script = document.createElement('script');
       script.src = 'assets/main.js';
       document.body.appendChild(script);
+      this.loader.setLoader(false);
     }, 500);
   }
 }

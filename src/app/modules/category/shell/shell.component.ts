@@ -15,6 +15,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiUserService } from 'src/app/core/api/api-user.service';
 import { IUserFavorites } from 'src/app/interfaces/users-interface';
 import { ApiCategoryService, ApiItemService } from '../../../core';
+import { LoaderService } from 'src/app/core/services/loader.service';
+import { log } from 'console';
 @Component({
   styleUrls: ['./shell.component.css'],
   templateUrl: './shell.component.html',
@@ -54,7 +56,8 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
     private activatedRoute: ActivatedRoute,
     private apiCategoryService: ApiCategoryService,
     private apiItemService: ApiItemService,
-    public userApi: ApiUserService
+    public userApi: ApiUserService,
+    private loader: LoaderService
   ) {}
 
   ngOnDestroy() {
@@ -62,6 +65,7 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
     this.destroyed$.complete();
   }
   ngOnInit() {
+    this.loader.setLoader(true);
     this.activatedRoute.paramMap
       .pipe(takeUntil(this.destroyed$))
       .subscribe((paramMap) => {
@@ -91,12 +95,6 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
 
-    this.apiCategoryService.getCategory(this.categoryId).subscribe((elem) => {
-      this.category = elem;
-      this.products = this.category.items.filter(
-        (el: any) => el.enabled === true
-      );
-    });
     this.apiCategoryService
       .getCategory(this.categoryId)
       .subscribe((category) => {
@@ -158,8 +156,8 @@ export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         setTimeout(() => {
           this.initSliders();
+          this.loader.imgLoader();
         }, 0);
-
         this.initOtherProducts();
       });
   }
