@@ -4353,6 +4353,12 @@ main {
     flex: 0 0 auto;
   }
 
+  .slider-project__slide .slider-project__image {
+    width: 100%;
+    height: 260px;
+    transition: 0;
+  }
+
   .slider-project__slide.swiper-slide-active .slider-project__image {
     width: 100%;
     height: 260px;
@@ -4360,12 +4366,12 @@ main {
 
   .slider-project__slide.swiper-slide-next .slider-project__image,
   .slider-project__slide.swiper-slide-prev .slider-project__image {
-    width: 220px;
+    width: 100%;
     height: 260px;
   }
 
   .slider-project__image {
-    width: 220px;
+    width: 100%;
     height: 260px;
   }
 }
